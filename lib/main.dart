@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation/screens/boarding/boarding1.dart';
 
 void main() {
   runApp(const MyApp());
@@ -6,12 +7,15 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      initialRoute: Onboarding1.routeName,
+      routes: {
+        Onboarding1.routeName : (context)=> Onboarding1() ,
+      }
+
     );
   }
 }
