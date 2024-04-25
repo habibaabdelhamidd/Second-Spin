@@ -17,13 +17,13 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: Onboarding1.routeName,
       routes: {
-        // Splashscreen.routeName :(context)=> Splashscreen(),
+        Splashscreen.routeName :(context)=> Splashscreen(),
         Onboarding1.routeName : (context)=> Onboarding1() ,
         Onboarding2.routeName: (context)=> Onboarding2(),
         Onboarding3.routeName: (context)=> Onboarding3(),
         // HomeLayout.routeName : (context)=> HomeLayout(),
       },
-      home: Onboarding1(),
+      home: Splashscreen(),
     );
   }
 }
