@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation/core/theme/app_theme.dart';
 import 'package:graduation/layouts/homelayout/homelayout.dart';
 import 'package:graduation/screens/boarding/boarding1.dart';
 import 'package:graduation/screens/boarding/boarding2.dart';
@@ -15,13 +16,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: Onboarding1.routeName,
+      theme: ApplicationTheme.lightTheme,
+
+      initialRoute: Splashscreen.routeName,
       routes: {
         Splashscreen.routeName :(context)=> Splashscreen(),
         Onboarding1.routeName : (context)=> Onboarding1() ,
         Onboarding2.routeName: (context)=> Onboarding2(),
         Onboarding3.routeName: (context)=> Onboarding3(),
-        // HomeLayout.routeName : (context)=> HomeLayout(),
+        HomeLayout.routeName : (context)=> HomeLayout(),
       },
       home: Splashscreen(),
     );

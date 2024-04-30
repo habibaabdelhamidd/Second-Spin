@@ -7,6 +7,7 @@ class Onboarding3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return Stack(
       children: [
         Image.asset("assets/image/On boarding 03.png"),
@@ -14,7 +15,7 @@ class Onboarding3 extends StatelessWidget {
           backgroundColor: Colors.transparent,
           appBar:AppBar(
             iconTheme: IconThemeData(
-              color: Color(0xff757575),
+              color:theme.appBarTheme.iconTheme?.color,
               size: 25,
             ),
             elevation: 0,
@@ -47,14 +48,14 @@ class Onboarding3 extends StatelessWidget {
                     width:360,
                     height: 50,
                     decoration: BoxDecoration(
-                        color: Color(0xff7AAB99),
+                        color: theme.primaryColor,
                         borderRadius: BorderRadius.circular(5)),
                     child: Padding(
                       padding: const EdgeInsets.only(
                           right: 8.0, left: 8, bottom: 8, top: 12),
                       child: GestureDetector(
                         onTap: (){
-                          // Navigator.pushNamed(context, HomeLayout.routeName);
+                          Navigator.pushNamed(context, HomeLayout.routeName);
                         },
                         child: Text(
                           "Get Start ",

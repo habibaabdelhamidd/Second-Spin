@@ -7,6 +7,7 @@ class Onboarding1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return Container(
       child: Stack(
         children: [
@@ -58,7 +59,7 @@ class Onboarding1 extends StatelessWidget {
                       width: 70,
                       height: 50,
                       decoration: BoxDecoration(
-                          color: Color(0xff7AAB99),
+                          color: theme.primaryColor,
                           borderRadius: BorderRadius.circular(5)),
                       child: Padding(
                         padding: const EdgeInsets.only(

@@ -7,6 +7,7 @@ class Onboarding2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return Stack(
       children: [
         Image.asset("assets/image/On boarding 02.png"),
@@ -14,7 +15,7 @@ class Onboarding2 extends StatelessWidget {
           backgroundColor: Colors.transparent,
           appBar:AppBar(
             iconTheme: IconThemeData(
-              color: Color(0xff757575),
+              color: theme.appBarTheme.iconTheme?.color,
               size: 25,
             ),
             elevation: 0,
@@ -61,7 +62,7 @@ class Onboarding2 extends StatelessWidget {
                     width: 70,
                     height: 50,
                     decoration: BoxDecoration(
-                        color: Color(0xff7AAB99),
+                        color: theme.primaryColor,
                         borderRadius: BorderRadius.circular(5)),
                     child: Padding(
                       padding: const EdgeInsets.only(
