@@ -7,15 +7,15 @@ class ApplicationTheme {
       primary: const Color(0xFF7AAB99),
       seedColor: const Color(0xFF7AAB99),
       onSecondary: const Color(0xFFEFEEEE),
-      onBackground: Colors.white,
+      onBackground: Color(0xffF7F7F7),
     ),
     appBarTheme: AppBarTheme(
         iconTheme: IconThemeData(color: Color(0XFF2B3139)),
         elevation: 0.0,
         backgroundColor: Colors.transparent,
-        centerTitle: true,
+        centerTitle: false,
         titleTextStyle: TextStyle(
-          fontSize: 30,
+          fontSize: 16,
             fontWeight: FontWeight.bold,
             color: Colors.black,
         )
@@ -37,8 +37,8 @@ class ApplicationTheme {
     textTheme: TextTheme(
       titleLarge:TextStyle(
         fontSize: 30,
-        fontWeight: FontWeight.bold,
-        color: Colors.black,
+        fontWeight: FontWeight.w900,
+        color: Color(0xff2B3139),
       ),
       bodyLarge: TextStyle(
         fontSize: 25,
@@ -51,15 +51,11 @@ class ApplicationTheme {
         color: Colors.black,
       ),
       bodySmall: TextStyle(
-        fontSize: 18,
-        fontWeight: FontWeight.normal,
-        color: Colors.black,
+        fontSize: 15,
+        color: Color(0xffd0d0d0),
       ),
     ),
-    bottomSheetTheme: BottomSheetThemeData(
-      backgroundColor: const Color(0xFFB7935F).withOpacity(0.7),
-    ),
-    dividerColor: const Color(0xFFB7935F),
+
   );
 
 }
