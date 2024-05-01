@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation/screens/account/account.dart';
 import 'package:graduation/screens/cart/cart.dart';
-import 'package:graduation/screens/category/category.dart';
 import 'package:graduation/screens/home/home.dart';
+import '../../screens/category/options/category_view.dart';
 
 class HomeLayout extends StatefulWidget {
   static const String routeName = "homelayout";
@@ -26,13 +26,6 @@ class _HomeLayoutState extends State<HomeLayout> {
     var theme = Theme.of(context);
     return Scaffold(
       backgroundColor: Color(0xffF7F7F7),
-      appBar: AppBar(
-        backgroundColor: theme.appBarTheme.backgroundColor,
-        elevation: theme.appBarTheme.elevation,
-        iconTheme: IconThemeData(color: theme.appBarTheme.iconTheme?.color,
-        size: 25
-        ),
-      ),
       body: screens[selectedNavgatorIndex],
       floatingActionButton: Container(
         margin: EdgeInsets.all(30),
