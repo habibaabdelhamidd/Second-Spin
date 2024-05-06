@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 class ApplicationTheme {
   static ThemeData lightTheme = ThemeData(
     primaryColor: const Color(0XFF7AAB99),
-    scaffoldBackgroundColor: Colors.transparent,
+    scaffoldBackgroundColor: Color(0xffF7F7F7),
     colorScheme: ColorScheme.fromSeed(
       primary: const Color(0xFF7AAB99),
       seedColor: const Color(0xFF7AAB99),
       onSecondary: const Color(0xFFEFEEEE),
       onBackground: Color(0xffF7F7F7),
+      secondary: Color(0xff2B3139),
     ),
     appBarTheme: AppBarTheme(
         iconTheme: IconThemeData(color: Color(0XFF2B3139)),
@@ -41,18 +42,18 @@ class ApplicationTheme {
         color: Color(0xff2B3139),
       ),
       bodyLarge: TextStyle(
-        fontSize: 25,
-        fontWeight: FontWeight.bold,
-        color: Colors.black,
+        fontSize: 18,
+        fontWeight: FontWeight.w700,
+        color: Color(0xff2B3139),
       ),
       bodyMedium: TextStyle(
-        fontSize: 25,
+        fontSize: 14,
         fontWeight: FontWeight.w500,
-        color: Colors.black,
+        color: Color(0xff2B3139),
       ),
       bodySmall: TextStyle(
-        fontSize: 15,
-        color: Color(0xffd0d0d0),
+        fontSize: 13,
+        color: Color(0xff7a7a7a),
       ),
       labelSmall: TextStyle(
         fontFamily: "poppins",
