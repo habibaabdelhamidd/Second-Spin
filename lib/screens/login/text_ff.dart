@@ -33,9 +33,8 @@ class TextF extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(10),
         ),
-        contentPadding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12),
+        contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
         enabledBorder: OutlineInputBorder(
-          gapPadding: 2.0,
       borderSide: const BorderSide(color: Colors.grey,width: 1),
       borderRadius: BorderRadius.circular(15),
     ),

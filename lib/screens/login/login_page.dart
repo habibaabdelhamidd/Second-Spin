@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation/screens/login/buttons.dart';
 import 'package:graduation/screens/login/text_ff.dart';
 
 import '../../layouts/homelayout/homelayout.dart';
@@ -29,7 +30,8 @@ class _LoginPageState extends State<LoginPage> {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        body: Form( key:formKey ,
+        body: Form(
+          key: formKey,
           child: Padding(
             padding: EdgeInsets.all(MediaQuery.of(context).size.height * 0.03),
             child: SingleChildScrollView(
@@ -54,46 +56,51 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   Text("Email", style: theme.textTheme.labelMedium),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.02,
+                    height: MediaQuery.of(context).size.height * 0.01,
                   ),
                   TextF(
                     hint: "alma.lawson@example.com",
                     astrik: false,
-                    textEditingController: emailControl, validator: (String? value) {
-                      if(value == null || value.trim().isEmpty){
-                        return "Please enter your E-mail address";}
-                      var regex = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-                      if(!regex.hasMatch(value)){
+                    textEditingController: emailControl,
+                    validator: (String? value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return "Please enter your E-mail address";
+                      }
+                      var regex = RegExp(
+                          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+                      if (!regex.hasMatch(value)) {
                         return "Invalid E-mail address";
                       }
                       return null;
-                  },
+                    },
                   ),
                   SizedBox(
-                    height:MediaQuery.of(context).size.height * 0.03,
+                    height: MediaQuery.of(context).size.height * 0.02,
                   ),
                   Text("Password", style: theme.textTheme.labelMedium),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.03,
+                    height: MediaQuery.of(context).size.height * 0.01,
                   ),
                   TextF(
-                    hint: "*************",
-                    astrik: !isVisible,
-                    icon: IconButton(onPressed: () {
-                      isVisible = !isVisible;
-                      setState(() {});
-                    },
-                    icon: isVisible == true?  const Icon(Icons.visibility_off) : const Icon(Icons.visibility)),
-                    textEditingController: passControl, validator: (String? value) {
-                      if (value == null || value
-                          .trim()
-                          .isEmpty) {
-                        return "Please enter password";}
-                      return null;
-                    }
-                    ),
+                      hint: "*************",
+                      astrik: !isVisible,
+                      icon: IconButton(
+                          onPressed: () {
+                            isVisible = !isVisible;
+                            setState(() {});
+                          },
+                          icon: isVisible == true
+                              ? const Icon(Icons.visibility_off)
+                              : const Icon(Icons.visibility)),
+                      textEditingController: passControl,
+                      validator: (String? value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return "Please enter password";
+                        }
+                        return null;
+                      }),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.04,
+                    height: MediaQuery.of(context).size.height * 0.01,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -109,33 +116,55 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.04,
                   ),
-                        MaterialButton(onPressed: (){
-              login();
-              // Navigator.pushNamed(context, HomeLayout.routeName);
-                        },
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 15),
-                width: double.infinity,
-                height: 55,
-                decoration: BoxDecoration(
-                  color: theme.primaryColor,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Text("Login", style: theme.textTheme.labelLarge, textAlign: TextAlign.center,),
-              ),),
+                  MaterialButton(
+                      onPressed: () {
+                        login();
+                      },
+                      child: Buttons(
+                        title: 'Login',
+                      )),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.03,
                   ),
-                 // Row(
-                 //    children: [
-                 //      Icon(Icons.),
-                 //      Text(
-                 //        "Or login with",
-                 //        style: theme.textTheme.labelSmall,
-                 //      ),
-                 //    ],
-                 //  ),
-              
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.horizontal_rule,
+                        color: Color(0xff7A7A7A),
+                      ),
+                      Text(
+                        "Or login with",
+                        style: theme.textTheme.labelSmall,
+                      ),
+                      const Icon(
+                        Icons.horizontal_rule,
+                        color: Color(0xff7A7A7A),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.02,
+                  ),
+                  Buttons(
+                    logo: "fb.png",
+                    title: 'Continue with Facebook',
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.02,
+                  ),
+                  Buttons(
+                    logo: "gmail.png",
+                    title: 'Continue with Google',
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Don’t have an account?",style: theme.textTheme.labelSmall),
+                      TextButton(onPressed: (){}, child: const Text("Sign Up", style:
+                      TextStyle(decoration: TextDecoration.underline,decorationColor: Colors.lightBlueAccent)))
+                    ],
+                  )
                 ],
               ),
             ),
@@ -144,8 +173,9 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-  login(){
-    if(formKey.currentState!.validate()){
+
+  login() {
+    if (formKey.currentState!.validate()) {
       Navigator.pushNamed(context, HomeLayout.routeName);
     }
   }
