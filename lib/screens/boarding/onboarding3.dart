@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../login/login_page.dart';
+import 'package:graduation/layouts/homelayout/homelayout.dart';
 
 class Onboarding3 extends StatelessWidget {
   static const String routeName = "onboarding3";
@@ -56,7 +55,7 @@ class Onboarding3 extends StatelessWidget {
                           right: 8.0, left: 8, bottom: 8, top: 12),
                       child: GestureDetector(
                         onTap: (){
-                          Navigator.pushNamed(context, LoginPage.routeName);
+                          Navigator.pushNamed(context, HomeLayout.routeName);
                         },
                         child: Text(
                           "Get Start ",
