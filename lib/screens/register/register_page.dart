@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:graduation/screens/login/buttons.dart';
 import 'package:graduation/screens/login/text_ff.dart';
-
 import '../../layouts/homelayout/homelayout.dart';
-import '../register/register_page.dart';
+import '../login/login_page.dart';
 
-class LoginPage extends StatefulWidget {
-  static const String routeName = "login";
+class RegisterPage extends StatefulWidget {
+  static const String routeName = "register";
 
-  LoginPage({super.key});
+  RegisterPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   TextEditingController emailControl = TextEditingController();
   TextEditingController passControl = TextEditingController();
+  TextEditingController nameControl = TextEditingController();
+  TextEditingController coPassControl = TextEditingController();
 
   var formKey = GlobalKey<FormState>();
   bool isVisible = false;
+  bool isSeen = false;
 
   @override
   Widget build(BuildContext context) {
@@ -34,26 +36,40 @@ class _LoginPageState extends State<LoginPage> {
         body: Form(
           key: formKey,
           child: Padding(
-            padding: EdgeInsets.all(MediaQuery.of(context).size.height * 0.03),
+            padding: EdgeInsets.all(MediaQuery.of(context).size.height * 0.02),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.10,
+                    height: MediaQuery.of(context).size.height * 0.09,
                   ),
                   Text(
-                    "Welcome back!",
+                    "Create account",
                     style: theme.textTheme.labelMedium?.copyWith(
                       fontSize: 32,
                     ),
                   ),
-                  Text(
-                    "Login to your account",
-                    style: theme.textTheme.labelSmall?.copyWith(fontSize: 17),
-                  ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.03,
+                  ),
+                  Text("User name", style: theme.textTheme.labelMedium),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.01,
+                  ),
+                  TextF(
+                    hint: "Cody Fisher",
+                    astrik: false,
+                    textEditingController: nameControl,
+                    validator: (String? value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return "Please enter user name";
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.02,
                   ),
                   Text("Email", style: theme.textTheme.labelMedium),
                   SizedBox(
@@ -98,31 +114,49 @@ class _LoginPageState extends State<LoginPage> {
                         if (value == null || value.trim().isEmpty) {
                           return "Please enter password";
                         }
+                        var regex = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
+                        if (!regex.hasMatch(value)) {
+                          return "Invalid Password";
+                        }
                         return null;
                       }),
                   SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.02,
+                  ),
+                  Text("Confirm Password", style: theme.textTheme.labelMedium),
+                  SizedBox(
                     height: MediaQuery.of(context).size.height * 0.01,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      GestureDetector(
-                        child: Text(
-                          "Forget Password?",
-                          style: theme.textTheme.labelSmall,
-                        ),
-                      ),
-                    ],
-                  ),
+                  TextF(
+                      hint: "*************",
+                      astrik: !isSeen,
+                      icon: IconButton(
+                          onPressed: () {
+                            isSeen = !isSeen;
+                            setState(() {});
+                          },
+                          icon: isSeen == true
+                              ? const Icon(Icons.visibility_off)
+                              : const Icon(Icons.visibility)),
+                      textEditingController: coPassControl,
+                      validator: (String? value) {
+                        if (value == null || value.trim().isEmpty) {
+                          return "Please confirm password";
+                        }
+                        if(value != passControl.text){
+                          return "Password doesn't match";
+                        }
+                        return null;
+                      }),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.04,
                   ),
                   MaterialButton(
                       onPressed: () {
-                        login();
+                        signUp();
                       },
                       child: Buttons(
-                        title: 'Login',
+                        title: 'Sign up',
                       )),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.03,
@@ -135,7 +169,7 @@ class _LoginPageState extends State<LoginPage> {
                         color: Color(0xff7A7A7A),
                       ),
                       Text(
-                        "Or login with",
+                        "Sign up with",
                         style: theme.textTheme.labelSmall,
                       ),
                       const Icon(
@@ -154,17 +188,9 @@ class _LoginPageState extends State<LoginPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Don’t have an account?",
-                          style: theme.textTheme.labelSmall),
-                      TextButton(
-                          onPressed: () {
-                            Navigator.pushNamed(
-                                context, RegisterPage.routeName);
-                          },
-                          child: const Text("Sign Up",
-                              style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  decorationColor: Colors.lightBlueAccent)))
+                      Text("Already have an account?",style: theme.textTheme.labelSmall),
+                      TextButton(onPressed: (){ Navigator.pushNamed(context, LoginPage.routeName);}, child: const Text("Login", style:
+                      TextStyle(decoration: TextDecoration.underline,decorationColor: Colors.lightBlueAccent)))
                     ],
                   )
                 ],
@@ -176,9 +202,9 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  login() {
+  signUp() {
     if (formKey.currentState!.validate()) {
-      Navigator.pushNamed(context, HomeLayout.routeName);
+      // Navigator.pushNamed(context, HomeLayout.routeName);
     }
   }
 }
