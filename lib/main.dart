@@ -4,6 +4,7 @@ import 'package:graduation/layouts/homelayout/homelayout.dart';
 import 'package:graduation/screens/boarding/boarding1.dart';
 import 'package:graduation/screens/boarding/boarding2.dart';
 import 'package:graduation/screens/boarding/onboarding3.dart';
+import 'package:graduation/screens/category/recycle/recycle_product_details/recycle_products_details.dart';
 import 'package:graduation/screens/category/recycle/recycle_products/recycle_products.dart';
 import 'package:graduation/screens/login/login_page.dart';
 import 'package:graduation/screens/register/register_page.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         RecycleViewProducts.routeName : (context)=> RecycleViewProducts(),
         LoginPage.routeName : (context)=> LoginPage(),
         RegisterPage.routeName  : (context)=> RegisterPage(),
+        Recycle_Product_Details.routeName : (context)=> Recycle_Product_Details(),
       },
       home: Splashscreen(),
     );
