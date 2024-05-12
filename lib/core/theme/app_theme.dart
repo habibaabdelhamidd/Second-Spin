@@ -9,7 +9,7 @@ class ApplicationTheme {
       onSecondary: const Color(0xFFEFEEEE),
       onBackground: Color(0xffF7F7F7),
     ),
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
         iconTheme: IconThemeData(color: Color(0XFF2B3139)),
         elevation: 0.0,
         backgroundColor: Colors.transparent,
@@ -34,7 +34,7 @@ class ApplicationTheme {
       ),
       unselectedItemColor: Colors.black,
     ),
-    textTheme: TextTheme(
+    textTheme: const TextTheme(
       titleLarge:TextStyle(
         fontSize: 30,
         fontWeight: FontWeight.w900,
