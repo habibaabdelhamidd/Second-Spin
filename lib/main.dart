@@ -7,6 +7,7 @@ import 'package:graduation/screens/boarding/onboarding3.dart';
 import 'package:graduation/screens/category/recycle/recycle_product_details/recycle_products_details.dart';
 import 'package:graduation/screens/category/recycle/recycle_products/recycle_products.dart';
 import 'package:graduation/screens/login/login_page.dart';
+import 'package:graduation/screens/register/register_page.dart';
 import 'package:graduation/screens/splash/splashscreen.dart';
 
 void main() {
@@ -30,6 +31,10 @@ class MyApp extends StatelessWidget {
         HomeLayout.routeName : (context)=> HomeLayout(),
         RecycleViewProducts.routeName : (context)=> RecycleViewProducts(),
         LoginPage.routeName : (context)=> LoginPage(),
+ register
+        RegisterPage.routeName  : (context)=> RegisterPage(),
+
+ dev
         Recycle_Product_Details.routeName : (context)=> Recycle_Product_Details(),
       },
       home: Splashscreen(),

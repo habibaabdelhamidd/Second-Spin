@@ -15,6 +15,7 @@ class TextF extends StatelessWidget {
        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
     alignment: Alignment.center,
     child: TextFormField(
+      style: theme.textTheme.labelMedium,
       obscureText: astrik,
       controller: textEditingController,
       validator: validator,
