@@ -55,6 +55,24 @@ class ApplicationTheme {
         fontSize: 13,
         color: Color(0xff7a7a7a),
       ),
+      labelSmall: TextStyle(
+        fontFamily: "poppins",
+        fontSize: 14,
+        fontWeight: FontWeight.bold,
+        color: Color(0xff7A7A7A),
+      ),
+      labelMedium: TextStyle(
+        fontFamily: "poppins",
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+        color: Color(0xf72B3139),
+      ),
+      labelLarge:  TextStyle(
+        fontFamily: "poppins",
+        fontSize: 15,
+        fontWeight: FontWeight.w700,
+        color: Colors.white,
+      ),
     ),
 
   );
