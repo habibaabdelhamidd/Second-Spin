@@ -164,30 +164,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(
-                        Icons.horizontal_rule,
-                        color: Color(0xff7A7A7A),
-                      ),
-                      Text(
-                        "Sign up with",
-                        style: theme.textTheme.labelSmall,
-                      ),
-                      const Icon(
-                        Icons.horizontal_rule,
-                        color: Color(0xff7A7A7A),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.02,
-                  ),
-                  Buttons(
-                    logo: "gmail.png",
-                    title: 'Continue with Google',
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
                       Text("Already have an account?",style: theme.textTheme.labelSmall),
                       TextButton(onPressed: (){ Navigator.pushNamed(context, LoginPage.routeName);}, child: const Text("Login", style:
                       TextStyle(decoration: TextDecoration.underline,decorationColor: Colors.lightBlueAccent)))
@@ -204,7 +180,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   signUp() {
     if (formKey.currentState!.validate()) {
-      // Navigator.pushNamed(context, HomeLayout.routeName);
+      Navigator.pushNamed(context, HomeLayout.routeName);
     }
   }
 }
