@@ -31,10 +31,7 @@ class MyApp extends StatelessWidget {
         HomeLayout.routeName : (context)=> HomeLayout(),
         RecycleViewProducts.routeName : (context)=> RecycleViewProducts(),
         LoginPage.routeName : (context)=> LoginPage(),
- register
         RegisterPage.routeName  : (context)=> RegisterPage(),
-
- dev
         Recycle_Product_Details.routeName : (context)=> Recycle_Product_Details(),
       },
       home: Splashscreen(),

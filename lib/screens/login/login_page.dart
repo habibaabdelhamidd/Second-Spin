@@ -99,7 +99,8 @@ class _LoginPageState extends State<LoginPage> {
                           return "Please enter password";
                         }
                         return null;
-                      }),
+                      }
+                      ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.01,
                   ),
@@ -119,37 +120,14 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   MaterialButton(
                       onPressed: () {
-                        login();
+                        // login();
+                        Navigator.pushNamed(context, HomeLayout.routeName);
                       },
                       child: Buttons(
                         title: 'Login',
                       )),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.03,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.horizontal_rule,
-                        color: Color(0xff7A7A7A),
-                      ),
-                      Text(
-                        "Or login with",
-                        style: theme.textTheme.labelSmall,
-                      ),
-                      const Icon(
-                        Icons.horizontal_rule,
-                        color: Color(0xff7A7A7A),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.02,
-                  ),
-                  Buttons(
-                    logo: "gmail.png",
-                    title: 'Continue with Google',
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -176,9 +154,9 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  login() {
-    if (formKey.currentState!.validate()) {
-      Navigator.pushNamed(context, HomeLayout.routeName);
-    }
-  }
-}
+//   login() {
+//     if (formKey.currentState!.validate()) {
+//       Navigator.pushNamed(context, HomeLayout.routeName);
+//     }
+//   }
+ }
