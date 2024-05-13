@@ -20,8 +20,8 @@ class TextF extends StatelessWidget {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     return Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20), color: fieldColor),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),
+        color: fieldColor),
         alignment: Alignment.center,
         child: TextFormField(
             style: theme.textTheme.labelMedium,
