@@ -9,6 +9,7 @@ import 'package:graduation/screens/category/recycle/recycle_product_details/recy
 import 'package:graduation/screens/category/recycle/recycle_products/recycle_products.dart';
 import 'package:graduation/screens/home/favourite/all_favourit_product.dart';
 import 'package:graduation/screens/home/home/home.dart';
+import 'package:graduation/screens/home/search/search_view.dart';
 import 'package:graduation/screens/login/login_page.dart';
 import 'package:graduation/screens/register/register_page.dart';
 import 'package:graduation/screens/splash/splashscreen.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
         RegisterPage.routeName  : (context)=> RegisterPage(),
         All_Favourit_Product.routeName: (context)=> All_Favourit_Product(),
         Recycle_Product_Details.routeName : (context)=> Recycle_Product_Details(),
+        SearchView.routeName : (context)=> SearchView(),
         Cart_Chackout.routeName : (context)=> Cart_Chackout(),
       },
       home: Splashscreen(),

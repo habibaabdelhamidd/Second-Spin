@@ -18,6 +18,7 @@ class ApplicationTheme {
           fontSize: 16,
             fontWeight: FontWeight.bold,
             color: Colors.black,
+          fontFamily: 'poppins'
         )
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
@@ -72,8 +73,6 @@ class ApplicationTheme {
         fontWeight: FontWeight.w700,
         color: Colors.white,
       ),
-    ),
-
-  );
+  ));
 
 }
