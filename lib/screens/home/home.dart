@@ -1,10 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:graduation/screens/login/text_ff.dart';
+import 'package:graduation/screens/home/search/search.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -40,49 +45,58 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.02,
                 ),
-                // Container(
-                //   decoration: BoxDecoration(
-                //     borderRadius: BorderRadius.circular(15),
-                //     color: theme.colorScheme.onSecondary,
-                //   ),
-                //   alignment: Alignment.center,
-                //   child: TextFormField(
-                //     decoration: InputDecoration(
-                //       contentPadding: const EdgeInsets.symmetric(
-                //           vertical: 10.0, horizontal: 10),
-                //       enabledBorder: OutlineInputBorder(
-                //         borderSide:
-                //             const BorderSide(color: Colors.grey, width: 1),
-                //         borderRadius: BorderRadius.circular(15),
-                //       ),
-                //       hintText: "What are you looking for?",
-                //       hintStyle: theme.textTheme.labelSmall,
-                //       suffixIcon: const Icon(Icons.search),
-                //     ),
-                //   ),
-                // )
                 InkWell(
-                  child: TextF(
-                    hint: "What are you looking for?",
-                    astrik: false,
-                    fieldColor: theme.colorScheme.onSecondary,
-                    icon: const Icon(Icons.search),
+                  onTap: () {
+                    final result =
+                        showSearch(context: context, delegate: ItemSearch());
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: MediaQuery.of(context).size.width * 0.04),
+                    height: 47,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: theme.colorScheme.onSecondary,
+                    ),
+                    alignment: Alignment.center,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Icon(
+                          Icons.search,
+                          color: Color(0xff7A7A7A),
+                          size: 30,
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.04,
+                        ),
+                        Text(
+                          "What are you looking for?",
+                          style: theme.textTheme.labelSmall
+                              ?.copyWith(fontWeight: FontWeight.w500),
+                          textAlign: TextAlign.start,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.02,
                 ),
-
                 CarouselSlider(
                     items: [1, 2, 3].map((i) {
                       return Builder(
                         builder: (BuildContext context) {
                           return Container(
-                            alignment: Alignment.centerLeft,
+                              alignment: Alignment.centerLeft,
                               width: MediaQuery.of(context).size.width,
-                              margin: EdgeInsets.symmetric(horizontal: 5.0),
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 5.0),
                               decoration: BoxDecoration(
-                                  image: DecorationImage(image: AssetImage("assets/image/slideshow1.jpg"),fit: BoxFit.fill),
+                                  image: const DecorationImage(
+                                      image: AssetImage(
+                                          "assets/image/slideshow1.jpg"),
+                                      fit: BoxFit.fill),
                                   borderRadius: BorderRadius.circular(25)),
                               child: Text(
                                 'Donate now',
