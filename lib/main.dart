@@ -4,8 +4,11 @@ import 'package:graduation/layouts/homelayout/homelayout.dart';
 import 'package:graduation/screens/boarding/boarding1.dart';
 import 'package:graduation/screens/boarding/boarding2.dart';
 import 'package:graduation/screens/boarding/onboarding3.dart';
+import 'package:graduation/screens/cart/cart_checkout/cart_checkout.dart';
 import 'package:graduation/screens/category/recycle/recycle_product_details/recycle_products_details.dart';
 import 'package:graduation/screens/category/recycle/recycle_products/recycle_products.dart';
+import 'package:graduation/screens/home/favourite/all_favourit_product.dart';
+import 'package:graduation/screens/home/home/home.dart';
 import 'package:graduation/screens/login/login_page.dart';
 import 'package:graduation/screens/register/register_page.dart';
 import 'package:graduation/screens/splash/splashscreen.dart';
@@ -29,10 +32,13 @@ class MyApp extends StatelessWidget {
         Onboarding2.routeName: (context)=> Onboarding2(),
         Onboarding3.routeName: (context)=> Onboarding3(),
         HomeLayout.routeName : (context)=> HomeLayout(),
+        HomeScreen.routeName: (context)=> HomeScreen(),
         RecycleViewProducts.routeName : (context)=> RecycleViewProducts(),
         LoginPage.routeName : (context)=> LoginPage(),
         RegisterPage.routeName  : (context)=> RegisterPage(),
+        All_Favourit_Product.routeName: (context)=> All_Favourit_Product(),
         Recycle_Product_Details.routeName : (context)=> Recycle_Product_Details(),
+        Cart_Chackout.routeName : (context)=> Cart_Chackout(),
       },
       home: Splashscreen(),
     );

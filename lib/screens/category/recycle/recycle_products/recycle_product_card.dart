@@ -17,6 +17,7 @@ class Recycl_Product_card extends StatelessWidget {
           Image.asset(
             "assets/image/laptop.jpeg",
             width: mediaquare.width / 2.5,
+            fit:BoxFit.fill,
           ),
           Text(
             "Apple MacBook Pro 13",

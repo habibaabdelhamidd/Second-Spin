@@ -31,8 +31,8 @@ class Onboarding3 extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: Text(
-                      "you can now offer your on a product to "
-                          "seller and start negotiation with him.",
+                      "you can now offer your on a product \nto "
+                          "seller and start negotiation with \nhim.",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontSize: 20,
@@ -44,27 +44,29 @@ class Onboarding3 extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Container(
-                    margin: EdgeInsets.all(20),
-                    width:360,
-                    height: 50,
-                    decoration: BoxDecoration(
-                        color: theme.primaryColor,
-                        borderRadius: BorderRadius.circular(5)),
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          right: 8.0, left: 8, bottom: 8, top: 12),
-                      child: GestureDetector(
-                        onTap: (){
-                          Navigator.pushNamed(context, LoginPage.routeName);
-                        },
-                        child: Text(
-                          "Get Start ",
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Color(0XFFffffff),
-                              fontWeight: FontWeight.w500),
-                          textAlign: TextAlign.center,
+                  Center(
+                    child: Container(
+                      margin: EdgeInsets.all(20),
+                      width:360,
+                      height: 50,
+                      decoration: BoxDecoration(
+                          color: theme.primaryColor,
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            right: 8.0, left: 8.0, bottom: 8, top: 12),
+                        child: GestureDetector(
+                          onTap: (){
+                            Navigator.pushNamed(context, LoginPage.routeName);
+                          },
+                          child: Text(
+                            "Get Start ",
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Color(0XFFffffff),
+                                fontWeight: FontWeight.w500),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
                       ),
                     ),

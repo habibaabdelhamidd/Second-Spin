@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation/screens/account/account.dart';
-import 'package:graduation/screens/cart/cart.dart';
-import 'package:graduation/screens/home/home.dart';
+import '../../screens/cart/cart_view/cart_view.dart';
 import '../../screens/category/options/category_view.dart';
+import '../../screens/home/home/home.dart';
 
 class HomeLayout extends StatefulWidget {
   static const String routeName = "homelayout";
@@ -17,7 +17,7 @@ class _HomeLayoutState extends State<HomeLayout> {
   List<Widget> screens = [
     HomeScreen(),
     CategoriesScreen(),
-    CartScreen(),
+    Cart_view_Screen(),
     AccountScreen(),
   ];
 

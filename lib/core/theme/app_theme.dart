@@ -7,7 +7,6 @@ class ApplicationTheme {
       primary: const Color(0xFF7AAB99),
       seedColor: const Color(0xFF7AAB99),
       onSecondary: const Color(0xFFEFEEEE),
-      onBackground: Color(0xffF7F7F7),
       secondary: Color(0xff2B3139),
     ),
     appBarTheme: const AppBarTheme(

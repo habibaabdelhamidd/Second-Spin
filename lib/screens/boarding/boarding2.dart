@@ -42,8 +42,8 @@ class Onboarding2 extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: Text(
-                      "you can now sell your products faster by making "
-                          "it featured to be seen by more users",
+                      "you can now sell your products faster \nby making "
+                          "it featured to be seen by \nmore users",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontSize: 20,
