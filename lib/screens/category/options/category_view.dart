@@ -30,7 +30,7 @@ class CategoriesScreen extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        "Used Products",
+                        "Used \nProducts",
                         style: theme.textTheme.titleLarge,
                       ),
                       Spacer(),
@@ -38,7 +38,7 @@ class CategoriesScreen extends StatelessWidget {
                     ],
                   ),
                   Text(
-                    "Category Used product",
+                    "Category \nUsed product",
                     style: TextStyle(color: Color(0XFFc5c5c5), fontSize: 15),
                   ),
                   Container(
@@ -70,14 +70,15 @@ class CategoriesScreen extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        "Recycle Products",
+                        "Recycle \nProducts",
                         style: theme.textTheme.titleLarge,
                       ),
+                      Spacer(),
                       Image.asset("assets/image/options.png")
                     ],
                   ),
                   Text(
-                    "Category Product with less price for recycle",
+                    "Category \nProduct with less price for recycle",
                     style: TextStyle(color: Color(0XFFc5c5c5), fontSize: 15),
                   ),
                   Container(
@@ -115,14 +116,15 @@ class CategoriesScreen extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        "Charity Products",
+                        "Charity \nProducts",
                         style: theme.textTheme.titleLarge,
                       ),
+                      Spacer(),
                       Image.asset("assets/image/options.png")
                     ],
                   ),
                   Text(
-                    "Category Charity Products",
+                    "Category \nCharity Products",
                     style: TextStyle(color: Color(0XFFc5c5c5), fontSize: 15),
                   ),
                   Container(

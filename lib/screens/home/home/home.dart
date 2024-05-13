@@ -1,10 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation/screens/home/favourite/all_favourit_product.dart';
 import 'package:graduation/screens/login/text_ff.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
+  static const String routeName = "home";
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -28,11 +29,17 @@ class HomeScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Image(image: AssetImage("assets/image/homeLogo.png")),
-                    CircleAvatar(
-                      backgroundColor: theme.colorScheme.onSecondary,
-                      child: Icon(
-                        Icons.favorite_border_outlined,
-                        color: theme.primaryColor,
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.pushNamed(context, All_Favourit_Product
+                            .routeName);
+                      },
+                      child: CircleAvatar(
+                        backgroundColor: theme.colorScheme.onSecondary,
+                        child: Icon(
+                          Icons.favorite_border_outlined,
+                          color: theme.primaryColor,
+                        ),
                       ),
                     )
                   ],

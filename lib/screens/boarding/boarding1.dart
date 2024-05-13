@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation/layouts/homelayout/homelayout.dart';
 import 'package:graduation/screens/boarding/boarding2.dart';
+
 
 class Onboarding1 extends StatelessWidget {
   static const String routeName = "onboarding1";
@@ -23,12 +25,17 @@ class Onboarding1 extends StatelessWidget {
                       width: 320,
                     ),
                     Container(
-                      child: Text(
-                        "Skip",
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0XFF757575)),
+                      child: GestureDetector(
+                        onTap: (){
+                          Navigator.pushNamed(context, HomeLayout.routeName);
+                        },
+                        child: Text(
+                          "Skip",
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0XFF757575)),
+                        ),
                       ),
                     )
                   ],
@@ -40,7 +47,7 @@ class Onboarding1 extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 20, right: 20),
                       child: Text(
                         "The best simple place where you "
-                        "discover most wonderful used and new Products.",
+                        "discover most wonderful used and \nnew Products.",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 20,
