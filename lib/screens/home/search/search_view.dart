@@ -14,19 +14,17 @@ class SearchView extends StatelessWidget {
       appBar: AppBar(
         title: Text(args.toString(),style: theme.appBarTheme.titleTextStyle,),
       ),
-      body: Expanded(
-        child: GridView.builder(
-            padding: const EdgeInsets.all(10),
-            itemCount: 12,
-            gridDelegate:
-            const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 15,
-              mainAxisSpacing: 15,
-              childAspectRatio: 0.7
-            ),
-            itemBuilder: (context, index) => const SearchItem()),
-      )
+      body: GridView.builder(
+          padding: const EdgeInsets.all(10),
+          itemCount: 12,
+          gridDelegate:
+          const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 15,
+            mainAxisSpacing: 15,
+            childAspectRatio: 0.7
+          ),
+          itemBuilder: (context, index) => const SearchItem())
     );
   }
 }

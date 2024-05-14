@@ -7,6 +7,8 @@ import 'package:graduation/screens/boarding/onboarding3.dart';
 import 'package:graduation/screens/cart/cart_checkout/cart_checkout.dart';
 import 'package:graduation/screens/category/recycle/recycle_product_details/recycle_products_details.dart';
 import 'package:graduation/screens/category/recycle/recycle_products/recycle_products.dart';
+import 'package:graduation/screens/category/used/used_category.dart';
+import 'package:graduation/screens/category/used/used_view.dart';
 import 'package:graduation/screens/home/favourite/all_favourit_product.dart';
 import 'package:graduation/screens/home/home/home.dart';
 import 'package:graduation/screens/home/search/search_details.dart';
@@ -45,6 +47,8 @@ class MyApp extends StatelessWidget {
         Cart_Chackout.routeName : (context)=> Cart_Chackout(),
         SearchItem.routeName : (context)=> const SearchItem(),
         SearchDetails.routeName : (context)=> const SearchDetails(),
+        UsedView.routeName : (context)=> UsedView(),
+        UsedCategory.routeName : (context)=> UsedCategory()
       },
       home: Splashscreen(),
     );

@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation/screens/category/recycle/recycle_products/recycle_products.dart';
+import '../used/used_view.dart';
 
 class CategoriesScreen extends StatelessWidget {
   @override
@@ -41,17 +41,22 @@ class CategoriesScreen extends StatelessWidget {
                     "Category \nUsed product",
                     style: TextStyle(color: Color(0XFFc5c5c5), fontSize: 15),
                   ),
-                  Container(
-                    width: 400,
-                    margin: EdgeInsets.only(top: 5),
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: theme.colorScheme.primary),
-                    child: Text(
-                      "Browse",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white70),
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.pushNamed(context, UsedView.routeName);
+                    },
+                    child: Container(
+                      width: 400,
+                      margin: EdgeInsets.only(top: 5),
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: theme.colorScheme.primary),
+                      child: Text(
+                        "Browse",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.white70),
+                      ),
                     ),
                   )
                 ],
