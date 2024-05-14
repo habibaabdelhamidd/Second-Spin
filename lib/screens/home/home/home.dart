@@ -1,7 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation/screens/home/favourite/all_favourit_product.dart';
-import 'package:graduation/screens/login/text_ff.dart';
 import 'package:graduation/screens/home/search/search.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -56,7 +55,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 InkWell(
                   onTap: () {
-                    final result =
                         showSearch(context: context, delegate: ItemSearch());
                   },
                   child: Container(

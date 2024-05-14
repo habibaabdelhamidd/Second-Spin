@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:graduation/screens/home/search/search_view.dart';
 
 class ItemSearch extends SearchDelegate<String> {
-  final items = ['shoes', 't-shirts', 'hats', 'jackets'];
-  final suggItems = ['hats', 'jackets'];
+  final items = ['shoes', 't-shirts', 'hats', 'jackets', 'Laptops'];
+  final suggItems = ['hats', 'Laptops'];
 
   @override
   List<Widget>? buildActions(BuildContext context) => [

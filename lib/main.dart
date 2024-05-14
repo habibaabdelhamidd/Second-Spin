@@ -9,6 +9,8 @@ import 'package:graduation/screens/category/recycle/recycle_product_details/recy
 import 'package:graduation/screens/category/recycle/recycle_products/recycle_products.dart';
 import 'package:graduation/screens/home/favourite/all_favourit_product.dart';
 import 'package:graduation/screens/home/home/home.dart';
+import 'package:graduation/screens/home/search/search_details.dart';
+import 'package:graduation/screens/home/search/search_items.dart';
 import 'package:graduation/screens/home/search/search_view.dart';
 import 'package:graduation/screens/login/login_page.dart';
 import 'package:graduation/screens/register/register_page.dart';
@@ -33,14 +35,16 @@ class MyApp extends StatelessWidget {
         Onboarding2.routeName: (context)=> Onboarding2(),
         Onboarding3.routeName: (context)=> Onboarding3(),
         HomeLayout.routeName : (context)=> HomeLayout(),
-        HomeScreen.routeName: (context)=> HomeScreen(),
+        HomeScreen.routeName: (context)=> const HomeScreen(),
         RecycleViewProducts.routeName : (context)=> RecycleViewProducts(),
         LoginPage.routeName : (context)=> LoginPage(),
         RegisterPage.routeName  : (context)=> RegisterPage(),
         All_Favourit_Product.routeName: (context)=> All_Favourit_Product(),
         Recycle_Product_Details.routeName : (context)=> Recycle_Product_Details(),
-        SearchView.routeName : (context)=> SearchView(),
+        SearchView.routeName : (context)=> const SearchView(),
         Cart_Chackout.routeName : (context)=> Cart_Chackout(),
+        SearchItem.routeName : (context)=> const SearchItem(),
+        SearchDetails.routeName : (context)=> const SearchDetails(),
       },
       home: Splashscreen(),
     );
