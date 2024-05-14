@@ -24,7 +24,7 @@ class RecycleViewProducts extends StatelessWidget {
               child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    childAspectRatio: 0.7
+                    childAspectRatio: 0.6
                 ),
                 itemBuilder: (context, index) =>
                     GestureDetector(
@@ -33,7 +33,6 @@ class RecycleViewProducts extends StatelessWidget {
                               context, Recycle_Product_Details.routeName);
                         },
                         child: Recycl_Product_card()),
-                itemCount: 10,
               )
           ),
 

@@ -1,8 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:graduation/screens/home/favourite/all_favourit_product.dart';
 import 'package:graduation/screens/home/home/suggestion_card.dart';
 import 'package:graduation/screens/home/search/search.dart';
+
+import '../favourite/all_favourite_product.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -129,13 +130,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            Expanded(child:
-                GridView.builder(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount
-                  (crossAxisCount: 2,
-                  childAspectRatio: 0.8
-
-                ),
-                    itemBuilder: (context,index)=> Suggestions_Card(),)
+            Container(
+              height: mediaquary.height/3,
+              child: Expanded(child:
+                  ListView.builder
+                    (
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context , index)=> Suggestions_Card(),
+                  itemCount: 10,
+                  )
+              ),
             ),
           ],
         ),
