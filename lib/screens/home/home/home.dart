@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation/screens/home/favourite/all_favourit_product.dart';
+import 'package:graduation/screens/home/home/suggestion_card.dart';
 import 'package:graduation/screens/home/search/search.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,8 +17,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: theme.colorScheme.onBackground,
-      body: Stack(
+      backgroundColor:Colors.transparent,
+      body:Stack(
         children: [
           Container(
             decoration: const BoxDecoration(
@@ -55,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 InkWell(
                   onTap: () {
-                        showSearch(context: context, delegate: ItemSearch());
+                    showSearch(context: context, delegate: ItemSearch());
                   },
                   child: Container(
                     padding: EdgeInsets.symmetric(
@@ -90,7 +91,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.02,
                 ),
-
                 CarouselSlider(
                     items: [1, 2, 3].map((i) {
                       return Builder(
@@ -99,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               alignment: Alignment.centerLeft,
                               width: MediaQuery.of(context).size.width,
                               margin:
-                                  const EdgeInsets.symmetric(horizontal: 5.0),
+                              const EdgeInsets.symmetric(horizontal: 5.0),
                               decoration: BoxDecoration(
                                   image: const DecorationImage(
                                       image: AssetImage(
@@ -119,12 +119,27 @@ class _HomeScreenState extends State<HomeScreen> {
                       viewportFraction: 1,
                       // autoPlay: true,
                       // autoPlayInterval: const Duration(seconds: 3),
-                    ))
+                    )),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0 ,
+                      vertical: 15.0),
+                  child: Row(
+                    children: [
+                      Text("suggestions" , style: theme.textTheme.bodyLarge,),
+                      Spacer(),
+                      Text("See All" , style: theme.textTheme.bodySmall,),
+                    ],
+                  ),
+                ),
+                ListView.builder
+                  (itemBuilder: (context , index)=> Suggestions_Card(),
+                  itemCount: 1,
+                )
               ],
             ),
-          )
+          ),
         ],
-      ),
+      )
     );
   }
 }
