@@ -7,7 +7,7 @@ import '../login/login_page.dart';
 class RegisterPage extends StatefulWidget {
   static const String routeName = "register";
 
-  RegisterPage({super.key});
+  const RegisterPage({super.key});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
