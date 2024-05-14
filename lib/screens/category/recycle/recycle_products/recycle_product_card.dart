@@ -7,8 +7,8 @@ class Recycl_Product_card extends StatelessWidget {
     var theme = Theme.of(context);
     final mediaquare = MediaQuery.of(context).size;
     return Container(
-      margin: EdgeInsets.all(10),
-      padding: EdgeInsets.all(10),
+      margin: EdgeInsets.all(5),
+      padding: EdgeInsets.all(5),
       decoration: BoxDecoration(
           color: Colors.white70, borderRadius: BorderRadius.circular(10)),
       child: Column(
@@ -16,28 +16,24 @@ class Recycl_Product_card extends StatelessWidget {
         children: [
           Image.asset(
             "assets/image/laptop.jpeg",
-            width: mediaquare.width / 2.5,
+            width: mediaquare.width / 2.2,
             fit:BoxFit.fill,
           ),
           Text(
             "Apple MacBook Pro 13",
-            style: TextStyle(fontSize: 16),
+            style: theme.textTheme.bodyLarge,
           ),
           Text(
             "EG 60,000",
-            style: TextStyle(fontSize: 16),
+            style: theme.textTheme.bodyLarge,
           ),
           Text(
             "Madinaty, Egypt",
-            style: TextStyle(fontSize: 10, color: Color(0xff7a7a7a)),
+            style: theme.textTheme.bodyMedium,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text(
-                "22 May",
-                style: TextStyle(fontSize: 10, color: Color(0xff7a7a7a)),
-              ),
-              Spacer(),
               Image.asset("assets/image/Icon fav.png"),
             ],
           ),

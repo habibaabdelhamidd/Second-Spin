@@ -40,20 +40,24 @@ class ApplicationTheme {
         fontSize: 30,
         fontWeight: FontWeight.w900,
         color: Color(0xff2B3139),
+          fontFamily: "poppins"
       ),
       bodyLarge: TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.w700,
         color: Color(0xff2B3139),
+          fontFamily: "poppins"
       ),
       bodyMedium: TextStyle(
         fontSize: 14,
         fontWeight: FontWeight.w500,
         color: Color(0xff2B3139),
+          fontFamily: "poppins"
       ),
       bodySmall: TextStyle(
         fontSize: 13,
         color: Color(0xff7a7a7a),
+        fontFamily: "poppins"
       ),
       labelSmall: TextStyle(
         fontFamily: "poppins",
