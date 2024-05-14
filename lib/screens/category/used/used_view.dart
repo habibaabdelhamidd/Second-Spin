@@ -19,7 +19,7 @@ class UsedView extends StatelessWidget {
                 ),
             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
             itemCount: 12,
-            itemBuilder: (context, index) =>  GestureDetector(
+            itemBuilder: (context, index) =>  InkWell(
               onTap: (){Navigator.pushNamed(context, UsedCategory.routeName);},
               child: Row(
               children: [
