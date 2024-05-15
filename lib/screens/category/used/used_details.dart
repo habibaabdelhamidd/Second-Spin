@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:graduation/screens/login/buttons.dart';
 
-class SearchDetails extends StatelessWidget {
-  static const String routeName = "SearchDetails";
-  const SearchDetails({super.key});
+class UsedDetails extends StatelessWidget {
+  static const String routeName = "UsedDetails";
+  const UsedDetails({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -55,12 +55,14 @@ class SearchDetails extends StatelessWidget {
               ),
             ),
             SizedBox(
+
               height: MediaQuery.of(context).size.height * 0.15,
             ),
             Buttons(
               title: " Add to cart",
               logo: "homecart.png",
               imgColor: Colors.white, padd: 15,
+
             )
           ],
         ),

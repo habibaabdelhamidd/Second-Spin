@@ -124,7 +124,7 @@ class _LoginPageState extends State<LoginPage> {
                         Navigator.pushNamed(context, HomeLayout.routeName);
                       },
                       child: Buttons(
-                        title: 'Login',
+                        title: 'Login', padd: 15,
                       )),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.03,

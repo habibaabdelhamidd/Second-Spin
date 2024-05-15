@@ -16,7 +16,9 @@ class Favourite_card extends StatelessWidget{
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset("assets/image/favimage.png" , width: mediaquare.width/2.2,fit:BoxFit.cover,),
+          Image.asset("assets/image/favimage.png" ,
+            width: mediaquare.width/2.2,
+            fit:BoxFit.cover,),
           Text(
             "Modern beige sofa",
             style: theme.textTheme.bodyLarge,

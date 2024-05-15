@@ -8,8 +8,9 @@ import 'package:graduation/screens/cart/cart_checkout/cart_checkout.dart';
 import 'package:graduation/screens/category/recycle/recycle_product_details/recycle_products_details.dart';
 import 'package:graduation/screens/category/recycle/recycle_products/recycle_products.dart';
 import 'package:graduation/screens/category/used/used_category.dart';
+import 'package:graduation/screens/category/used/used_details.dart';
+import 'package:graduation/screens/category/used/used_items.dart';
 import 'package:graduation/screens/category/used/used_view.dart';
-import 'package:graduation/screens/home/favourite/all_favourit_product.dart';
 import 'package:graduation/screens/home/favourite/all_favourite_product.dart';
 import 'package:graduation/screens/home/favourite/favourite_product_details.dart';
 import 'package:graduation/screens/home/home/home.dart';
@@ -18,6 +19,9 @@ import 'package:graduation/screens/home/search/search_items.dart';
 import 'package:graduation/screens/home/search/search_view.dart';
 import 'package:graduation/screens/login/login_page.dart';
 import 'package:graduation/screens/register/register_page.dart';
+import 'package:graduation/screens/sell/form/charity_form.dart';
+import 'package:graduation/screens/sell/form/sell_form.dart';
+import 'package:graduation/screens/sell/sell_view.dart';
 import 'package:graduation/screens/splash/splashscreen.dart';
 
 void main() {
@@ -51,7 +55,12 @@ class MyApp extends StatelessWidget {
         SearchItem.routeName : (context)=> const SearchItem(),
         SearchDetails.routeName : (context)=> const SearchDetails(),
         UsedView.routeName : (context)=> UsedView(),
-        UsedCategory.routeName : (context)=> UsedCategory()
+        UsedCategory.routeName : (context)=> UsedCategory(),
+        UsedItem.routeName : (context)=> UsedItem(),
+        UsedDetails.routeName : (context)=> UsedDetails(),
+        SellView.routeName : (context)=> SellView(),
+        SellForm.routeName : (context)=> SellForm(),
+        CharityForm.routeName : (context)=> CharityForm(),
       },
       home: Splashscreen(),
     );
