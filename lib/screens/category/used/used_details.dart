@@ -55,12 +55,12 @@ class UsedDetails extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.2,
+              height: MediaQuery.of(context).size.height * 0.15,
             ),
             Buttons(
               title: " Add to cart",
               logo: "homecart.png",
-              imgColor: Colors.white,
+              imgColor: Colors.white, padd: 15,
             )
           ],
         ),

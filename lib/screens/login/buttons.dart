@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 
 class Buttons extends StatelessWidget {
+   double padd;
   final String title;
   Color? imgColor;
   String? logo;
-   Buttons({super.key, required this.title, this.logo, this.imgColor});
+   Buttons({super.key, required this.title, this.logo, this.imgColor,required this.padd});
 
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     return Container(
-        padding: const EdgeInsets.symmetric(vertical: 15),
+        padding: EdgeInsets.symmetric(vertical: padd),
         margin: const EdgeInsets.symmetric(horizontal: 5),
         width: double.infinity,
         decoration: BoxDecoration(
