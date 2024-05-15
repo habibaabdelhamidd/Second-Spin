@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graduation/screens/login/buttons.dart';
+import 'package:graduation/screens/sell/form/charity_form.dart';
+import 'package:graduation/screens/sell/form/sell_form.dart';
 
 class SellView extends StatelessWidget {
   static const String routeName = "SellView";
@@ -44,7 +46,7 @@ class SellView extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    // Navigator.pushNamed(context, UsedView.routeName);
+                    Navigator.pushNamed(context, SellForm.routeName);
                   },
                   child: Buttons(title: "Sell", padd: 10,)
                 )
@@ -78,7 +80,7 @@ class SellView extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    // Navigator.pushNamed(context, RecycleViewProducts.routeName);
+                    Navigator.pushNamed(context, CharityForm.routeName);
                   },
                   child: Buttons(title: "Donate", padd: 10,)
                 )

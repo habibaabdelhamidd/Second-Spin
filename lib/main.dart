@@ -19,6 +19,8 @@ import 'package:graduation/screens/home/search/search_items.dart';
 import 'package:graduation/screens/home/search/search_view.dart';
 import 'package:graduation/screens/login/login_page.dart';
 import 'package:graduation/screens/register/register_page.dart';
+import 'package:graduation/screens/sell/form/charity_form.dart';
+import 'package:graduation/screens/sell/form/sell_form.dart';
 import 'package:graduation/screens/sell/sell_view.dart';
 import 'package:graduation/screens/splash/splashscreen.dart';
 
@@ -57,6 +59,8 @@ class MyApp extends StatelessWidget {
         UsedItem.routeName : (context)=> UsedItem(),
         UsedDetails.routeName : (context)=> UsedDetails(),
         SellView.routeName : (context)=> SellView(),
+        SellForm.routeName : (context)=> SellForm(),
+        CharityForm.routeName : (context)=> CharityForm(),
       },
       home: Splashscreen(),
     );
