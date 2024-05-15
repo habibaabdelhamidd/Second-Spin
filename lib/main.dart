@@ -57,6 +57,7 @@ class MyApp extends StatelessWidget {
         UsedItem.routeName : (context)=> UsedItem(),
         UsedDetails.routeName : (context)=> UsedDetails(),
         SellView.routeName : (context)=> SellView(),
+        UsedDetails.routeName : (context)=> UsedDetails()
       },
       home: Splashscreen(),
     );
