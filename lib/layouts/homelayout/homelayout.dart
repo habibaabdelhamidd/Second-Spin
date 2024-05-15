@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation/screens/account/account.dart';
+import 'package:graduation/screens/sell/sell_view.dart';
 import '../../screens/cart/cart_view/cart_view.dart';
 import '../../screens/category/options/category_view.dart';
 import '../../screens/home/home/home.dart';
@@ -34,7 +35,9 @@ class _HomeLayoutState extends State<HomeLayout> {
           backgroundColor: Colors.transparent,
           child: FloatingActionButton(
             backgroundColor: theme.primaryColor,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, SellView.routeName);
+            },
             child: Icon(
               Icons.add,
               size: 30,

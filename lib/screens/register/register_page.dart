@@ -156,7 +156,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         signUp();
                       },
                       child: Buttons(
-                        title: 'Sign up',
+                        title: 'Sign up', padd: 15,
                       )),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.03,
