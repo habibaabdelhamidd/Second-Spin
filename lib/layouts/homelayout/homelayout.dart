@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:graduation/screens/account/account.dart';
+import 'package:graduation/screens/account/account_viwe_screen/account.dart';
 import 'package:graduation/screens/sell/sell_view.dart';
 import '../../screens/cart/cart_view/cart_view.dart';
 import '../../screens/category/options/category_view.dart';
@@ -19,7 +19,7 @@ class _HomeLayoutState extends State<HomeLayout> {
     HomeScreen(),
     CategoriesScreen(),
     Cart_view_Screen(),
-    AccountScreen(),
+    AccountScreen()
   ];
 
   @override
