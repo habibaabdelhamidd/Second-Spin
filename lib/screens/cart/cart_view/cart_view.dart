@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../cart_checkout/cart_checkout.dart';
-
 class Cart_view_Screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+    final mediaquary = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
@@ -72,7 +72,7 @@ class Cart_view_Screen extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 500,
+              height: mediaquary.height,
             ),
             Container(
                 width: double.infinity,

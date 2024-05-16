@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:graduation/core/theme/app_theme.dart';
 import 'package:graduation/layouts/homelayout/homelayout.dart';
+import 'package:graduation/screens/account/edit_account/edit_account.dart';
+import 'package:graduation/screens/account/settings_account/settings_account.dart';
 import 'package:graduation/screens/boarding/boarding1.dart';
 import 'package:graduation/screens/boarding/boarding2.dart';
 import 'package:graduation/screens/boarding/onboarding3.dart';
@@ -61,6 +63,8 @@ class MyApp extends StatelessWidget {
         SellView.routeName : (context)=> SellView(),
         SellForm.routeName : (context)=> SellForm(),
         CharityForm.routeName : (context)=> CharityForm(),
+        Edit_Account.routeName : (context)=> Edit_Account(),
+        Settings_Account.routeName: (context)=> Settings_Account(),
       },
       home: Splashscreen(),
     );
