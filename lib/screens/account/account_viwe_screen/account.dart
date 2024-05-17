@@ -42,7 +42,7 @@ class _AccountScreenState extends State<AccountScreen> {
             ),
             GestureDetector(
               onTap: (){
-                Navigator.pushNamed(context, Edit_Account.routeName);
+                Navigator.pushNamed(context, EditAccount.routeName);
               },
               child: Container(
                 margin: EdgeInsets.only(top: 20, bottom: 20),
