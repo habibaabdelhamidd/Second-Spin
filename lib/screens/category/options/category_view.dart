@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:graduation/screens/category/recycle/recycle_products/recycle_products.dart';
 import '../used/used_view.dart';
-
 class CategoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final mediaquary = MediaQuery.of(context).size;
     var theme = Theme.of(context);
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -18,8 +18,16 @@ class CategoriesScreen extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.only(top: 30, bottom: 35, right: 20, left: 20),
-              margin: EdgeInsets.only(top: 50, bottom: 20, right: 30, left: 30),
+              padding: EdgeInsets.only(
+                  top: mediaquary.width * 0.05,
+                  bottom: mediaquary.width * 0.08,
+                  right: mediaquary.width * 0.04,
+                  left: mediaquary.width * 0.04),
+              margin: EdgeInsets.only(
+                  top: mediaquary.width * 0.1,
+                  bottom: mediaquary.width * 0.1,
+                  right: mediaquary.width * 0.06,
+                  left: mediaquary.width * 0.06),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
@@ -42,13 +50,13 @@ class CategoriesScreen extends StatelessWidget {
                     style: TextStyle(color: Color(0XFFc5c5c5), fontSize: 15),
                   ),
                   GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       Navigator.pushNamed(context, UsedView.routeName);
                     },
                     child: Container(
-                      width: 400,
-                      margin: EdgeInsets.only(top: 5),
-                      padding: EdgeInsets.all(10),
+                      width: mediaquary.width * 0.9,
+                      margin: EdgeInsets.only(top: mediaquary.width * 0.04),
+                      padding: EdgeInsets.all(mediaquary.width * 0.04),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: theme.colorScheme.primary),
@@ -62,10 +70,20 @@ class CategoriesScreen extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 50,),
+            SizedBox(
+              height: mediaquary.height / 20,
+            ),
             Container(
-              padding: EdgeInsets.only(top: 30, bottom: 35, right: 20, left: 20),
-              margin: EdgeInsets.only(top: 20, bottom: 20, right: 30, left: 30),
+              padding: EdgeInsets.only(
+                  top: mediaquary.width * 0.05,
+                  bottom: mediaquary.width * 0.08,
+                  right: mediaquary.width * 0.04,
+                  left: mediaquary.width * 0.04),
+              margin: EdgeInsets.only(
+                  top: mediaquary.width * 0.1,
+                  bottom: mediaquary.width * 0.1,
+                  right: mediaquary.width * 0.06,
+                  left: mediaquary.width * 0.06),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
@@ -88,9 +106,9 @@ class CategoriesScreen extends StatelessWidget {
                     style: TextStyle(color: Color(0XFFc5c5c5), fontSize: 15),
                   ),
                   Container(
-                    width: 400,
-                    margin: EdgeInsets.only(top: 5),
-                    padding: EdgeInsets.all(10),
+                    width: mediaquary.width * 0.9,
+                    margin: EdgeInsets.only(top: mediaquary.width * 0.04),
+                    padding: EdgeInsets.all(mediaquary.width * 0.04),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: theme.colorScheme.primary),
