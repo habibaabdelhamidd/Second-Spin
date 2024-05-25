@@ -7,8 +7,8 @@ class Suggestions_Card extends StatelessWidget{
     final mediaquary = MediaQuery.of(context).size;
     var theme = Theme.of(context);
     return Container(
-      padding: EdgeInsets.all(5),
-      margin: EdgeInsets.all(5),
+      padding: EdgeInsets.all(mediaquary.width*0.015),
+      margin: EdgeInsets.all(mediaquary.width * 0.01),
       width:mediaquary.width/2.6,
       decoration: BoxDecoration(
         color:Colors.white,

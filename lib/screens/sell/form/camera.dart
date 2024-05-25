@@ -1,7 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation/screens/sell/form/sell_form.dart';
-
 class FormCamera extends StatefulWidget {
   static const String routeName = "FormCamera";
   const FormCamera({super.key});
@@ -9,7 +8,6 @@ class FormCamera extends StatefulWidget {
   @override
   State<FormCamera> createState() => _FormCameraState();
 }
-
 class _FormCameraState extends State<FormCamera> {
   late CameraController cameraController;
   late Future<void> initializeController;

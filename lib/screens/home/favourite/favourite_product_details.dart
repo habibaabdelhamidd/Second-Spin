@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 class Favourite_product_details extends StatelessWidget {
   @override
   static const String routeName = "favourite product details";
+
   Widget build(BuildContext context) {
     final mediaquary = MediaQuery.of(context).size;
     var theme = Theme.of(context);
@@ -16,7 +18,7 @@ class Favourite_product_details extends StatelessWidget {
         ),
       ),
       body: Container(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(mediaquary.width * 0.02),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,8 +32,10 @@ class Favourite_product_details extends StatelessWidget {
                     fit: BoxFit.fill,
                   ),
                   Container(
-                      margin: EdgeInsets.only(right: 15, bottom: 5),
-                      padding: EdgeInsets.all(8),
+                      margin: EdgeInsets.only(
+                          right: mediaquary.width * 0.02,
+                          bottom: mediaquary.width * 0.02),
+                      padding: EdgeInsets.all(mediaquary.width * 0.02),
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20)),
@@ -41,7 +45,9 @@ class Favourite_product_details extends StatelessWidget {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 8.0, bottom: 5),
+                padding: EdgeInsets.only(
+                    top: mediaquary.width * 0.02,
+                    bottom: mediaquary.width * 0.01),
                 child: Text(
                   "Modern beige sofa",
                   style: theme.textTheme.bodyLarge,
@@ -55,8 +61,10 @@ class Favourite_product_details extends StatelessWidget {
                       .copyWith(color: Color(0xffA7A7A7))),
               Text("Cairo, Egypt", style: theme.textTheme.bodyMedium),
               Container(
-                padding: EdgeInsets.all(20),
-                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                padding: EdgeInsets.all(mediaquary.width * 0.05),
+                margin: EdgeInsets.symmetric(
+                    vertical: mediaquary.width * 0.02,
+                    horizontal: mediaquary.width * 0.01),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Color(0xffEFEEEE),
@@ -68,7 +76,7 @@ class Favourite_product_details extends StatelessWidget {
                       style: theme.textTheme.bodyLarge,
                     ),
                     SizedBox(
-                      width: 120,
+                      width: mediaquary.width / 3.5,
                     ),
                     Text(
                       "EG 60,000",
@@ -78,10 +86,10 @@ class Favourite_product_details extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 125,
+                height: mediaquary.height / 7,
               ),
               Container(
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.all(mediaquary.width * 0.02),
                 decoration: BoxDecoration(
                   color: Colors.white70,
                   boxShadow: [
@@ -94,8 +102,8 @@ class Favourite_product_details extends StatelessWidget {
                   ],
                 ),
                 child: Container(
-                  padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.all(10),
+                  padding: EdgeInsets.all(mediaquary.width * 0.03),
+                  margin: EdgeInsets.all(mediaquary.width * 0.02),
                   decoration: BoxDecoration(
                       color: theme.primaryColor,
                       borderRadius: BorderRadius.circular(10)),

@@ -5,8 +5,8 @@ import 'favourite_card.dart';
 class All_Favourit_Product extends StatelessWidget {
   @override
   static const String routeName = "all_favourit";
-
   Widget build(BuildContext context) {
+    final mediaquary = MediaQuery.of(context).size;
     var theme = Theme.of(context);
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -23,7 +23,7 @@ class All_Favourit_Product extends StatelessWidget {
           Expanded(
               child: GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, childAspectRatio: 0.7),
+                      crossAxisCount: 2, childAspectRatio: mediaquary.width*0.0017),
                   itemBuilder: (context, index) => GestureDetector(
                       onTap: () {
                         Navigator.pushNamed(

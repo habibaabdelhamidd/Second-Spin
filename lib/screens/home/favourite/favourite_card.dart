@@ -1,24 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Favourite_card extends StatelessWidget{
+class Favourite_card extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final mediaquare = MediaQuery.of(context).size;
+    final mediaquary = MediaQuery.of(context).size;
     var theme = Theme.of(context);
     return Container(
-      padding: EdgeInsets.all(5),
-      margin: EdgeInsets.all(5),
+      padding: EdgeInsets.all(mediaquary.width * 0.015),
+      margin: EdgeInsets.all(mediaquary.width * 0.01),
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(5)
-      ),
+          color: Colors.white, borderRadius: BorderRadius.circular(5)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset("assets/image/favimage.png" ,
-            width: mediaquare.width/2.2,
-            fit:BoxFit.cover,),
+          Image.asset(
+            "assets/image/favimage.png",
+            width: mediaquary.width / 2.2,
+            fit: BoxFit.cover,
+          ),
           Text(
             "Modern beige sofa",
             style: theme.textTheme.bodyLarge,
@@ -28,12 +28,14 @@ class Favourite_card extends StatelessWidget{
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-            ImageIcon(AssetImage("assets/image/fav_icon_solid.png"),
-              color: theme.primaryColor,)
-          ],)
+              ImageIcon(
+                AssetImage("assets/image/fav_icon_solid.png"),
+                color: theme.primaryColor,
+              )
+            ],
+          )
         ],
       ),
     );
   }
-  
 }

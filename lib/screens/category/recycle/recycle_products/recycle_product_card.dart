@@ -5,10 +5,10 @@ class Recycl_Product_card extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    final mediaquare = MediaQuery.of(context).size;
+    final mediaquary = MediaQuery.of(context).size;
     return Container(
-      margin: EdgeInsets.all(5),
-      padding: EdgeInsets.all(5),
+      padding: EdgeInsets.all(mediaquary.width * 0.015),
+      margin: EdgeInsets.all(mediaquary.width * 0.01),
       decoration: BoxDecoration(
           color: Colors.white70, borderRadius: BorderRadius.circular(10)),
       child: Column(
@@ -16,8 +16,8 @@ class Recycl_Product_card extends StatelessWidget {
         children: [
           Image.asset(
             "assets/image/laptop.jpeg",
-            width: mediaquare.width / 2.2,
-            fit:BoxFit.fill,
+            width: mediaquary.width / 2.2,
+            fit: BoxFit.fill,
           ),
           Text(
             "Apple MacBook Pro 13",

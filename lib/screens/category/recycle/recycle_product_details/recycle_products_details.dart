@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-class Recycle_Product_Details extends StatelessWidget{
+class Recycle_Product_Details extends StatelessWidget {
   @override
   static const String routeName = "Recycle_Product_Details";
   Widget build(BuildContext context) {
@@ -11,11 +10,13 @@ class Recycle_Product_Details extends StatelessWidget{
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
         iconTheme: theme.appBarTheme.iconTheme,
-        title: Text("Product Details" ,
-          style: theme.appBarTheme.titleTextStyle,),
+        title: Text(
+          "Product Details",
+          style: theme.appBarTheme.titleTextStyle,
+        ),
       ),
       body: Container(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(mediaquery.width * 0.02),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,47 +26,68 @@ class Recycle_Product_Details extends StatelessWidget{
                 children: [
                   ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: Image.asset("assets/image/laptop.jpeg",)),
+                      child: Image.asset(
+                        "assets/image/laptop.jpeg",
+                      )),
                   Container(
-                    margin: EdgeInsets.only(right: 15,bottom: 5),
-                    padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20)
-                    ),
-                    child: Image.asset("assets/image/Icon fav.png",)
-                  ),
+                      margin: EdgeInsets.only(
+                          right: mediaquery.width * 0.05,
+                          bottom: mediaquery.width * 0.02),
+                      padding: EdgeInsets.all(mediaquery.width * 0.02),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Image.asset(
+                        "assets/image/Icon fav.png",
+                      )),
                 ],
               ),
               Padding(
-                padding:EdgeInsets.symmetric(vertical: 5),
-                child: Text("Apple MacBook Pro 13" ,
-                    style:theme.textTheme.bodyLarge),
+                padding: EdgeInsets.symmetric(vertical: mediaquery.width * 0.0),
+                child: Text("Apple MacBook Pro 13",
+                    style: theme.textTheme.bodyLarge),
               ),
-              Text("Lorem ipsum dolor sit amet, consectetur "
+              Text(
+                  "Lorem ipsum dolor sit amet, consectetur "
                   "scing elit. Suspendisse, Curabitur vehicula "
-                  "tellus vel lorem commodo.", style:theme.textTheme.bodySmall),
-              Text("Cairo, Egypt", style:theme.textTheme.bodyMedium,),
+                  "tellus vel lorem commodo.",
+                  style: theme.textTheme.bodySmall),
+              Text(
+                "Cairo, Egypt",
+                style: theme.textTheme.bodyMedium,
+              ),
               Container(
-                padding: EdgeInsets.all(20),
-                margin: EdgeInsets.symmetric(vertical: 10 , horizontal: 15),
+                padding: EdgeInsets.all(mediaquery.width * 0.05),
+                margin: EdgeInsets.symmetric(
+                    vertical: mediaquery.width * 0.02,
+                    horizontal: mediaquery.width * 0.01),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Color(0xffEFEEEE),
                 ),
                 child: Row(
                   children: [
-                    Text("Price:", style: theme.textTheme.bodyLarge,),
-                    SizedBox(width: 120,),
-                    Text("EG 60,000", style: theme.textTheme.bodyLarge,),
+                    Text(
+                      "Price:",
+                      style: theme.textTheme.bodyLarge,
+                    ),
+                    SizedBox(
+                      width: mediaquery.width / 3.5,
+                    ),
+                    Text(
+                      "EG 60,000",
+                      style: theme.textTheme.bodyLarge,
+                    ),
                   ],
                 ),
               ),
-              SizedBox(height: 120,),
+              SizedBox(
+                height: mediaquery.height / 10,
+              ),
               Container(
-                padding: EdgeInsets.all(10),
+                padding: EdgeInsets.all(mediaquery.width * 0.02),
                 decoration: BoxDecoration(
-                  color:Colors.white70,
+                  color: Colors.white70,
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.10),
@@ -76,24 +98,23 @@ class Recycle_Product_Details extends StatelessWidget{
                   ],
                 ),
                 child: Container(
-                  padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.all(10),
+                  padding: EdgeInsets.all(mediaquery.width * 0.03),
+                  margin: EdgeInsets.all(mediaquery.width * 0.02),
                   decoration: BoxDecoration(
-                    color: theme.primaryColor,
-                    borderRadius: BorderRadius.circular(10)
-                  ),
+                      color: theme.primaryColor,
+                      borderRadius: BorderRadius.circular(10)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ImageIcon(AssetImage("assets/image/homecart.png"),
+                      ImageIcon(
+                        AssetImage("assets/image/homecart.png"),
                         color: Colors.white,
                         size: 30,
                       ),
-                      Text("Add to cart", style: theme.textTheme.bodyLarge!
-                          .copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w900
-                      )),
+                      Text("Add to cart",
+                          style: theme.textTheme.bodyLarge!.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w900)),
                     ],
                   ),
                 ),
@@ -104,5 +125,4 @@ class Recycle_Product_Details extends StatelessWidget{
       ),
     );
   }
-
 }

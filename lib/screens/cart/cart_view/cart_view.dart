@@ -32,8 +32,8 @@ class Cart_view_Screen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              padding: EdgeInsets.all(10),
-              margin: EdgeInsets.all(5),
+              padding: EdgeInsets.all(mediaquary.width * 0.006),
+              margin: EdgeInsets.all(mediaquary.width * 0.02),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   border: Border.all(
@@ -44,7 +44,10 @@ class Cart_view_Screen extends StatelessWidget {
                 children: [
                   Image.asset("assets/image/snkeers.png"),
                   Padding(
-                    padding: const EdgeInsets.only(top: 5, left: 8, bottom: 5),
+                    padding: EdgeInsets.only(
+                        top: mediaquary.width * 0.02,
+                        left: mediaquary.width * 0.03,
+                        bottom: mediaquary.width * 0.01),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -72,12 +75,12 @@ class Cart_view_Screen extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: mediaquary.height,
+              height: mediaquary.height / 1.8,
             ),
             Container(
                 width: double.infinity,
-                padding: EdgeInsets.all(20),
-                margin: EdgeInsets.all(8),
+                padding: EdgeInsets.all(mediaquary.width * 0.04),
+                margin: EdgeInsets.all(mediaquary.width * 0.02),
                 decoration: BoxDecoration(
                     color: theme.primaryColor,
                     borderRadius: BorderRadius.circular(10)),
