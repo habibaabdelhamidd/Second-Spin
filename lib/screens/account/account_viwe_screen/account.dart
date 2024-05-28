@@ -6,11 +6,11 @@ class AccountScreen extends StatefulWidget {
   @override
   State<AccountScreen> createState() => _AccountScreenState();
 }
-
 class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+    final mediaquery = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
@@ -21,10 +21,10 @@ class _AccountScreenState extends State<AccountScreen> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(
-          top: 35.0,
-          right: 15,
-          left: 15,
+        padding: EdgeInsets.only(
+          top: mediaquery.width*0.1,
+          right: mediaquery.width*0.03,
+          left: mediaquery.width*0.03,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,7 +45,8 @@ class _AccountScreenState extends State<AccountScreen> {
                 Navigator.pushNamed(context, EditAccount.routeName);
               },
               child: Container(
-                margin: EdgeInsets.only(top: 20, bottom: 20),
+                margin: EdgeInsets.only(top: mediaquery.width*0.06,
+                    bottom:mediaquery.width*0.06),
                 child: Row(
                   children: [
                     ImageIcon(
@@ -55,7 +56,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       color: theme.primaryColor,
                     ),
                     SizedBox(
-                      width: 15,
+                      width:mediaquery.width*0.04,
                     ),
                     Text("Edit Profile",
                         style: theme.textTheme.bodyLarge!.copyWith(fontSize: 16)),
@@ -78,7 +79,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     color: theme.primaryColor,
                   ),
                   SizedBox(
-                    width: 15,
+                    width:mediaquery.width*0.04,
                   ),
                   Text("Settings",
                       style: theme.textTheme.bodyLarge!.copyWith(fontSize: 16)),
@@ -92,12 +93,13 @@ class _AccountScreenState extends State<AccountScreen> {
                 _showDialog(context);
               },
               child: Container(
-                margin: EdgeInsets.only(top: 20, bottom: 20),
+                margin: EdgeInsets.only(top: mediaquery.width*0.06,
+                    bottom:mediaquery.width*0.06),
                 child: Row(
                   children: [
                     Icon(Icons.feedback , color: theme.primaryColor,size: 30,),
                     SizedBox(
-                      width: 15,
+                      width:mediaquery.width*0.04,
                     ),
                     Text("feedbak", style: theme.textTheme.bodyLarge!.copyWith(fontSize: 16),),
                     Spacer(),
@@ -107,51 +109,59 @@ class _AccountScreenState extends State<AccountScreen> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: 10 , bottom: 20),
+              margin: EdgeInsets.only(top:mediaquery.width * 0.01
+              ,left: mediaquery.width*0.01,
+                right: mediaquery.width*0.01,
+                bottom: mediaquery.width*0.04
+              ),
               width: double.infinity,
-              height: 2,
+              height: mediaquery.height * 0.002,
               color: Colors.grey.shade400,
             ),
             Row(children: [ImageIcon(AssetImage("assets/image/contact-us.png"), color: theme.primaryColor,),
-              SizedBox(width: 15,),
+              SizedBox(width:mediaquery.width*0.04,),
               Text("contactus", style: theme.textTheme.bodyLarge!.copyWith(fontSize: 16)),],),
             Container(
-              margin:   EdgeInsets.only(left: 40 , top: 10),
+              margin:   EdgeInsets.only(left:mediaquery.width*0.08, top:mediaquery.width*0.03),
               child: Row(
                 children: [
                   Icon(Icons.phone , color: Colors.grey.shade400,),
-                  SizedBox(width:5),
+                  SizedBox(width:mediaquery.width*0.03),
                   Text("19911", style: theme.textTheme.bodyMedium),
 
                 ],
               ),
             ),
             Container(
-              margin:   EdgeInsets.only(left: 40 , top: 10),
+              margin:   EdgeInsets.only(left:mediaquery.width*0.08, top:mediaquery.width*0.03),
               child: Row(
                 children: [
                   Icon(Icons.mail , color: Colors.grey.shade400,),
-                  SizedBox(width:5),
+                  SizedBox(width:mediaquery.width*0.03),
                   Text("contact@SecondSpin.com ", style: theme.textTheme.bodyMedium),
 
                 ],
               ),
             ),
             Container(
-              margin:   EdgeInsets.only(left: 40 , top: 10),
+              margin:   EdgeInsets.only(left:mediaquery.width*0.08, top:mediaquery.width*0.03),
               child: Row(
                 children: [
                   Icon(Icons.location_on , color: Colors.grey.shade400,),
-                  SizedBox(width:5),
+                  SizedBox(width:mediaquery.width*0.03),
                   Text("Cairo , Egypt", style: theme.textTheme.bodyMedium),
 
                 ],
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: 20 , bottom: 20),
+              margin: EdgeInsets.only(top:mediaquery.width * 0.04
+                  ,left: mediaquery.width*0.01,
+                  right: mediaquery.width*0.01,
+                  bottom: mediaquery.width*0.04
+              ),
               width: double.infinity,
-              height: 2,
+              height: mediaquery.height * 0.002,
               color: Colors.grey.shade400,
             ),
             GestureDetector(
@@ -159,7 +169,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 showLogout(context);
               },
               child: Row(children: [ImageIcon(AssetImage("assets/image/Logout.png"), color: theme.primaryColor,),
-                SizedBox(width: 15,),
+                SizedBox(width:mediaquery.width*0.04,),
                 Text("Logout", style: theme.textTheme.bodyLarge!.copyWith(fontSize: 16)),],),
             ),
             GestureDetector(
@@ -170,7 +180,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 margin: EdgeInsets.only(top: 10),
                 child: Row(children: [
                   Icon(Icons.delete_outline , color: theme.primaryColor,),
-                  SizedBox(width: 15,),
+                  SizedBox(width:mediaquery.width*0.04,),
                   Text("Delete Account", style: theme.textTheme.bodyLarge!.copyWith(fontSize: 16)),],),
               ),
             ),
@@ -199,7 +209,7 @@ void _showDialog(BuildContext context) {
             ),
             actions: [
               Padding(
-                padding: const EdgeInsets.only(bottom: 8.0 , right: 8.0),
+                padding: EdgeInsets.only(bottom: 8.0, right: 8.0),
                 child: Text("Done" , style: TextStyle(fontWeight: FontWeight.w600),),
               )
             ],
