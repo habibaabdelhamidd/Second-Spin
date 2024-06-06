@@ -1,22 +1,31 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation/models/home_model.dart';
 import 'package:graduation/screens/category/used/used_items.dart';
 import 'package:graduation/screens/category/used/used_view.dart';
 import 'package:graduation/screens/home/home/suggestion_card.dart';
 import 'package:graduation/screens/home/search/search.dart';
-
 import '../favourite/all_favourite_product.dart';
+import '../view_model/view_model.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
-
+   HomeScreen({super.key});
   static const String routeName = "home";
-
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
-
 class _HomeScreenState extends State<HomeScreen> {
+ late HomeViewModel homeVm ;
+  @override
+  void initState() {
+    super.initState();
+    homeVm = HomeViewModel();
+    futureSuggest();
+  }
+  Future<void> futureSuggest ()async{
+   await homeVm.getSuggtionsModel();
+   setState(() {});
+  }
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -141,18 +150,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              GestureDetector(
-                onTap: () {
-                  // Navigator.pushNamed(context, UsedItem.routeName);
-                },
-                child: Container(
-                  height: mediaquary.height / 3,
-                  child: Expanded(
-                      child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) => Suggestions_Card(),
-                    itemCount: 10,
-                  )),
+              Container(
+                height: mediaquary.height/3,
+                child:ListView.builder(itemBuilder:
+                (context , index)=> Suggestions_Card(
+                  homeVm.suggestionsProducts[index]
+                ),
+                  itemCount: homeVm.suggestionsProducts.length,
                 ),
               ),
             ],
