@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
         Onboarding2.routeName: (context)=> Onboarding2(),
         Onboarding3.routeName: (context)=> Onboarding3(),
         HomeLayout.routeName : (context)=> HomeLayout(),
-        HomeScreen.routeName: (context)=> const HomeScreen(),
+        HomeScreen.routeName: (context)=>  HomeScreen(),
         RecycleViewProducts.routeName : (context)=> RecycleViewProducts(),
         LoginPage.routeName : (context)=> LoginPage(),
         RegisterPage.routeName  : (context)=> RegisterPage(),

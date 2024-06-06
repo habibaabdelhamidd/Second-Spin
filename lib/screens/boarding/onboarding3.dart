@@ -31,8 +31,8 @@ class Onboarding3 extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: Text(
-                      "you can now offer your on a product \nto "
-                          "seller and start negotiation with \nhim.",
+                      "you can now offer your on a product to "
+                          "seller and start negotiation with him.",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontSize: 20,

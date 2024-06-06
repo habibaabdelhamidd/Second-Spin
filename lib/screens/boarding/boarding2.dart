@@ -4,10 +4,10 @@ import 'package:graduation/screens/boarding/onboarding3.dart';
 
 class Onboarding2 extends StatelessWidget {
   static const String routeName = "onboarding2";
-
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+    final mediaqurery = MediaQuery.of(context).size;
     return Stack(
       children: [
         Image.asset("assets/image/On boarding 02.png"),
@@ -23,7 +23,7 @@ class Onboarding2 extends StatelessWidget {
               children: [
                 Spacer(),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(mediaqurery.width*0.02),
                   child: Text("Skip",style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
@@ -42,8 +42,8 @@ class Onboarding2 extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: Text(
-                      "you can now sell your products faster \nby making "
-                          "it featured to be seen by \nmore users",
+                      "you can now sell your products fasterby making "
+                          "it featured to be seen by more users",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontSize: 20,
