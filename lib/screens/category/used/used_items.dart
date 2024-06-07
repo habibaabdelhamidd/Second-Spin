@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:graduation/models/categories_response/category_data.dart';
 import 'package:graduation/screens/category/used/used_details.dart';
 
 class UsedItem extends StatelessWidget {
   static const String routeName = "UsedItem";
-
-  const UsedItem({super.key});
+final CategoryData catData;
+  const UsedItem(this.catData,{super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,24 +25,20 @@ class UsedItem extends StatelessWidget {
                 const Image(
                   image: AssetImage("assets/image/SearchEx.png"),),
                 Text(
-                    'item name',
+                    catData.title ?? "",
                     style: theme.textTheme.bodyMedium
                 ),
                 Text(
-                    'price',
+                    catData.price ?? "",
                     style: theme.textTheme.bodyMedium
                 ),
                 Text(
-                    'address',
+                    catData.location?? "",
                     style: theme.textTheme.bodySmall
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text(
-                        'date',
-                        style: theme.textTheme.bodySmall
-                    ),
                     Icon(Icons.favorite_border_outlined,
                       color: theme.primaryColor,)
                   ],
