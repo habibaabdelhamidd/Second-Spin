@@ -14,6 +14,14 @@ class Api_Manager {
       headers:{
         "Authorization":"Bearer 7|Mg31lmlgv4yc0EcWuwYsb1lYGP1bV1XVnEae6Z5f25d6b3dd"
       }
+        Uri.parse(
+          // Constants.Ai_base_URLp + "/api/products/home",
+            "http://10.0.2.2:8000/api/products/home"
+        ),
+        // headers:{
+        //   "Access-Control-Allow-Origin": "*",
+        //   "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PUT,DELETE,HEAD"
+        // }
         );
     final decodedResponse = jsonDecode(response.body);
     if (response.statusCode == 200 && decodedResponse["status"] == true) {
