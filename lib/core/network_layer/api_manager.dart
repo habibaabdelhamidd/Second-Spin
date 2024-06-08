@@ -7,7 +7,6 @@ import 'package:graduation/models/categories_response/CategoryResponse.dart';
 import 'package:graduation/models/home_model.dart';
 import 'package:graduation/models/response/AllCategoriesResponse.dart';
 import 'package:http/http.dart' as http;
-
 class Api_Manager {
   Future<List<Data>?> fetchHome() async {
     final response = await http.get(
@@ -15,6 +14,16 @@ class Api_Manager {
         Uri.http(
           Constants.api_base_URL ,
           "/api/products/home",
+        Uri.http(
+          Constants.api_base_URL ,
+          "/api/products/home",
+        ),
+      headers:{
+        "Authorization":"Bearer 7|Mg31lmlgv4yc0EcWuwYsb1lYGP1bV1XVnEae6Z5f25d6b3dd"
+      }
+        Uri.parse(
+          // Constants.Ai_base_URLp + "/api/products/home",
+            "http://10.0.2.2:8000/api/products/home"
         ),
       headers:{
         "Authorization":"Bearer 7|Mg31lmlgv4yc0EcWuwYsb1lYGP1bV1XVnEae6Z5f25d6b3dd"
