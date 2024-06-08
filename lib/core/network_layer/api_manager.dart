@@ -7,17 +7,16 @@ import 'package:graduation/models/categories_response/CategoryResponse.dart';
 import 'package:graduation/models/home_model.dart';
 import 'package:graduation/models/response/AllCategoriesResponse.dart';
 import 'package:http/http.dart' as http;
-
 class Api_Manager {
   Future<List<Data>?> fetchHome() async {
     final response = await http.get(
-      Uri.parse(
-          // Constants.Ai_base_URLp + "/api/products/home",
-          "http://127.0.0.1:8000/api/products/home"),
-      // headers:{
-      //   "Access-Control-Allow-Origin": "*",
-      //   "Access-Control-Allow-Methods": "POST, GET, OPTIONS, PUT,DELETE,HEAD"
-      // }
+        Uri.http(
+          Constants.api_base_URL ,
+          "/api/products/home",
+        ),
+      headers:{
+        "Authorization":"Bearer 7|Mg31lmlgv4yc0EcWuwYsb1lYGP1bV1XVnEae6Z5f25d6b3dd"
+      }
     );
     final decodedResponse = jsonDecode(response.body);
     if (response.statusCode == 200 && decodedResponse["status"] == true) {

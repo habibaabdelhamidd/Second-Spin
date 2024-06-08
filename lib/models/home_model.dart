@@ -16,7 +16,7 @@ class HomeModel {
   }
 }
 class Data {
-  String? id;
+  int? id;
   String? title;
   String? image;
   String? price;
