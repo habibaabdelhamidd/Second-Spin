@@ -1,6 +1,9 @@
 
 class Constants {
   
-  static const String Api_base_URL = "http://10.0.2.2:8000";
+
+  static const String api_base_URL = "secondspin.xyz";
+  static const String homeEndPoint ="/api/products/home";
+
 
 }
