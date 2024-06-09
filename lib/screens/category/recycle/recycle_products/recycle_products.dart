@@ -2,10 +2,29 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation/screens/category/recycle/recycle_product_details/recycle_products_details.dart';
 import 'package:graduation/screens/category/recycle/recycle_products/recycle_product_card.dart';
-class RecycleViewProducts extends StatelessWidget {
+import 'package:graduation/screens/category/recycle/view_model/recycl_view_model.dart';
+class RecycleViewProducts extends StatefulWidget {
+  RecycleViewProducts({super.key});
   @override
   static const String routeName = "recycle_view_products";
 
+  @override
+  State<RecycleViewProducts> createState() => _RecycleViewProductsState();
+}
+
+class _RecycleViewProductsState extends State<RecycleViewProducts> {
+  late AllRecyclViewModel recyclVm ;
+  @override
+  void initState() {
+    super.initState();
+    recyclVm = AllRecyclViewModel();
+    futureRecycl();
+  }
+  Future<void> futureRecycl ()async{
+    await recyclVm.getAllRecyclProducts();
+    setState(() {});
+  }
+  @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     final mediaquary = MediaQuery.of(context).size;
@@ -29,7 +48,11 @@ class RecycleViewProducts extends StatelessWidget {
                   Navigator.pushNamed(
                       context, Recycle_Product_Details.routeName);
                 },
-                child: Recycl_Product_card()),
+                child: Recycl_Product_card(
+                    recyclVm.allRecyclProductsView[index],
+                ),
+            ),
+                itemCount: recyclVm.allRecyclProductsView.length,
           )),
         ],
       ),

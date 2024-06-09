@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation/models/recyle/all_recycle_model.dart';
 
 class Recycl_Product_card extends StatelessWidget {
+  AllRecycle productRecycl  ;
+  Recycl_Product_card(this.productRecycl);
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -15,20 +18,20 @@ class Recycl_Product_card extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Image.asset(
-            "assets/image/laptop.jpeg",
+            productRecycl.image!,
             width: mediaquary.width / 2.2,
             fit: BoxFit.fill,
           ),
           Text(
-            "Apple MacBook Pro 13",
+            productRecycl.title!,
             style: theme.textTheme.bodyLarge,
           ),
           Text(
-            "EG 60,000",
+            productRecycl.price!,
             style: theme.textTheme.bodyLarge,
           ),
           Text(
-            "Madinaty, Egypt",
+            productRecycl.location!,
             style: theme.textTheme.bodyMedium,
           ),
           Row(
