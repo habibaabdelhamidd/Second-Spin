@@ -6,6 +6,7 @@ import 'package:graduation/screens/category/used/used_view.dart';
 import 'package:graduation/screens/home/home/suggestion_card.dart';
 import 'package:graduation/screens/home/search/search.dart';
 import '../favourite/all_favourite_product.dart';
+import '../search/search_view.dart';
 import '../view_model/view_model.dart';
 
 class HomeScreen extends StatefulWidget {
