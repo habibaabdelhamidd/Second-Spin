@@ -1,8 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-class Recycle_Product_Details extends StatelessWidget {
+import 'package:graduation/screens/category/recycle/view_model/recycle_product_details_vm.dart';
+class Recycle_Product_Details extends StatefulWidget {
   @override
   static const String routeName = "Recycle_Product_Details";
+  Recycle_Product_Details({super.key});
+
+  @override
+  State<Recycle_Product_Details> createState() => _Recycle_Product_DetailsState();
+}
+
+class _Recycle_Product_DetailsState extends State<Recycle_Product_Details> {
+  late RecycleProductDetailsVm recylePVM ;
+  @override
+  void initState() {
+    super.initState();
+    recylePVM = RecycleProductDetailsVm();
+    futureProductData();
+  }
+  Future<void> futureProductData()async{
+    await recylePVM.getProductData();
+    setState(() {});
+  }
+  @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     final mediaquery = MediaQuery.of(context).size;
@@ -27,8 +47,9 @@ class Recycle_Product_Details extends StatelessWidget {
                   ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Image.asset(
-                        "assets/image/laptop.jpeg",
-                      )),
+                        recylePVM.prodcuctData?.image ?? "" ,
+                      )
+                  ),
                   Container(
                       margin: EdgeInsets.only(
                           right: mediaquery.width * 0.05,
@@ -44,16 +65,14 @@ class Recycle_Product_Details extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: mediaquery.width * 0.0),
-                child: Text("Apple MacBook Pro 13",
+                child: Text(recylePVM.prodcuctData?.title??"",
                     style: theme.textTheme.bodyLarge),
               ),
               Text(
-                  "Lorem ipsum dolor sit amet, consectetur "
-                  "scing elit. Suspendisse, Curabitur vehicula "
-                  "tellus vel lorem commodo.",
+                  recylePVM.prodcuctData?.description?? "",
                   style: theme.textTheme.bodySmall),
               Text(
-                "Cairo, Egypt",
+                recylePVM.prodcuctData?.location ?? "",
                 style: theme.textTheme.bodyMedium,
               ),
               Container(
@@ -75,7 +94,7 @@ class Recycle_Product_Details extends StatelessWidget {
                       width: mediaquery.width / 3.5,
                     ),
                     Text(
-                      "EG 60,000",
+                      recylePVM.prodcuctData?.price ?? "",
                       style: theme.textTheme.bodyLarge,
                     ),
                   ],
