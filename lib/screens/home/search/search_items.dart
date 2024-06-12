@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation/models/categories_response/category_data.dart';
 
 import 'search_details.dart';
 
@@ -9,6 +10,7 @@ class SearchItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+    var args = ModalRoute.of(context)?.settings.arguments as CategoryData;
     return InkWell(
       onTap: (){
         Navigator.pushNamed(context, SearchDetails.routeName);
@@ -26,24 +28,20 @@ class SearchItem extends StatelessWidget {
                 const Image(
                     image: AssetImage("assets/image/SearchEx.png"),),
                 Text(
-                  'item name',
+                  args.title??"",
                   style: theme.textTheme.bodyMedium
                   ),
                 Text(
-                  'price',
+                  args.price??"",
                   style: theme.textTheme.bodyMedium
                 ),
                 Text(
-                  'address',
+                  args.location??"",
                   style: theme.textTheme.bodySmall
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text(
-                      'date',
-                      style: theme.textTheme.bodySmall
-                    ),
                     Icon(Icons.favorite_border_outlined, color: theme.primaryColor,)
                   ],
                 )

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:graduation/screens/home/search/search_view.dart';
 
+import '../../../core/network_layer/api_manager.dart';
+
 class ItemSearch extends SearchDelegate<String> {
   final items = ['shoes', 't-shirts', 'hats', 'jackets', 'Laptops'];
   final suggItems = ['hats', 'Laptops'];
@@ -25,15 +27,34 @@ class ItemSearch extends SearchDelegate<String> {
       icon: const Icon(Icons.arrow_back_outlined));
 
   @override
-  Widget buildResults(BuildContext context) => Center(
-          child: Column(
-        children: [
-          const Icon(Icons.abc),
-          Text(
-            query,
-          ),
-        ],
-      ));
+  Widget buildResults(BuildContext context) => FutureBuilder(
+      future: Api_Manager.getSearch(query),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+              child: CircularProgressIndicator(
+                color: Colors.black,
+              ));
+        }
+        if (snapshot.hasError || snapshot.data == null) {
+          return Center(
+              child: Text(
+                snapshot.data?.message ?? snapshot.error.toString(),
+                style: const TextStyle(color: Colors.black),
+              ));
+        }
+        var categoryList = snapshot.data?.data;
+        return Expanded(
+          child: ListView.separated(
+              separatorBuilder: (context, index) => Container(
+                margin: const EdgeInsets.symmetric(vertical: 20),
+              ),
+              padding:
+              const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+              itemCount: categoryList?.length ?? 0,
+              itemBuilder: (context, index) =>SearchView()),
+        );
+      });
 
   @override
   Widget buildSuggestions(BuildContext context) {

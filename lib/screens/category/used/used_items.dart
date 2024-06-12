@@ -22,8 +22,7 @@ final CategoryData catData;
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Image(
-                  image: AssetImage("assets/image/SearchEx.png"),),
+                Image.network(catData.image!,width: double.infinity ,height: 135,fit: BoxFit.cover, ),
                 Text(
                     catData.title ?? "",
                     style: theme.textTheme.bodyMedium
@@ -32,13 +31,13 @@ final CategoryData catData;
                     catData.price ?? "",
                     style: theme.textTheme.bodyMedium
                 ),
-                Text(
-                    catData.location?? "",
-                    style: theme.textTheme.bodySmall
-                ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    Text(
+                      catData.location?? "",
+                      style: theme.textTheme.bodySmall
+                  ),
                     Icon(Icons.favorite_border_outlined,
                       color: theme.primaryColor,)
                   ],
