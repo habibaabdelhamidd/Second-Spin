@@ -1,8 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:graduation/models/home_model.dart';
-import 'package:graduation/screens/category/used/used_items.dart';
-import 'package:graduation/screens/category/used/used_view.dart';
 import 'package:graduation/screens/home/home/suggestion_card.dart';
 import 'package:graduation/screens/home/search/search.dart';
 import '../favourite/all_favourite_product.dart';
@@ -151,8 +148,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               Container(
-                height: mediaquary.height/3,
-                child:ListView.builder(itemBuilder:
+                height: mediaquary.height/2.6,
+                child:ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder:
                 (context , index)=> Suggestions_Card(
                   homeVm.suggestionsProducts[index]
                 ),
