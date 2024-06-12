@@ -8,7 +8,9 @@ import 'package:graduation/models/recyle/recycle_product_details_model.dart';
 import 'package:graduation/models/response/AllCategoriesResponse.dart';
 import 'package:graduation/screens/category/recycle/view_model/recycle_product_details_vm.dart';
 import 'package:http/http.dart' as http;
+import '../../models/details_response/DetailsResponse.dart';
 import '../../models/recyle/all_recycle_model.dart';
+import '../../models/search_response/SearchResponse.dart';
 class Api_Manager {
   Future<List<Data>?> fetchHome() async {
     final response = await http.get(
@@ -45,9 +47,9 @@ class Api_Manager {
     // }
   }
 
-  static Future<CategoryResponse> getCategory(num? categoryId) async {
+  static Future<CategoryResponse>getCategory(num? categoryId) async {
     try {
-    var response = await http.post(Uri.parse("http://secondspin.xyz/api/categories/product/10"),
+    var response = await http.post(Uri.parse("http://secondspin.xyz/api/categories/product/$categoryId"),
         headers: { HttpHeaders.authorizationHeader:
         "Bearer 13|JBv81PCc2JdPH25kSaNz0ylYvpoxxU9txsEIeh8r97684cd8"
         });
@@ -78,6 +80,31 @@ class Api_Manager {
       throw Exception('Failed to load products');
     }
   }
+  static Future<DetailsResponse>getDetails(num? detailsId) async {
+      var response = await http.post(Uri.parse("http://secondspin.xyz/api/products/showDetails/$detailsId"),
+          headers: { HttpHeaders.authorizationHeader:
+          "Bearer 13|JBv81PCc2JdPH25kSaNz0ylYvpoxxU9txsEIeh8r97684cd8"
+          });
+
+      final result = jsonDecode(response.body);
+      debugPrint(response.body);
+      var detailsResponse = DetailsResponse.fromJson(result);
+      return detailsResponse;
+  }
+
+  static Future<SearchResponse>getSearch(String query) async {
+    try {
+      var response = await http.post(Uri.parse("http://secondspin.xyz/api/products/search?search=$query"),
+          headers: { HttpHeaders.authorizationHeader:
+          "Bearer 13|JBv81PCc2JdPH25kSaNz0ylYvpoxxU9txsEIeh8r97684cd8"
+          });
+
+      final result = jsonDecode(response.body);
+      debugPrint(response.body);
+      var searchResponse = SearchResponse.fromJson(result);
+      return searchResponse;}
+    catch (e) {
+      rethrow;
   Future<ProdcuctData?> fetchGetProductDetails(int? productId) async {
     final response = await http.get(
         Uri.http(
