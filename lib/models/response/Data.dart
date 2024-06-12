@@ -8,7 +8,6 @@ class Category {
     _id = id;
     _name = name;
 }
-
   Category.fromJson(dynamic json) {
     _id = json['id'];
     _name = json['name'];
