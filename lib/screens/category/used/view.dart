@@ -21,9 +21,8 @@ class ViewCategoryList extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.1,
           ),
           Text(category.name ?? "",
-              style: theme.textTheme.bodyMedium
-                  ?.copyWith(fontFamily: "poppins")),
-         Spacer(),
+              style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500).copyWith(fontFamily: "poppins")),
+         const Spacer(),
           const Icon(
             Icons.arrow_forward_ios_outlined,
           )
