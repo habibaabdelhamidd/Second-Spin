@@ -59,6 +59,7 @@ class ProdcuctData {
     locationDetails = json['location_details'];
     category = json['category'];
     user = json['user'];
+    description = json['description'];
   }
 
   Map<String, dynamic> toJson() {

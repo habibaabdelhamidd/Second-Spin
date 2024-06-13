@@ -20,8 +20,11 @@ class Suggestions_Card extends StatelessWidget{
       child: Column(
         crossAxisAlignment:CrossAxisAlignment.start,
         children: [
-          Image.network(product.image!,fit: BoxFit.fill, ),
-          Text(product.title!,style: theme.textTheme.bodyLarge),
+          Container(
+              width: double.infinity,
+              height: mediaquary.height*0.2,
+              child: Image.network(product.image!,fit: BoxFit.cover, )),
+          Text(product.title!,style: theme.textTheme.bodyMedium),
           Text(product.price!, style: theme.textTheme.bodyLarge,),
           Text(product.location!, style: theme.textTheme.bodyLarge,),
           Row(children: [
