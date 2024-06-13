@@ -1,8 +1,8 @@
-/// id : 30
-/// title : "party decorations"
-/// image : "WE6G5ygPLFzwT03vhkXUZAoR6WbJQxHE.jpg"
-/// price : "125.44"
-/// location : "cairo"
+/// id : 4
+/// title : "adidas"
+/// image : "http://www.secondspin.xyz/public/storage/SLhaJCMdLWuwVumvsyDcOYCun9rNPNo8.png"
+/// price : "560.00"
+/// location : "giza"
 
 class CategoryData {
   CategoryData({
