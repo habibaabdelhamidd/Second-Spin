@@ -1,14 +1,14 @@
 import 'Data.dart';
 
-/// message : "Search Done Successfully"
-/// data : [{"id":86,"title":"style vase","image":"http://www.secondspin.xyz/public/storage/fgH4UxN1cMfTX11kPS3CHnpz8FxafjKJ.jpg","price":"336.00","location":"giza"}]
+/// message : "User Logged In Successfully"
+/// data : {"token":"17|tumBxXRbjLcnUbiJFPLgCZ8iHaFk2xeMjUTIHPUVae5ed142","name":"habiba22","email":"habiba22@gmail.com"}
 /// status : true
 /// code : 200
 
-class SearchResponse {
-  SearchResponse({
+class LoginResponse {
+  LoginResponse({
       String? message, 
-      List<SearchData>? data,
+      LoginData? data,
       bool? status, 
       num? code,}){
     _message = message;
@@ -17,32 +17,27 @@ class SearchResponse {
     _code = code;
 }
 
-  SearchResponse.fromJson(dynamic json) {
+  LoginResponse.fromJson(dynamic json) {
     _message = json['message'];
-    if (json['data'] != null) {
-      _data = [];
-      json['data'].forEach((v) {
-        _data?.add(SearchData.fromJson(v));
-      });
-    }
+    _data = json['data'] != null ? LoginData.fromJson(json['data']) : null;
     _status = json['status'];
     _code = json['code'];
   }
   String? _message;
-  List<SearchData>? _data;
+  LoginData? _data;
   bool? _status;
   num? _code;
-SearchResponse copyWith({  String? message,
-  List<SearchData>? data,
+LoginResponse copyWith({  String? message,
+  LoginData? data,
   bool? status,
   num? code,
-}) => SearchResponse(  message: message ?? _message,
+}) => LoginResponse(  message: message ?? _message,
   data: data ?? _data,
   status: status ?? _status,
   code: code ?? _code,
 );
   String? get message => _message;
-  List<SearchData>? get data => _data;
+  LoginData? get data => _data;
   bool? get status => _status;
   num? get code => _code;
 
@@ -50,7 +45,7 @@ SearchResponse copyWith({  String? message,
     final map = <String, dynamic>{};
     map['message'] = _message;
     if (_data != null) {
-      map['data'] = _data?.map((v) => v.toJson()).toList();
+      map['data'] = _data?.toJson();
     }
     map['status'] = _status;
     map['code'] = _code;
