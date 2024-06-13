@@ -274,7 +274,7 @@ void showDelete(BuildContext context) {
                 ),
                 Container(
                   margin: EdgeInsets.only(right: 5 , bottom: 10),
-                  child: Text("Logout"),
+                  child: Text("Delete"),
                 ),
               ],
             ),
