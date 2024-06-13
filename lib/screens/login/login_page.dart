@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation/core/network_layer/api_manager.dart';
 import 'package:graduation/screens/login/buttons.dart';
 import 'package:graduation/screens/login/text_ff.dart';
 
@@ -122,6 +123,10 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () {
                         // login();
                         Navigator.pushNamed(context, HomeLayout.routeName);
+                        // String email = emailControl.text;
+                        // String password = passControl.text;
+                        // Api_Manager.login(email, password);
+                        // print(email + " " + password);
                       },
                       child: Buttons(
                         title: 'Login', padd: 15,

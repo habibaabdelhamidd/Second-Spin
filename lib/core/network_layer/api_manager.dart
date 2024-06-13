@@ -6,7 +6,6 @@ import 'package:graduation/models/categories_response/CategoryResponse.dart';
 import 'package:graduation/models/home_model.dart';
 import 'package:graduation/models/recyle/recycle_product_details_model.dart';
 import 'package:graduation/models/response/AllCategoriesResponse.dart';
-import 'package:graduation/screens/category/recycle/view_model/recycle_product_details_vm.dart';
 import 'package:http/http.dart' as http;
 import '../../models/details_response/DetailsResponse.dart';
 import '../../models/loginResponse/LoginResponse.dart';
@@ -94,7 +93,6 @@ class Api_Manager {
   }
 
   static Future<SearchResponse>getSearch(String query) async {
-
       var response = await http.get(Uri.parse("http://secondspin.xyz/api/products/search?search=$query"),
           headers: { HttpHeaders.authorizationHeader:
           "Bearer 13|JBv81PCc2JdPH25kSaNz0ylYvpoxxU9txsEIeh8r97684cd8"
@@ -105,21 +103,21 @@ class Api_Manager {
       var searchResponse = SearchResponse.fromJson(result);
       return searchResponse;}
 
-  static Future<LoginResponse>login(String userName, String password) async {
+
+  static Future<LoginResponse>login(String email, String password) async {
     var response = await http.post(
       Uri.parse("http://secondspin.xyz/api/auth/login"),
       headers: { HttpHeaders.authorizationHeader:
       "Bearer 13|JBv81PCc2JdPH25kSaNz0ylYvpoxxU9txsEIeh8r97684cd8"
       },
-      // body: jsonEncode(<String, dynamic>{
-      //   "token": password,
-      //   "name": userName,
-      //   "email": "habiba22@gmail.com"
-      // })
+      body: jsonEncode(<String, dynamic>{
+        "password": password,
+        "email": email
+      })
     );
 
     final result = jsonDecode(response.body);
-    debugPrint(response.body);
+    print(response.body);
     var loginResponse = LoginResponse.fromJson(result);
     return loginResponse;
   }
