@@ -140,12 +140,6 @@ class _Cart_view_ScreenState extends State<Cart_view_Screen> {
             SizedBox(
               height: mediaquary.height * 0.03,
             ),
-            Container(
-              margin: EdgeInsets.all(mediaquary.width * 0.01),
-              width: double.infinity,
-              height: mediaquary.height * 0.002,
-              color: Colors.grey.shade400,
-            ),
             Padding(
               padding: EdgeInsets.only(
                   top: mediaquary.width * 0.02,
@@ -200,9 +194,9 @@ class _Cart_view_ScreenState extends State<Cart_view_Screen> {
                 });
               },
             ),
-            // SizedBox(
-            //   height: mediaquary.height / 1.8,
-            // ),
+            SizedBox(
+              height: mediaquary.height*0.09,
+            ),
             Container(
                 width: double.infinity,
                 padding: EdgeInsets.all(mediaquary.width * 0.04),
