@@ -17,7 +17,7 @@ class Recycl_Product_card extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(
+          Image.network(
             productRecycl.image!,
             width: mediaquary.width / 2.2,
             fit: BoxFit.fill,
