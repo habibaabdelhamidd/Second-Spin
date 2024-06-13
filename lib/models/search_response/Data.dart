@@ -4,8 +4,8 @@
 /// price : "336.00"
 /// location : "giza"
 
-class Data {
-  Data({
+class SearchData {
+  SearchData({
       num? id, 
       String? title, 
       String? image, 
@@ -18,7 +18,7 @@ class Data {
     _location = location;
 }
 
-  Data.fromJson(dynamic json) {
+  SearchData.fromJson(dynamic json) {
     _id = json['id'];
     _title = json['title'];
     _image = json['image'];
@@ -30,12 +30,12 @@ class Data {
   String? _image;
   String? _price;
   String? _location;
-Data copyWith({  num? id,
+SearchData copyWith({  num? id,
   String? title,
   String? image,
   String? price,
   String? location,
-}) => Data(  id: id ?? _id,
+}) => SearchData(  id: id ?? _id,
   title: title ?? _title,
   image: image ?? _image,
   price: price ?? _price,

@@ -12,7 +12,7 @@ final CategoryData catData;
     var theme = Theme.of(context);
     return InkWell(
         onTap: () {
-          Navigator.pushNamed(context, UsedDetails.routeName);
+          Navigator.pushNamed(context, UsedDetails.routeName, arguments: catData);
         },
         child: Container(
             padding: const EdgeInsets.all(10),
