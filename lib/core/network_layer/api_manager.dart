@@ -94,7 +94,7 @@ class Api_Manager {
   }
 
   static Future<SearchResponse>getSearch(String query) async {
-  //   try {
+
       var response = await http.get(Uri.parse("http://secondspin.xyz/api/products/search?search=$query"),
           headers: { HttpHeaders.authorizationHeader:
           "Bearer 13|JBv81PCc2JdPH25kSaNz0ylYvpoxxU9txsEIeh8r97684cd8"
@@ -104,29 +104,26 @@ class Api_Manager {
       debugPrint(response.body);
       var searchResponse = SearchResponse.fromJson(result);
       return searchResponse;}
-  //   catch (e) {
-  //     rethrow;
-  //   }
-  // }
 
   static Future<LoginResponse>login(String userName, String password) async {
-    var response = await http.post(Uri.parse("http://secondspin.xyz/api/auth/login"),
-        headers: { HttpHeaders.authorizationHeader:
-        "Bearer 13|JBv81PCc2JdPH25kSaNz0ylYvpoxxU9txsEIeh8r97684cd8"
-        },
-        // body: jsonEncode(<String, dynamic>{
-        //   "token": password,
-        //   "name": userName,
-        //   "email": "habiba22@gmail.com"
-        // })
+    var response = await http.post(
+      Uri.parse("http://secondspin.xyz/api/auth/login"),
+      headers: { HttpHeaders.authorizationHeader:
+      "Bearer 13|JBv81PCc2JdPH25kSaNz0ylYvpoxxU9txsEIeh8r97684cd8"
+      },
+      // body: jsonEncode(<String, dynamic>{
+      //   "token": password,
+      //   "name": userName,
+      //   "email": "habiba22@gmail.com"
+      // })
     );
 
     final result = jsonDecode(response.body);
     debugPrint(response.body);
     var loginResponse = LoginResponse.fromJson(result);
-    return loginResponse;}
-    catch (e) {
-      rethrow;
+    return loginResponse;
+  }
+
   Future<ProdcuctData?> fetchGetProductDetails(int? productId) async {
     final response = await http.get(
         Uri.http(

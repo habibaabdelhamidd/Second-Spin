@@ -12,8 +12,7 @@ class SearchDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var details = ModalRoute.of(context)?.settings.arguments as SearchData;
-    return
-        // FutureBuilder(
+    return // FutureBuilder(
         //     future: Api_Manager.getDetails(details.id),
         //     builder: (context, snapshot) {
         //       if (snapshot.connectionState == ConnectionState.waiting) {
