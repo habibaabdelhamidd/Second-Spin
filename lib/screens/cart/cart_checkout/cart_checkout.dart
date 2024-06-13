@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation/layouts/homelayout/homelayout.dart';
+import 'package:graduation/models/home_model.dart';
+import 'package:graduation/screens/home/home/home.dart';
 
 class Cart_Chackout extends StatefulWidget {
   @override
@@ -9,14 +12,8 @@ class Cart_Chackout extends StatefulWidget {
   State<Cart_Chackout> createState() => _Cart_ChackoutState();
 }
 
-List<String> options = [
-  "Credit card",
-  "cash",
-];
 
 class _Cart_ChackoutState extends State<Cart_Chackout> {
-  String currentOption = options[0];
-
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     final mediaquary = MediaQuery.of(context).size;
@@ -36,95 +33,6 @@ class _Cart_ChackoutState extends State<Cart_Chackout> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.only(bottom: mediaquary.width * 0.02),
-                    child: Text(
-                      "Location Details",
-                      style: theme.textTheme.bodyMedium!
-                          .copyWith(fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        hintText: "Enter Your Location Details",
-                        hintStyle: theme.textTheme.bodySmall,
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide:
-                                BorderSide(color: Colors.grey.shade500))),
-                  ),
-                  SizedBox(
-                    height: mediaquary.height * 0.03,
-                  ),
-                  Container(
-                    margin: EdgeInsets.all(mediaquary.width * 0.01),
-                    width: double.infinity,
-                    height: mediaquary.height * 0.002,
-                    color: Colors.grey.shade400,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: mediaquary.width * 0.02,
-                        left: mediaquary.width * 0.02),
-                    child: Text(
-                      "Payment Method:",
-                      style: theme.textTheme.bodyMedium!
-                          .copyWith(fontSize: 16, fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                  RadioListTile(
-                    title: Row(
-                      children: [
-                        ImageIcon(
-                          AssetImage("assets/image/credit-card.png"),
-                          color: Colors.black,
-                        ),
-                        SizedBox(
-                          width: mediaquary.width * 0.01,
-                        ),
-                        Text("Credit Card:", style: theme.textTheme.bodyMedium),
-                      ],
-                    ),
-                    value: options[0],
-                    groupValue: currentOption,
-                    onChanged: (value) {
-                      setState(() {
-                        currentOption = value.toString();
-                      });
-                    },
-                  ),
-                  RadioListTile(
-                    title: Row(
-                      children: [
-                        ImageIcon(
-                          AssetImage(
-                            "assets/image/cash.png",
-                          ),
-                          color: Colors.black,
-                        ),
-                        SizedBox(
-                          width: mediaquary.width * 0.01,
-                        ),
-                        Text("Cash:", style: theme.textTheme.bodyMedium),
-                      ],
-                    ),
-                    value: options[1],
-                    groupValue: currentOption,
-                    onChanged: (value) {
-                      setState(() {
-                        currentOption = value.toString();
-                      });
-                    },
-                  ),
-                  SizedBox(
-                    height: mediaquary.height * 0.003,
-                  ),
-                  Container(
-                    margin: EdgeInsets.all(5),
-                    width: double.infinity,
-                    height: 2,
-                    color: Colors.grey.shade400,
-                  ),
                   Padding(
                     padding: EdgeInsets.only(
                         top: mediaquary.width * 0.02,
@@ -169,21 +77,26 @@ class _Cart_ChackoutState extends State<Cart_Chackout> {
                     ),
                   ),
                   SizedBox(
-                    height: mediaquary.height * 0.3,
+                    height: mediaquary.height /1.7,
                   ),
-                  Container(
-                      padding: EdgeInsets.all(mediaquary.width * 0.04),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: theme.primaryColor,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Text(
-                        "Checkout",
-                        style: theme.textTheme.bodyLarge!
-                            .copyWith(color: Colors.white),
-                        textAlign: TextAlign.center,
-                      )),
+                  GestureDetector(
+                    onTap: (){
+                      _showDialog(context);
+                    },
+                    child: Container(
+                        padding: EdgeInsets.all(mediaquary.width * 0.04),
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: theme.primaryColor,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(
+                          "Checkout",
+                          style: theme.textTheme.bodyLarge!
+                              .copyWith(color: Colors.white),
+                          textAlign: TextAlign.center,
+                        )),
+                  ),
                 ],
               ),
             ),
@@ -192,4 +105,21 @@ class _Cart_ChackoutState extends State<Cart_Chackout> {
       ),
     );
   }
+}
+void _showDialog(BuildContext context) {
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Success Purchase" , style: TextStyle(fontWeight: FontWeight.w900),textAlign: TextAlign.center,),
+          content:GestureDetector(
+              onTap:(){
+                Navigator.pushNamed(context, HomeLayout.routeName);
+              },
+              child: Text("Continue Shopping" , style: TextStyle(fontWeight: FontWeight.w700 ,
+                  fontSize: 18),textAlign: TextAlign.center,),),
+          actions: [],
+        );
+      }
+  );
 }

@@ -5,10 +5,12 @@ import 'package:graduation/screens/sell/form/sell_form.dart';
 
 class SellView extends StatelessWidget {
   static const String routeName = "SellView";
+
   const SellView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final mediaquery = MediaQuery.of(context).size;
     var theme = Theme.of(context);
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
@@ -21,8 +23,16 @@ class SellView extends StatelessWidget {
       body: Column(
         children: [
           Container(
-            padding: const EdgeInsets.symmetric(vertical: 30,horizontal: 20),
-            margin: const EdgeInsets.only(top: 50, bottom: 20, right: 30, left: 30),
+            padding: EdgeInsets.only(
+                top: mediaquery.width * 0.05,
+                bottom: mediaquery.width * 0.08,
+                right: mediaquery.width * 0.04,
+                left: mediaquery.width * 0.04),
+            margin: EdgeInsets.only(
+                top: mediaquery.width * 0.1,
+                bottom: mediaquery.width * 0.1,
+                right: mediaquery.width * 0.06,
+                left: mediaquery.width * 0.06),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(20),
@@ -45,18 +55,37 @@ class SellView extends StatelessWidget {
                   style: TextStyle(color: Color(0XFFc5c5c5), fontSize: 15),
                 ),
                 GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, SellForm.routeName);
-                  },
-                  child: Buttons(title: "Sell", padd: 10,)
-                )
+                    onTap: () {
+                      Navigator.pushNamed(context, SellForm.routeName);
+                    },
+                    child: Container(
+                      width: mediaquery.width * 0.9,
+                      margin: EdgeInsets.only(top: mediaquery.width * 0.04),
+                      padding: EdgeInsets.all(mediaquery.width * 0.04),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: theme.colorScheme.primary),
+                      child: Text("Sell",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.white70)),
+                    ))
               ],
             ),
           ),
+          SizedBox(
+            height: mediaquery.height / 10,
+          ),
           Container(
-            padding:
-                const EdgeInsets.symmetric(vertical: 30,horizontal: 20),
-            margin: const EdgeInsets.symmetric(vertical: 20,horizontal: 30),
+            padding: EdgeInsets.only(
+                top: mediaquery.width * 0.05,
+                bottom: mediaquery.width * 0.08,
+                right: mediaquery.width * 0.04,
+                left: mediaquery.width * 0.04),
+            margin: EdgeInsets.only(
+                top: mediaquery.width * 0.1,
+                bottom: mediaquery.width * 0.1,
+                right: mediaquery.width * 0.06,
+                left: mediaquery.width * 0.06),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(20),
@@ -79,11 +108,20 @@ class SellView extends StatelessWidget {
                   style: TextStyle(color: Color(0XFFc5c5c5), fontSize: 15),
                 ),
                 GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, CharityForm.routeName);
-                  },
-                  child: Buttons(title: "Donate", padd: 10,)
-                )
+                    onTap: () {
+                      Navigator.pushNamed(context, CharityForm.routeName);
+                    },
+                    child: Container(
+                      width: mediaquery.width * 0.9,
+                      margin: EdgeInsets.only(top: mediaquery.width * 0.04),
+                      padding: EdgeInsets.all(mediaquery.width * 0.04),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: theme.colorScheme.primary),
+                      child: Text("Donate",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.white70)),
+                    ))
               ],
             ),
           ),

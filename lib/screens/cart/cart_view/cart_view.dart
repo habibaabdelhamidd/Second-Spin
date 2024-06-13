@@ -1,8 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation/screens/sell/form/charity_form.dart';
 import '../cart_checkout/cart_checkout.dart';
-class Cart_view_Screen extends StatelessWidget {
+List<String> items = <String>[
+  'Cairo ','Giza', 'Demietta', "Gharbia" ,"Beni suef" , "Asute" , "Beheria" ,
+  "Fayoum" , "Aswan " , "Dekahlia"
+];
+class Cart_view_Screen extends StatefulWidget {
   @override
+  State<Cart_view_Screen> createState() => _Cart_view_ScreenState();
+}
+List<String> options = [
+  "Credit card",
+  "cash",
+];
+class _Cart_view_ScreenState extends State<Cart_view_Screen> {
+
+  String dropDownValue = items.first;
+  @override
+  String currentOption = options[0];
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     final mediaquary = MediaQuery.of(context).size;
@@ -74,9 +90,119 @@ class Cart_view_Screen extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
-              height: mediaquary.height / 1.8,
+            Padding(
+              padding:  EdgeInsets.only(left: mediaquary.width*0.02  ,
+                  top: mediaquary.width*0.02),
+              child: Text("Location"
+              ,  style: theme.textTheme.labelMedium,
+              ),
             ),
+            DropdownButton<String>(
+                style: theme.textTheme.labelSmall,
+                padding: EdgeInsets.all(
+                    MediaQuery.of(context).size.width * 0.02),
+                isExpanded: true,
+                value: dropDownValue,
+                icon: const Icon(Icons.keyboard_arrow_down),
+                items:
+                items.map<DropdownMenuItem<String>>((String items) {
+                  return DropdownMenuItem<String>(
+                    value: items,
+                    child: Text(items),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    dropDownValue = newValue!;
+                  });
+                }),
+            Padding(
+              padding: EdgeInsets.only(bottom: mediaquary.width * 0.02 ,
+                  left: mediaquary.width*0.02),
+              child: Text(
+                "Location Details",
+                style: theme.textTheme.bodyMedium!
+                    .copyWith(fontWeight: FontWeight.w700),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(left: mediaquary.width*0.02 , right:mediaquary.width*0.02 ),
+              child: TextFormField(
+                decoration: InputDecoration(
+                    hintText: "Enter Your Location Details",
+                    hintStyle: theme.textTheme.bodySmall,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide:
+                        BorderSide(color: Colors.grey.shade500))),
+              ),
+            ),
+            SizedBox(
+              height: mediaquary.height * 0.03,
+            ),
+            Container(
+              margin: EdgeInsets.all(mediaquary.width * 0.01),
+              width: double.infinity,
+              height: mediaquary.height * 0.002,
+              color: Colors.grey.shade400,
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  top: mediaquary.width * 0.02,
+                  left: mediaquary.width * 0.02),
+              child: Text(
+                "Payment Method:",
+                style: theme.textTheme.bodyMedium!
+                    .copyWith(fontSize: 16, fontWeight: FontWeight.w700),
+              ),
+            ),
+            RadioListTile(
+              title: Row(
+                children: [
+                  ImageIcon(
+                    AssetImage("assets/image/credit-card.png"),
+                    color: Colors.black,
+                  ),
+                  SizedBox(
+                    width: mediaquary.width * 0.01,
+                  ),
+                  Text("Credit Card:", style: theme.textTheme.bodyMedium),
+                ],
+              ),
+              value: options[0],
+              groupValue: currentOption,
+              onChanged: (value) {
+                setState(() {
+                  currentOption = value.toString();
+                });
+              },
+            ),
+            RadioListTile(
+              title: Row(
+                children: [
+                  ImageIcon(
+                    AssetImage(
+                      "assets/image/cash.png",
+                    ),
+                    color: Colors.black,
+                  ),
+                  SizedBox(
+                    width: mediaquary.width * 0.01,
+                  ),
+                  Text("Cash:", style: theme.textTheme.bodyMedium),
+                ],
+              ),
+              value: options[1],
+              groupValue: currentOption,
+              onChanged: (value) {
+                setState(() {
+                  currentOption = value.toString();
+                });
+              },
+            ),
+            // SizedBox(
+            //   height: mediaquary.height / 1.8,
+            // ),
             Container(
                 width: double.infinity,
                 padding: EdgeInsets.all(mediaquary.width * 0.04),
