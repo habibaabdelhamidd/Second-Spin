@@ -1,11 +1,11 @@
-/// id : 4
-/// title : "adidas"
-/// image : "http://www.secondspin.xyz/public/storage/SLhaJCMdLWuwVumvsyDcOYCun9rNPNo8.png"
-/// price : "560.00"
+/// id : 86
+/// title : "style vase"
+/// image : "http://www.secondspin.xyz/public/storage/fgH4UxN1cMfTX11kPS3CHnpz8FxafjKJ.jpg"
+/// price : "336.00"
 /// location : "giza"
 
-class CategoryData {
-  CategoryData({
+class SearchData {
+  SearchData({
       num? id, 
       String? title, 
       String? image, 
@@ -18,7 +18,7 @@ class CategoryData {
     _location = location;
 }
 
-  CategoryData.fromJson(dynamic json) {
+  SearchData.fromJson(dynamic json) {
     _id = json['id'];
     _title = json['title'];
     _image = json['image'];
@@ -30,12 +30,12 @@ class CategoryData {
   String? _image;
   String? _price;
   String? _location;
-CategoryData copyWith({  num? id,
+SearchData copyWith({  num? id,
   String? title,
   String? image,
   String? price,
   String? location,
-}) => CategoryData(  id: id ?? _id,
+}) => SearchData(  id: id ?? _id,
   title: title ?? _title,
   image: image ?? _image,
   price: price ?? _price,

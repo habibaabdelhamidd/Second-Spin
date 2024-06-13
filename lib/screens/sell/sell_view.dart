@@ -47,13 +47,15 @@ class SellView extends StatelessWidget {
                       style: theme.textTheme.titleLarge,
                     ),
                     const Spacer(),
-                    Image.asset("assets/image/options.png")
+                    // Image.asset("assets/image/options.png")
+                    Icon(Icons.shopping_bag_outlined,size: 45,color: theme.primaryColor,)
                   ],
                 ),
                 const Text(
-                  "Category \nUsed product",
+                  "Used Products",
                   style: TextStyle(color: Color(0XFFc5c5c5), fontSize: 15),
                 ),
+               SizedBox(height: MediaQuery.of(context).size.height*0.02,),
                 GestureDetector(
                     onTap: () {
                       Navigator.pushNamed(context, SellForm.routeName);
@@ -69,6 +71,11 @@ class SellView extends StatelessWidget {
                           textAlign: TextAlign.center,
                           style: TextStyle(color: Colors.white70)),
                     ))
+                  onTap: () {
+                    Navigator.pushNamed(context, SellForm.routeName);
+                  },
+                  child: Buttons(title: "Sell", padd: 16,)
+                )
               ],
             ),
           ),
@@ -100,14 +107,15 @@ class SellView extends StatelessWidget {
                       style: theme.textTheme.titleLarge,
                     ),
                     const Spacer(),
-                    Image.asset("assets/image/options.png")
+                    // Image.asset("assets/image/options.png")
+                    Icon(Icons.handshake_outlined,size: 45,color: theme.primaryColor,)
                   ],
                 ),
                 const Text(
-                  "Category \nProduct with less price for recycle",
+                  "Product with less price for recycle",
                   style: TextStyle(color: Color(0XFFc5c5c5), fontSize: 15),
                 ),
-                GestureDetector(
+                SizedBox(height: MediaQuery.of(context).size.height*0.02,),
                     onTap: () {
                       Navigator.pushNamed(context, CharityForm.routeName);
                     },
@@ -122,6 +130,11 @@ class SellView extends StatelessWidget {
                           textAlign: TextAlign.center,
                           style: TextStyle(color: Colors.white70)),
                     ))
+                  onTap: () {
+                    Navigator.pushNamed(context, CharityForm.routeName);
+                  },
+                  child: Buttons(title: "Donate", padd: 16,)
+                )
               ],
             ),
           ),
