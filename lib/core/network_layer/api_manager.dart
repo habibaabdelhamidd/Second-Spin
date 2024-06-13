@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:graduation/core/constants.dart';
 import 'package:graduation/models/categories_response/CategoryResponse.dart';
 import 'package:graduation/models/home_model.dart';
+import 'package:graduation/models/recyle/recycle_product_details_model.dart';
 import 'package:graduation/models/response/AllCategoriesResponse.dart';
+import 'package:graduation/screens/category/recycle/view_model/recycle_product_details_vm.dart';
 import 'package:http/http.dart' as http;
 import '../../models/details_response/DetailsResponse.dart';
 import '../../models/loginResponse/LoginResponse.dart';
@@ -62,7 +64,7 @@ class Api_Manager {
     }
   }
   Future<List<AllRecycle>?> fetchAllRecycl() async {
-    final response = await http.post(
+    final response = await http.get(
         Uri.http(
           Constants.api_base_URL ,
           "/api/categories/product/1",
@@ -71,7 +73,6 @@ class Api_Manager {
           "Authorization":"Bearer 7|Mg31lmlgv4yc0EcWuwYsb1lYGP1bV1XVnEae6Z5f25d6b3dd"
         }
     );
-    print(response.body);
     final decodedResponse = jsonDecode(response.body);
     if (response.statusCode == 200 && decodedResponse["status"] == true) {
       final allRecyclModel = AllRecycleModel.fromJson(decodedResponse);
@@ -80,7 +81,6 @@ class Api_Manager {
       throw Exception('Failed to load products');
     }
   }
-
   static Future<DetailsResponse>getDetails(num? detailsId) async {
       var response = await http.get(Uri.parse("http://secondspin.xyz/api/products/showDetails/$detailsId"),
           headers: { HttpHeaders.authorizationHeader:
@@ -125,4 +125,24 @@ class Api_Manager {
     debugPrint(response.body);
     var loginResponse = LoginResponse.fromJson(result);
     return loginResponse;}
+    catch (e) {
+      rethrow;
+  Future<ProdcuctData?> fetchGetProductDetails(int? productId) async {
+    final response = await http.get(
+        Uri.http(
+          Constants.api_base_URL ,
+          "/api/products/showDetails/$productId",
+        ),
+        headers:{
+          "Authorization":"Bearer 7|Mg31lmlgv4yc0EcWuwYsb1lYGP1bV1XVnEae6Z5f25d6b3dd"
+        }
+    );
+    final decodedResponse = jsonDecode(response.body);
+    if (response.statusCode == 200 && decodedResponse["status"] == true) {
+      final productDetails  = RecycleProductDetailsModel.fromJson(decodedResponse);
+      return productDetails.data;
+    } else {
+      throw Exception('Failed to load products');
+    }
+  }
 }

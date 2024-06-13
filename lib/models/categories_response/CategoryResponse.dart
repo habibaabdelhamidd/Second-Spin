@@ -7,15 +7,17 @@ import 'category_data.dart';
 
 class CategoryResponse {
   CategoryResponse({
-      String? message, 
-      List<CategoryData>? data,
-      bool? status, 
-      num? code,}){
+    String? message,
+    List<CategoryData>? data,
+    bool? status,
+    num? code,
+  })
+  {
     _message = message;
     _data = data;
     _status = status;
     _code = code;
-}
+  }
 
   CategoryResponse.fromJson(dynamic json) {
     _message = json['message'];
@@ -28,22 +30,31 @@ class CategoryResponse {
     _status = json['status'];
     _code = json['code'];
   }
+
   String? _message;
   List<CategoryData>? _data;
   bool? _status;
   num? _code;
-CategoryResponse copyWith({  String? message,
-  List<CategoryData>? data,
-  bool? status,
-  num? code,
-}) => CategoryResponse(  message: message ?? _message,
-  data: data ?? _data,
-  status: status ?? _status,
-  code: code ?? _code,
-);
+
+  CategoryResponse copyWith({
+    String? message,
+    List<CategoryData>? data,
+    bool? status,
+    num? code,
+  }) =>
+      CategoryResponse(
+        message: message ?? _message,
+        data: data ?? _data,
+        status: status ?? _status,
+        code: code ?? _code,
+      );
+
   String? get message => _message;
+
   List<CategoryData>? get data => _data;
+
   bool? get status => _status;
+
   num? get code => _code;
 
   Map<String, dynamic> toJson() {
@@ -56,5 +67,4 @@ CategoryResponse copyWith({  String? message,
     map['code'] = _code;
     return map;
   }
-
 }
