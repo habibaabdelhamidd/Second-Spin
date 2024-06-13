@@ -1,5 +1,6 @@
 /// id : 4
 /// title : "adidas"
+/// description : "Adidas Football Shoes Original"
 /// image : "http://www.secondspin.xyz/public/storage/SLhaJCMdLWuwVumvsyDcOYCun9rNPNo8.png"
 /// price : "560.00"
 /// created_at : "2024-05-28T13:42:44.000000Z"
@@ -13,6 +14,7 @@ class DetailsData {
   DetailsData({
       num? id, 
       String? title, 
+      String? description, 
       String? image, 
       String? price, 
       String? createdAt, 
@@ -23,6 +25,7 @@ class DetailsData {
       String? user,}){
     _id = id;
     _title = title;
+    _description = description;
     _image = image;
     _price = price;
     _createdAt = createdAt;
@@ -36,6 +39,7 @@ class DetailsData {
   DetailsData.fromJson(dynamic json) {
     _id = json['id'];
     _title = json['title'];
+    _description = json['description'];
     _image = json['image'];
     _price = json['price'];
     _createdAt = json['created_at'];
@@ -47,6 +51,7 @@ class DetailsData {
   }
   num? _id;
   String? _title;
+  String? _description;
   String? _image;
   String? _price;
   String? _createdAt;
@@ -57,6 +62,7 @@ class DetailsData {
   String? _user;
 DetailsData copyWith({  num? id,
   String? title,
+  String? description,
   String? image,
   String? price,
   String? createdAt,
@@ -67,6 +73,7 @@ DetailsData copyWith({  num? id,
   String? user,
 }) => DetailsData(  id: id ?? _id,
   title: title ?? _title,
+  description: description ?? _description,
   image: image ?? _image,
   price: price ?? _price,
   createdAt: createdAt ?? _createdAt,
@@ -78,6 +85,7 @@ DetailsData copyWith({  num? id,
 );
   num? get id => _id;
   String? get title => _title;
+  String? get description => _description;
   String? get image => _image;
   String? get price => _price;
   String? get createdAt => _createdAt;
@@ -91,6 +99,7 @@ DetailsData copyWith({  num? id,
     final map = <String, dynamic>{};
     map['id'] = _id;
     map['title'] = _title;
+    map['description'] = _description;
     map['image'] = _image;
     map['price'] = _price;
     map['created_at'] = _createdAt;

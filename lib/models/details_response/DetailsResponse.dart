@@ -1,7 +1,7 @@
 import 'Data.dart';
 
 /// message : "Successful query"
-/// data : {"id":4,"title":"adidas","image":"http://www.secondspin.xyz/public/storage/SLhaJCMdLWuwVumvsyDcOYCun9rNPNo8.png","price":"560.00","created_at":"2024-05-28T13:42:44.000000Z","story":null,"location":"giza","location_details":"el zamalleek","category":"Shoes&Bags","user":"1"}
+/// data : {"id":4,"title":"adidas","description":"Adidas Football Shoes Original","image":"http://www.secondspin.xyz/public/storage/SLhaJCMdLWuwVumvsyDcOYCun9rNPNo8.png","price":"560.00","created_at":"2024-05-28T13:42:44.000000Z","story":null,"location":"giza","location_details":"el zamalleek","category":"Shoes&Bags","user":"1"}
 /// status : true
 /// code : 200
 
