@@ -42,11 +42,13 @@ class _RecycleViewProductsState extends State<RecycleViewProducts> {
           Expanded(
               child: GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, childAspectRatio: mediaquary.width * 0.0015),
+                crossAxisCount: 2, childAspectRatio: mediaquary.width*0.0016),
             itemBuilder: (context, index) => GestureDetector(
                 onTap: () {
                   Navigator.pushNamed(
-                      context, Recycle_Product_Details.routeName);
+                      context, Recycle_Product_Details.routeName,
+                    arguments: recyclVm.allRecyclProductsView[index].id as int
+                  );
                 },
                 child: Recycl_Product_card(
                     recyclVm.allRecyclProductsView[index],
