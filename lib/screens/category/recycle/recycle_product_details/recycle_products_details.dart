@@ -16,16 +16,17 @@ class _Recycle_Product_DetailsState extends State<Recycle_Product_Details> {
   void initState() {
     super.initState();
     recylePVM = RecycleProductDetailsVm();
-    futureProductData();
   }
-  Future<void> futureProductData()async{
-    await recylePVM.getProductData();
+  Future<void> futureProductData(int id )async{
+    await recylePVM.getProductData(id);
     setState(() {});
   }
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     final mediaquery = MediaQuery.of(context).size;
+    int id = ModalRoute.of(context)!.settings.arguments as int;
+    futureProductData(id);
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
@@ -44,11 +45,14 @@ class _Recycle_Product_DetailsState extends State<Recycle_Product_Details> {
               Stack(
                 alignment: AlignmentDirectional.bottomEnd,
                 children: [
-                  ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.asset(
-                        recylePVM.prodcuctData?.image ?? "" ,
-                      )
+                  Container(
+                    width: double.infinity,
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.network(
+                          recylePVM.prodcuctData?.image ?? "" ,
+                        )
+                    ),
                   ),
                   Container(
                       margin: EdgeInsets.only(
