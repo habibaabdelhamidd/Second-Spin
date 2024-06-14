@@ -1,13 +1,33 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Favourite_product_details extends StatelessWidget {
+import '../../category/recycle/view_model/recycle_product_details_vm.dart';
+
+class Favourite_product_details extends StatefulWidget {
   @override
   static const String routeName = "favourite product details";
 
+  @override
+  State<Favourite_product_details> createState() => _Favourite_product_detailsState();
+}
+
+class _Favourite_product_detailsState extends State<Favourite_product_details> {
+  late RecycleProductDetailsVm recylePVM ;
+  @override
+  void initState() {
+    super.initState();
+    recylePVM = RecycleProductDetailsVm();
+  }
+  @override
+  Future<void> futureProductData(int id )async{
+    await recylePVM.getProductData(id);
+    setState(() {});
+  }
   Widget build(BuildContext context) {
     final mediaquary = MediaQuery.of(context).size;
     var theme = Theme.of(context);
+    int id = ModalRoute.of(context)!.settings.arguments as int;
+    futureProductData(id);
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
@@ -26,8 +46,8 @@ class Favourite_product_details extends StatelessWidget {
               Stack(
                 alignment: AlignmentDirectional.bottomEnd,
                 children: [
-                  Image.asset(
-                    "assets/image/favimage.png",
+                  Image.network(
+                    recylePVM.prodcuctData?.image?? "",
                     width: mediaquary.width,
                     fit: BoxFit.fill,
                   ),
@@ -49,17 +69,15 @@ class Favourite_product_details extends StatelessWidget {
                     top: mediaquary.width * 0.02,
                     bottom: mediaquary.width * 0.01),
                 child: Text(
-                  "Modern beige sofa",
+                  recylePVM.prodcuctData?.title??"",
                   style: theme.textTheme.bodyLarge,
                 ),
               ),
               Text(
-                  "Lorem ipsum dolor sit amet, consectetur scing "
-                  "elit. Suspendisse, Curabitur vehicula "
-                  "tellus vel lorem commodo.",
+                  recylePVM.prodcuctData?.description??"",
                   style: theme.textTheme.bodyMedium!
                       .copyWith(color: Color(0xffA7A7A7))),
-              Text("Cairo, Egypt", style: theme.textTheme.bodyMedium),
+              Text(recylePVM.prodcuctData?.location??"", style: theme.textTheme.bodyMedium),
               Container(
                 padding: EdgeInsets.all(mediaquary.width * 0.05),
                 margin: EdgeInsets.symmetric(
@@ -79,7 +97,7 @@ class Favourite_product_details extends StatelessWidget {
                       width: mediaquary.width / 3.5,
                     ),
                     Text(
-                      "EG 60,000",
+                      recylePVM.prodcuctData?.price??"",
                       style: theme.textTheme.bodyLarge,
                     ),
                   ],

@@ -46,7 +46,6 @@ class ItemSearch extends SearchDelegate<String> {
           }).toList();
     return buildSuggestionSuccess(suggestions);
   }
-
   buildSuggestionSuccess(List<String> suggestions) => ListView.builder(
       itemBuilder: (context, index) {
         final suggestion = suggestions[index];

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:graduation/core/constants.dart';
 import 'package:graduation/models/categories_response/CategoryResponse.dart';
+import 'package:graduation/models/fav/addtofav/add_to_fav.dart';
 import 'package:graduation/models/home_model.dart';
 import 'package:graduation/models/recyle/recycle_product_details_model.dart';
 import 'package:graduation/models/response/AllCategoriesResponse.dart';
@@ -85,13 +86,31 @@ class Api_Manager {
           "/api/products/showDetails/$productId",
         ),
         headers:{
-          "Authorization":"Bearer 7|Mg31lmlgv4yc0EcWuwYsb1lYGP1bV1XVnEae6Z5f25d6b3dd"
+          "Authorization":"Bearer 13|JBv81PCc2JdPH25kSaNz0ylYvpoxxU9txsEIeh8r97684cd8"
         }
     );
     final decodedResponse = jsonDecode(response.body);
     if (response.statusCode == 200 && decodedResponse["status"] == true) {
       final productDetails  = RecycleProductDetailsModel.fromJson(decodedResponse);
       return productDetails.data;
+    } else {
+      throw Exception('Failed to load products');
+    }
+  }
+  Future<List<FavProductList>?> fetchAllFavList() async {
+    final response = await http.get(
+        Uri.http(
+          Constants.api_base_URL ,
+          "/api/favorites/favoritelist",
+        ),
+        headers:{
+          "Authorization":"Bearer 13|JBv81PCc2JdPH25kSaNz0ylYvpoxxU9txsEIeh8r97684cd8"
+        }
+    );
+    final decodedResponse = jsonDecode(response.body);
+    if (response.statusCode == 200 && decodedResponse["status"] == true) {
+      final favList  = AddToFavModel.fromJson(decodedResponse);
+      return favList.data;
     } else {
       throw Exception('Failed to load products');
     }
