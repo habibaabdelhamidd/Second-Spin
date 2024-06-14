@@ -7,12 +7,10 @@ import 'package:graduation/models/fav/addtofav/add_to_fav.dart';
 import 'package:graduation/models/home_model.dart';
 import 'package:graduation/models/recyle/recycle_product_details_model.dart';
 import 'package:graduation/models/response/AllCategoriesResponse.dart';
+import 'package:graduation/models/search_response/SearchResponse.dart';
 import 'package:graduation/screens/category/recycle/view_model/recycle_product_details_vm.dart';
 import 'package:http/http.dart' as http;
-import '../../models/details_response/DetailsResponse.dart';
-import '../../models/loginResponse/LoginResponse.dart';
 import '../../models/recyle/all_recycle_model.dart';
-import '../../models/search_response/SearchResponse.dart';
 class Api_Manager {
   Future<List<Data>?> fetchHome() async {
     final response = await http.get(
@@ -32,7 +30,6 @@ class Api_Manager {
       throw Exception('Failed to load products');
     }
   }
-
   static Future<AllCategoriesResponse> getAllCategories() async {
     // try{
     var response = await http.get(Uri.parse("http://secondspin.xyz/api/categories/used"),
@@ -48,14 +45,13 @@ class Api_Manager {
     //   throw "Unable to retrieve posts.";
     // }
   }
-
-  static Future<CategoryResponse>getCategory(num? categoryId) async {
+  static Future<CategoryResponse> getCategory(num? categoryId) async {
     try {
-    var response = await http.get(Uri.parse("http://secondspin.xyz/api/categories/product/$categoryId"),
+    var response = await http.post(Uri.parse("http://secondspin.xyz/api/categories/product/10"),
         headers: { HttpHeaders.authorizationHeader:
         "Bearer 13|JBv81PCc2JdPH25kSaNz0ylYvpoxxU9txsEIeh8r97684cd8"
         });
-    debugPrint(response.body);
+
     final result = jsonDecode(response.body);
     debugPrint(response.body);
     var categoryResponse = CategoryResponse.fromJson(result);
@@ -63,6 +59,17 @@ class Api_Manager {
     catch (e) {
       rethrow;
     }
+  }
+  static Future<SearchResponse>getSearch(String query) async {
+    var response = await http.get(Uri.parse("http://secondspin.xyz//api/products/search?search$query"),
+        headers: { HttpHeaders.authorizationHeader:
+        "Bearer 13|JBv81PCc2JdPH25kSaNz0ylYvpoxxU9txsEIeh8r97684cd8"
+        }
+    );
+    final result = jsonDecode(response.body);
+    debugPrint(response.body);
+    var searchResponse = SearchResponse.fromJson(result);
+    return searchResponse;
   }
   Future<List<AllRecycle>?> fetchAllRecycl() async {
     final response = await http.get(
@@ -82,52 +89,6 @@ class Api_Manager {
       throw Exception('Failed to load products');
     }
   }
-  static Future<DetailsResponse>getDetails(num? detailsId) async {
-      var response = await http.get(Uri.parse("http://secondspin.xyz/api/products/showDetails/$detailsId"),
-          headers: { HttpHeaders.authorizationHeader:
-          "Bearer 13|JBv81PCc2JdPH25kSaNz0ylYvpoxxU9txsEIeh8r97684cd8"
-          });
-
-      final result = jsonDecode(response.body);
-      debugPrint(response.body);
-      var detailsResponse = DetailsResponse.fromJson(result);
-      return detailsResponse;
-  }
-
-  static Future<SearchResponse>getSearch(String query) async {
-  //   try {
-      var response = await http.get(Uri.parse("http://secondspin.xyz/api/products/search?search=$query"),
-          headers: { HttpHeaders.authorizationHeader:
-          "Bearer 13|JBv81PCc2JdPH25kSaNz0ylYvpoxxU9txsEIeh8r97684cd8"
-          });
-
-      final result = jsonDecode(response.body);
-      debugPrint(response.body);
-      var searchResponse = SearchResponse.fromJson(result);
-      return searchResponse;}
-  //   catch (e) {
-  //     rethrow;
-  //   }
-  // }
-
-  static Future<LoginResponse>login(String userName, String password) async {
-    var response = await http.post(Uri.parse("http://secondspin.xyz/api/auth/login"),
-        headers: { HttpHeaders.authorizationHeader:
-        "Bearer 13|JBv81PCc2JdPH25kSaNz0ylYvpoxxU9txsEIeh8r97684cd8"
-        },
-        // body: jsonEncode(<String, dynamic>{
-        //   "token": password,
-        //   "name": userName,
-        //   "email": "habiba22@gmail.com"
-        // })
-    );
-
-    final result = jsonDecode(response.body);
-    debugPrint(response.body);
-    var loginResponse = LoginResponse.fromJson(result);
-    return loginResponse;}
-    catch (e) {
-      rethrow;
   Future<ProdcuctData?> fetchGetProductDetails(int? productId) async {
     final response = await http.get(
         Uri.http(
