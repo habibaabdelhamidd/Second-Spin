@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation/models/fav/addtofav/add_to_fav.dart';
 
 class Favourite_card extends StatelessWidget {
+  FavProductList  favProducts ;
+  Favourite_card(this.favProducts);
   @override
   Widget build(BuildContext context) {
     final mediaquary = MediaQuery.of(context).size;
@@ -14,17 +17,18 @@ class Favourite_card extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(
-            "assets/image/favimage.png",
-            width: mediaquary.width / 2.2,
+          Image.network(
+            favProducts.image!,
+            width:double.infinity,
+            height: mediaquary.height*0.2,
             fit: BoxFit.cover,
           ),
           Text(
-            "Modern beige sofa",
+            favProducts.title!,
             style: theme.textTheme.bodyLarge,
           ),
-          Text("EG 60,000", style: theme.textTheme.bodyLarge),
-          Text("Cairo, Egypt", style: theme.textTheme.bodyMedium),
+          Text(favProducts.price!, style: theme.textTheme.bodyLarge),
+          Text(favProducts.location!, style: theme.textTheme.bodyMedium),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
