@@ -25,11 +25,12 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController coPassControl = TextEditingController();
   Future<RegisterResponse> register(
       String email, String password, String name) async {
+    String? token = await Preference.getToken();
     var response = await http.post(
         Uri.parse("http://secondspin.xyz/api/auth/register"),
         headers: {
             HttpHeaders.authorizationHeader:
-          "Bearer 13|JBv81PCc2JdPH25kSaNz0ylYvpoxxU9txsEIeh8r97684cd8",
+          "Bearer $token",
           HttpHeaders.contentTypeHeader: "application/json",
         },
         body: jsonEncode(

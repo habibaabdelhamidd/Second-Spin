@@ -22,10 +22,11 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController emailControl = TextEditingController();
   TextEditingController passControl = TextEditingController();
    Future<LoginResponse>login(String email, String password) async {
+     String? token = await Preference.getToken();
     var response = await http.post(
         Uri.parse("http://secondspin.xyz/api/auth/login"),
         headers: { HttpHeaders.authorizationHeader:
-        "Bearer 13|JBv81PCc2JdPH25kSaNz0ylYvpoxxU9txsEIeh8r97684cd8",
+        "Bearer $token",
           HttpHeaders.contentTypeHeader: "application/json",
         },
         body: jsonEncode(<String, dynamic>{
