@@ -6,39 +6,40 @@ import '../../../core/network_layer/api_manager.dart';
 
 class SearchDetails extends StatelessWidget {
   static const String routeName = "SearchDetails";
-  const SearchDetails({super.key});
+  SearchDetails({super.key});
+  late DetailsData details = DetailsData();
 
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    var details = ModalRoute.of(context)?.settings.arguments as SearchData;
-    return
-        // FutureBuilder(
-        //     future: Api_Manager.getDetails(details.id),
-        //     builder: (context, snapshot) {
-        //       if (snapshot.connectionState == ConnectionState.waiting) {
-        //         return const Center(
-        //             child: CircularProgressIndicator(
-        //           color: Colors.black,
-        //         ));
-        //       }
-        //       if (snapshot.hasError || snapshot.data == null) {
-        //         return Center(
-        //             child: Text(
-        //           snapshot.data?.message ?? snapshot.error.toString(),
-        //           style: const TextStyle(color: Colors.black),
-        //         ));
-        //       }
-        //       return
-        Scaffold(
-      backgroundColor: theme.scaffoldBackgroundColor,
-      appBar: AppBar(
+    var args = ModalRoute.of(context)?.settings.arguments as SearchData;
+    return Scaffold(
+        backgroundColor: theme.scaffoldBackgroundColor,
+        appBar: AppBar(
         title: Text(
-          "Product Details",
-          style: theme.appBarTheme.titleTextStyle,
-        ),
-      ),
-      body: Padding(
+        args.title??"",
+        style: theme.appBarTheme.titleTextStyle,
+    ),
+    ),
+    body:
+        FutureBuilder(
+            future: Api_Manager.getDetails(details.id),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                    child: CircularProgressIndicator(
+                  color: Colors.black,
+                ));
+              }
+              if (snapshot.hasError || snapshot.data == null) {
+                return Center(
+                    child: Text(
+                  snapshot.data?.message ?? snapshot.error.toString(),
+                  style: const TextStyle(color: Colors.black),
+                ));
+              }
+              return
+        Padding(
         padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.04),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -108,9 +109,7 @@ class SearchDetails extends StatelessWidget {
               padd: 15,
             )
           ],
-        ),
-      ),
-    );
-    //       });
+          ) );
+           }));
   }
 }
