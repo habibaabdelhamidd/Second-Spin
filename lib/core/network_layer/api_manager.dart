@@ -11,7 +11,6 @@ import 'package:graduation/models/response/AllCategoriesResponse.dart';
 import 'package:http/http.dart' as http;
 import '../../models/details_response/DetailsResponse.dart';
 import 'package:graduation/models/search_response/SearchResponse.dart';
-import 'package:graduation/screens/category/recycle/view_model/recycle_product_details_vm.dart';
 import '../../models/recyle/all_recycle_model.dart';
 class Api_Manager {
   Future<List<Data>?> fetchHome() async {
@@ -151,13 +150,14 @@ class Api_Manager {
     }
   }
   Future<List<FavProductList>?> fetchAllFavList() async {
+    String? token = await Preference.getToken();
     final response = await http.get(
         Uri.http(
           Constants.api_base_URL ,
           "/api/favorites/favoritelist",
         ),
         headers:{
-          "Authorization":"Bearer 13|JBv81PCc2JdPH25kSaNz0ylYvpoxxU9txsEIeh8r97684cd8"
+          "Authorization":"Bearer $token"
         }
     );
     final decodedResponse = jsonDecode(response.body);
