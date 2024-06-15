@@ -10,9 +10,7 @@ import 'package:graduation/models/recyle/recycle_product_details_model.dart';
 import 'package:graduation/models/response/AllCategoriesResponse.dart';
 import '../../models/details_response/DetailsResponse.dart';
 import 'package:graduation/models/search_response/SearchResponse.dart';
-import 'package:graduation/screens/category/recycle/view_model/recycle_product_details_vm.dart';
 import 'package:http/http.dart' as http;
-
 import '../../models/recyle/all_recycle_model.dart';
 class Api_Manager {
   Future<List<Data>?> fetchHome() async {
@@ -80,7 +78,6 @@ class Api_Manager {
       throw Exception('Failed to load products');
     }
   }
-
   static Future<DetailsResponse>getDetails(num? detailsId) async {
     String? token = await Preference.getToken();
       var response = await http.get(Uri.parse("http://secondspin.xyz/api/products/showDetails/$detailsId"),
@@ -93,7 +90,6 @@ class Api_Manager {
       var detailsResponse = DetailsResponse.fromJson(result);
       return detailsResponse;
   }
-
   static Future<SearchResponse>getSearch(String query) async {
     String? token = await Preference.getToken();
       var response = await http.get(Uri.parse("http://secondspin.xyz/api/products/search?search=$query"),
@@ -129,7 +125,6 @@ class Api_Manager {
   //   var loginResponse = LoginResponse.fromJson(result);
   //   return loginResponse;
   // }
-
   Future<ProdcuctData?> fetchGetProductDetails(int? productId) async {
     final response = await http.get(
         Uri.http(
