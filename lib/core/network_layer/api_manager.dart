@@ -4,13 +4,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:graduation/core/constants.dart';
 import 'package:graduation/core/shared_preference.dart';
 import 'package:graduation/models/categories_response/CategoryResponse.dart';
+import 'package:graduation/models/fav/addtofav/add_to_fav.dart';
 import 'package:graduation/models/home_model.dart';
 import 'package:graduation/models/recyle/recycle_product_details_model.dart';
 import 'package:graduation/models/response/AllCategoriesResponse.dart';
-import 'package:http/http.dart' as http;
 import '../../models/details_response/DetailsResponse.dart';
+import 'package:graduation/models/search_response/SearchResponse.dart';
+import 'package:graduation/screens/category/recycle/view_model/recycle_product_details_vm.dart';
+import 'package:http/http.dart' as http;
+
 import '../../models/recyle/all_recycle_model.dart';
-import '../../models/search_response/SearchResponse.dart';
 class Api_Manager {
   Future<List<Data>?> fetchHome() async {
     final response = await http.get(
@@ -30,7 +33,6 @@ class Api_Manager {
       throw Exception('Failed to load products');
     }
   }
-
   static Future<AllCategoriesResponse> getAllCategories() async {
     String? token = await Preference.getToken();
     var response = await http.get(Uri.parse("http://secondspin.xyz/api/categories/used"),
@@ -43,9 +45,9 @@ class Api_Manager {
     var allCategoriesResponse = AllCategoriesResponse.fromJson(result);
     return allCategoriesResponse;
   }
-
-  static Future<CategoryResponse>getCategory(num? categoryId) async {
+  static Future<CategoryResponse> getCategory(num? categoryId) async {
     try {
+
       String? token = await Preference.getToken();
     var response = await http.get(Uri.parse("http://secondspin.xyz/api/categories/product/$categoryId"),
         headers: { HttpHeaders.authorizationHeader:
@@ -60,7 +62,6 @@ class Api_Manager {
       rethrow;
     }
   }
-
   Future<List<AllRecycle>?> fetchAllRecycl() async {
     final response = await http.get(
         Uri.http(
@@ -128,6 +129,7 @@ class Api_Manager {
   //   var loginResponse = LoginResponse.fromJson(result);
   //   return loginResponse;
   // }
+
   Future<ProdcuctData?> fetchGetProductDetails(int? productId) async {
     final response = await http.get(
         Uri.http(
@@ -135,13 +137,31 @@ class Api_Manager {
           "/api/products/showDetails/$productId",
         ),
         headers:{
-          "Authorization":"Bearer 7|Mg31lmlgv4yc0EcWuwYsb1lYGP1bV1XVnEae6Z5f25d6b3dd"
+          "Authorization":"Bearer 13|JBv81PCc2JdPH25kSaNz0ylYvpoxxU9txsEIeh8r97684cd8"
         }
     );
     final decodedResponse = jsonDecode(response.body);
     if (response.statusCode == 200 && decodedResponse["status"] == true) {
       final productDetails  = RecycleProductDetailsModel.fromJson(decodedResponse);
       return productDetails.data;
+    } else {
+      throw Exception('Failed to load products');
+    }
+  }
+  Future<List<FavProductList>?> fetchAllFavList() async {
+    final response = await http.get(
+        Uri.http(
+          Constants.api_base_URL ,
+          "/api/favorites/favoritelist",
+        ),
+        headers:{
+          "Authorization":"Bearer 13|JBv81PCc2JdPH25kSaNz0ylYvpoxxU9txsEIeh8r97684cd8"
+        }
+    );
+    final decodedResponse = jsonDecode(response.body);
+    if (response.statusCode == 200 && decodedResponse["status"] == true) {
+      final favList  = AddToFavModel.fromJson(decodedResponse);
+      return favList.data;
     } else {
       throw Exception('Failed to load products');
     }

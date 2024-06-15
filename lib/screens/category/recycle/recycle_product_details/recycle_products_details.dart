@@ -5,11 +5,9 @@ class Recycle_Product_Details extends StatefulWidget {
   @override
   static const String routeName = "Recycle_Product_Details";
   Recycle_Product_Details({super.key});
-
   @override
   State<Recycle_Product_Details> createState() => _Recycle_Product_DetailsState();
 }
-
 class _Recycle_Product_DetailsState extends State<Recycle_Product_Details> {
   late RecycleProductDetailsVm recylePVM ;
   @override
@@ -47,6 +45,7 @@ class _Recycle_Product_DetailsState extends State<Recycle_Product_Details> {
                 children: [
                   Container(
                     width: double.infinity,
+                    height: mediaquery.height*0.3,
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: Image.network(
