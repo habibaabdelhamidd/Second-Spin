@@ -1,9 +1,12 @@
+import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:graduation/core/network_layer/api_manager.dart';
+import 'package:graduation/core/shared_preference.dart';
 import 'package:graduation/screens/login/buttons.dart';
 import 'package:graduation/screens/login/text_ff.dart';
-
+import 'package:http/http.dart' as http;
 import '../../layouts/homelayout/homelayout.dart';
+import '../../models/loginResponse/LoginResponse.dart';
 import '../register/register_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -18,6 +21,33 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController emailControl = TextEditingController();
   TextEditingController passControl = TextEditingController();
+   Future<LoginResponse>login(String email, String password) async {
+    var response = await http.post(
+        Uri.parse("http://secondspin.xyz/api/auth/login"),
+        headers: { HttpHeaders.authorizationHeader:
+        "Bearer 13|JBv81PCc2JdPH25kSaNz0ylYvpoxxU9txsEIeh8r97684cd8",
+          HttpHeaders.contentTypeHeader: "application/json",
+        },
+        body: jsonEncode(<String, dynamic>{
+          "password": password,
+          "email": email
+        })
+    );
+    if(response.statusCode == 200){
+      final result = jsonDecode(response.body);
+      print(response.body);
+      var loginResponse = LoginResponse.fromJson(result);
+      Preference.saveToken(loginResponse.data?.token);
+      Navigator.pushNamed(context, HomeLayout.routeName);
+    }
+    else{
+      print("failed");
+    }
+    final result = jsonDecode(response.body);
+    print(response.body);
+    var loginResponse = LoginResponse.fromJson(result);
+    return loginResponse;
+  }
 
   var formKey = GlobalKey<FormState>();
   bool isVisible = false;
@@ -122,11 +152,10 @@ class _LoginPageState extends State<LoginPage> {
                   MaterialButton(
                       onPressed: () {
                         // login();
-                        Navigator.pushNamed(context, HomeLayout.routeName);
+                        // Navigator.pushNamed(context, HomeLayout.routeName);
                         // String email = emailControl.text;
                         // String password = passControl.text;
-                        // Api_Manager.login(email, password);
-                        // print(email + " " + password);
+                        login(emailControl.text, passControl.text);
                       },
                       child: Buttons(
                         title: 'Login', padd: 15,
