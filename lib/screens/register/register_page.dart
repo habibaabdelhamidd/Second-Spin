@@ -1,8 +1,13 @@
+import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:graduation/models/register_response/RegisterResponse.dart';
 import 'package:graduation/screens/login/buttons.dart';
 import 'package:graduation/screens/login/text_ff.dart';
+import '../../core/shared_preference.dart';
 import '../../layouts/homelayout/homelayout.dart';
 import '../login/login_page.dart';
+import 'package:http/http.dart' as http;
 
 class RegisterPage extends StatefulWidget {
   static const String routeName = "register";
@@ -18,6 +23,32 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController passControl = TextEditingController();
   TextEditingController nameControl = TextEditingController();
   TextEditingController coPassControl = TextEditingController();
+  Future<RegisterResponse> register(
+      String email, String password, String name) async {
+    var response = await http.post(
+        Uri.parse("http://secondspin.xyz/api/auth/register"),
+        headers: {
+            HttpHeaders.authorizationHeader:
+          "Bearer 13|JBv81PCc2JdPH25kSaNz0ylYvpoxxU9txsEIeh8r97684cd8",
+          HttpHeaders.contentTypeHeader: "application/json",
+        },
+        body: jsonEncode(
+            <String, dynamic>{"password": password, "email": email, "name" : name}));
+    if (response.statusCode == 200) {
+      final result = jsonDecode(response.body);
+      print(response.body);
+      var registerResponse = RegisterResponse.fromJson(result);
+      Preference.saveToken(registerResponse.data?.token);
+      Navigator.pushNamed(context, HomeLayout.routeName);
+    } else {
+      print("failed");
+    }
+
+    final result = jsonDecode(response.body);
+    print(response.body);
+    var registerResponse = RegisterResponse.fromJson(result);
+    return registerResponse;
+  }
 
   var formKey = GlobalKey<FormState>();
   bool isVisible = false;
@@ -114,7 +145,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         if (value == null || value.trim().isEmpty) {
                           return "Please enter password";
                         }
-                        var regex = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
+                        var regex = RegExp(
+                            r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
                         if (!regex.hasMatch(value)) {
                           return "Invalid Password";
                         }
@@ -143,7 +175,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         if (value == null || value.trim().isEmpty) {
                           return "Please confirm password";
                         }
-                        if(value != passControl.text){
+                        if (value != passControl.text) {
                           return "Password doesn't match";
                         }
                         return null;
@@ -153,10 +185,13 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   MaterialButton(
                       onPressed: () {
-                        signUp();
+                        // signUp();
+                        register(emailControl.text.toString(),
+                            passControl.text.toString(), nameControl.text.toString());
                       },
                       child: Buttons(
-                        title: 'Sign up', padd: 15,
+                        title: 'Sign up',
+                        padd: 15,
                       )),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.03,
@@ -164,9 +199,16 @@ class _RegisterPageState extends State<RegisterPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Already have an account?",style: theme.textTheme.labelSmall),
-                      TextButton(onPressed: (){ Navigator.pushNamed(context, LoginPage.routeName);}, child: const Text("Login", style:
-                      TextStyle(decoration: TextDecoration.underline,decorationColor: Colors.lightBlueAccent)))
+                      Text("Already have an account?",
+                          style: theme.textTheme.labelSmall),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, LoginPage.routeName);
+                          },
+                          child: const Text("Login",
+                              style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: Colors.lightBlueAccent)))
                     ],
                   )
                 ],
@@ -177,10 +219,10 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
   }
-
-  signUp() {
-    if (formKey.currentState!.validate()) {
-      Navigator.pushNamed(context, HomeLayout.routeName);
-    }
-  }
+  //
+  // signUp() {
+  //   if (formKey.currentState!.validate()) {
+  //     Navigator.pushNamed(context, HomeLayout.routeName);
+  //   }
+  // }
 }

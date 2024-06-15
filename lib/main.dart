@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation/core/shared_preference.dart';
 import 'package:graduation/core/theme/app_theme.dart';
 import 'package:graduation/layouts/homelayout/homelayout.dart';
 import 'package:graduation/screens/account/edit_account/edit_account.dart';
@@ -11,14 +12,11 @@ import 'package:graduation/screens/category/recycle/recycle_product_details/recy
 import 'package:graduation/screens/category/recycle/recycle_products/recycle_products.dart';
 import 'package:graduation/screens/category/used/used_category.dart';
 import 'package:graduation/screens/category/used/used_details.dart';
-import 'package:graduation/screens/category/used/used_items.dart';
 import 'package:graduation/screens/category/used/used_view.dart';
 import 'package:graduation/screens/home/favourite/all_favourite_product.dart';
 import 'package:graduation/screens/home/favourite/favourite_product_details.dart';
 import 'package:graduation/screens/home/home/home.dart';
 import 'package:graduation/screens/home/search/search_details.dart';
-import 'package:graduation/screens/home/search/search_items.dart';
-import 'package:graduation/screens/home/search/search_view.dart';
 import 'package:graduation/screens/login/login_page.dart';
 import 'package:graduation/screens/register/register_page.dart';
 import 'package:graduation/screens/sell/form/camera.dart';
@@ -26,8 +24,11 @@ import 'package:graduation/screens/sell/form/charity_form.dart';
 import 'package:graduation/screens/sell/form/sell_form.dart';
 import 'package:graduation/screens/sell/sell_view.dart';
 import 'package:graduation/screens/splash/splashscreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  Preference. prefs =  await SharedPreferences.getInstance();
   runApp(const MyApp());
 }
 
@@ -58,14 +59,14 @@ class MyApp extends StatelessWidget {
         // SearchItem.routeName : (context)=> const SearchItem(),
         SearchDetails.routeName : (context)=> SearchDetails(),
         UsedView.routeName : (context)=> const UsedView(),
-        UsedCategory.routeName : (context)=> UsedCategory(),
-        UsedDetails.routeName : (context)=> UsedDetails(),
-        SellView.routeName : (context)=> SellView(),
+        UsedCategory.routeName : (context)=> const UsedCategory(),
+        UsedDetails.routeName : (context)=> const UsedDetails(),
+        SellView.routeName : (context)=> const SellView(),
         SellForm.routeName : (context)=> SellForm(),
-        CharityForm.routeName : (context)=> CharityForm(),
-        EditAccount.routeName : (context)=> EditAccount(),
+        CharityForm.routeName : (context)=> const CharityForm(),
+        EditAccount.routeName : (context)=> const EditAccount(),
         Settings_Account.routeName: (context)=> Settings_Account(),
-        FormCamera.routeName : (context)=> FormCamera(),
+        FormCamera.routeName : (context)=> const FormCamera(),
       },
       home: Splashscreen(),
     );

@@ -1,14 +1,14 @@
 import 'Data.dart';
 
-/// message : "Successful query"
-/// data : {"id":4,"title":"adidas","description":"Adidas Football Shoes Original","image":"http://www.secondspin.xyz/public/storage/SLhaJCMdLWuwVumvsyDcOYCun9rNPNo8.png","price":"560.00","created_at":"2024-05-28T13:42:44.000000Z","story":null,"location":"giza","location_details":"el zamalleek","category":"Shoes&Bags","user":"1"}
+/// message : "User Created Successfully"
+/// data : {"name":"habiba28","email":"habiba28@gmail.com","password":"Habiba@2468","token":"23|unzOlvUTadkh1qhO7guTR74x1OFxRlnVwZp57vJi4eff3198"}
 /// status : true
 /// code : 200
 
-class DetailsResponse {
-  DetailsResponse({
+class RegisterResponse {
+  RegisterResponse({
       String? message, 
-      DetailsData? data,
+      RegisterData? data,
       bool? status, 
       num? code,}){
     _message = message;
@@ -17,27 +17,27 @@ class DetailsResponse {
     _code = code;
 }
 
-  DetailsResponse.fromJson(dynamic json) {
+  RegisterResponse.fromJson(dynamic json) {
     _message = json['message'];
-    _data = json['data'] != null ? DetailsData.fromJson(json['data']) : null;
+    _data = json['data'] != null ? RegisterData.fromJson(json['data']) : null;
     _status = json['status'];
     _code = json['code'];
   }
   String? _message;
-  DetailsData? _data;
+  RegisterData? _data;
   bool? _status;
   num? _code;
-DetailsResponse copyWith({  String? message,
-  DetailsData? data,
+RegisterResponse copyWith({  String? message,
+  RegisterData? data,
   bool? status,
   num? code,
-}) => DetailsResponse(  message: message ?? _message,
+}) => RegisterResponse(  message: message ?? _message,
   data: data ?? _data,
   status: status ?? _status,
   code: code ?? _code,
 );
   String? get message => _message;
-  DetailsData? get data => _data;
+  RegisterData? get data => _data;
   bool? get status => _status;
   num? get code => _code;
 

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:graduation/screens/home/home/suggestion_card.dart';
 import 'package:graduation/screens/home/search/search.dart';
 import '../favourite/all_favourite_product.dart';
-import '../search/search_view.dart';
 import '../view_model/view_model.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -141,9 +140,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: theme.textTheme.bodyLarge,
                     ),
                     Spacer(),
-                    Text(
-                      "See All",
-                      style: theme.textTheme.bodySmall,
+                    InkWell(
+                      // onTap: ,
+                      child: Text(
+                        "See All",
+                        style: theme.textTheme.bodySmall,
+                      ),
                     ),
                   ],
                 ),
