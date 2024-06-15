@@ -17,10 +17,14 @@ class Recycl_Product_card extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.network(
-            productRecycl.image!,
-            width: mediaquary.width / 2.2,
-            fit: BoxFit.fill,
+          Container(
+            width: double.infinity,
+            height: mediaquary.height * 0.2,
+            child: Image.network(
+              productRecycl.image!,
+              width: mediaquary.width / 2.2,
+              fit: BoxFit.fill,
+            ),
           ),
           Text(
             productRecycl.title!,
