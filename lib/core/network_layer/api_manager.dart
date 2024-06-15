@@ -13,13 +13,14 @@ import '../../models/recyle/all_recycle_model.dart';
 import '../../models/search_response/SearchResponse.dart';
 class Api_Manager {
   Future<List<Data>?> fetchHome() async {
+    String? token = await Preference.getToken();
     final response = await http.get(
         Uri.http(
           Constants.api_base_URL ,
           "/api/products/home",
         ),
       headers:{
-        "Authorization":"Bearer 7|Mg31lmlgv4yc0EcWuwYsb1lYGP1bV1XVnEae6Z5f25d6b3dd"
+        "Authorization":"Bearer $token"
       }
     );
     final decodedResponse = jsonDecode(response.body);
@@ -62,13 +63,14 @@ class Api_Manager {
   }
 
   Future<List<AllRecycle>?> fetchAllRecycl() async {
+    String? token = await Preference.getToken();
     final response = await http.get(
         Uri.http(
           Constants.api_base_URL ,
           "/api/categories/product/1",
         ),
         headers:{
-          "Authorization":"Bearer 7|Mg31lmlgv4yc0EcWuwYsb1lYGP1bV1XVnEae6Z5f25d6b3dd"
+          "Authorization":"Bearer $token"
         }
     );
     final decodedResponse = jsonDecode(response.body);
@@ -129,13 +131,14 @@ class Api_Manager {
   //   return loginResponse;
   // }
   Future<ProdcuctData?> fetchGetProductDetails(int? productId) async {
+    String? token = await Preference.getToken();
     final response = await http.get(
         Uri.http(
           Constants.api_base_URL ,
           "/api/products/showDetails/$productId",
         ),
         headers:{
-          "Authorization":"Bearer 7|Mg31lmlgv4yc0EcWuwYsb1lYGP1bV1XVnEae6Z5f25d6b3dd"
+          "Authorization":"Bearer $token"
         }
     );
     final decodedResponse = jsonDecode(response.body);
