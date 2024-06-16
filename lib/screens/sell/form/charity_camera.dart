@@ -1,16 +1,14 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:graduation/screens/sell/form/sell_form.dart';
-
-class FormCamera extends StatefulWidget {
-  static const String routeName = "FormCamera";
-  const FormCamera({super.key});
+import 'package:graduation/screens/sell/form/charity_form.dart';
+class CharityCamera extends StatefulWidget {
+  static const String routeName = "CharityCamera";
+  const CharityCamera({super.key});
 
   @override
-  State<FormCamera> createState() => _FormCameraState();
+  State<CharityCamera> createState() => _CharityCameraState();
 }
-
-class _FormCameraState extends State<FormCamera> {
+class _CharityCameraState extends State<CharityCamera> {
   late CameraController cameraController;
   late Future<void> initializeController;
   @override
@@ -30,7 +28,6 @@ class _FormCameraState extends State<FormCamera> {
     cameraController.dispose();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -52,13 +49,10 @@ class _FormCameraState extends State<FormCamera> {
           onPressed: () async {
             try {
               final image = await cameraController.takePicture();
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => SellForm(
-                        imagePath: image.path,
-                      )));
-            } catch (e) {
-              rethrow;
-            }
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => CharityForm(imagePath: image.path,
+                    )));
+            } catch (e){rethrow;}
           },
           backgroundColor: Colors.white,
           child: Icon(
@@ -69,4 +63,8 @@ class _FormCameraState extends State<FormCamera> {
       ],
     );
   }
+  // void navigate(Widget navigateTo){
+  //   Navigator.of(context).push(MaterialPageRoute(
+  //       builder: (context) => navigateTo));
+  // }
 }

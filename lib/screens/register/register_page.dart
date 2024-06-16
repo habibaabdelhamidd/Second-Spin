@@ -29,21 +29,24 @@ class _RegisterPageState extends State<RegisterPage> {
     var response = await http.post(
         Uri.parse("http://secondspin.xyz/api/auth/register"),
         headers: {
-            HttpHeaders.authorizationHeader:
-          "Bearer $token",
+          HttpHeaders.authorizationHeader: "Bearer $token",
           HttpHeaders.contentTypeHeader: "application/json",
         },
-        body: jsonEncode(
-            <String, dynamic>{"password": password, "email": email, "name" : name}));
+        body: jsonEncode(<String, dynamic>{
+          "password": password,
+          "email": email,
+          "name": name
+        }));
     if (response.statusCode == 200) {
       final result = jsonDecode(response.body);
       print(response.body);
       var registerResponse = RegisterResponse.fromJson(result);
       Preference.saveToken(registerResponse.data?.token);
       Navigator.pushNamed(context, HomeLayout.routeName);
-    } else {
-      print("failed");
     }
+    // else {
+    //   print("failed");
+    // }
 
     final result = jsonDecode(response.body);
     print(response.body);
@@ -186,9 +189,11 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   MaterialButton(
                       onPressed: () {
-                        // signUp();
-                        register(emailControl.text.toString(),
-                            passControl.text.toString(), nameControl.text.toString());
+                        signUp();
+                        register(
+                            emailControl.text.toString(),
+                            passControl.text.toString(),
+                            nameControl.text.toString());
                       },
                       child: Buttons(
                         title: 'Sign up',
@@ -220,10 +225,10 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
   }
-  //
-  // signUp() {
-  //   if (formKey.currentState!.validate()) {
-  //     Navigator.pushNamed(context, HomeLayout.routeName);
-  //   }
-  // }
+
+  signUp() {
+    if (formKey.currentState!.validate()) {
+      // Navigator.pushNamed(context, HomeLayout.routeName);
+    }
+  }
 }

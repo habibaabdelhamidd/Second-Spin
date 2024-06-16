@@ -1,14 +1,14 @@
 import 'Data.dart';
 
 /// message : "Added Successfuly"
-/// data : {"id":3,"description":"white ashdkjshjkjf","title":"tshirt dajkfjkashfjashsd","image":"m7MS4ykvNVhoAnQ092sOH5tYUlN28URG.jpg","location":"cairo","location_details":"helwan sdfafafeefe"}
+/// data : {"id":124,"title":"ladder","description":"bikia to sell","image":"http://secondspin.xyz/storage/app/public/2CjmgeQTfzS4nkl5hEy6NYuGEqrzNeev.jpg","price":103.03999999999999,"created_at":"2024-06-16T16:17:41.000000Z","story":null,"location":"giza","location_details":"el sheikh zayed","category":"Recycle","user":6}
 /// status : true
 /// code : 201
 
-class DonationFormRes {
-  DonationFormRes({
+class SellResponse {
+  SellResponse({
       String? message, 
-      DonationData? data,
+      SellData? data,
       bool? status, 
       num? code,}){
     _message = message;
@@ -17,27 +17,27 @@ class DonationFormRes {
     _code = code;
 }
 
-  DonationFormRes.fromJson(dynamic json) {
+  SellResponse.fromJson(dynamic json) {
     _message = json['message'];
-    _data = json['data'] != null ? DonationData.fromJson(json['data']) : null;
+    _data = json['data'] != null ? SellData.fromJson(json['data']) : null;
     _status = json['status'];
     _code = json['code'];
   }
   String? _message;
-  DonationData? _data;
+  SellData? _data;
   bool? _status;
   num? _code;
-DonationFormRes copyWith({  String? message,
-  DonationData? data,
+SellResponse copyWith({  String? message,
+  SellData? data,
   bool? status,
   num? code,
-}) => DonationFormRes(  message: message ?? _message,
+}) => SellResponse(  message: message ?? _message,
   data: data ?? _data,
   status: status ?? _status,
   code: code ?? _code,
 );
   String? get message => _message;
-  DonationData? get data => _data;
+  SellData? get data => _data;
   bool? get status => _status;
   num? get code => _code;
 
