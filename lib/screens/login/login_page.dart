@@ -21,28 +21,25 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController emailControl = TextEditingController();
   TextEditingController passControl = TextEditingController();
-   Future<LoginResponse>login(String email, String password) async {
-     String? token = await Preference.getToken();
+  Future<LoginResponse> login(String email, String password) async {
+    String? token = await Preference.getToken();
     var response = await http.post(
         Uri.parse("http://secondspin.xyz/api/auth/login"),
-        headers: { HttpHeaders.authorizationHeader:
-        "Bearer $token",
+        headers: {
+          HttpHeaders.authorizationHeader: "Bearer $token",
           HttpHeaders.contentTypeHeader: "application/json",
         },
-        body: jsonEncode(<String, dynamic>{
-          "password": password,
-          "email": email
-        })
-    );
-    if(response.statusCode == 200){
+        body: jsonEncode(
+            <String, dynamic>{"password": password, "email": email}));
+    if (response.statusCode == 200) {
       final result = jsonDecode(response.body);
       print(response.body);
       var loginResponse = LoginResponse.fromJson(result);
       Preference.saveToken(loginResponse.data?.token);
       Navigator.pushNamed(context, HomeLayout.routeName);
     }
-    else{
-      print("failed");
+    else if(response.statusCode == 401){
+      return Future.error("Invalid credentials");
     }
     final result = jsonDecode(response.body);
     print(response.body);
@@ -130,9 +127,11 @@ class _LoginPageState extends State<LoginPage> {
                         if (value == null || value.trim().isEmpty) {
                           return "Please enter password";
                         }
+                        // if(LoginResponse.fromJson(value) == 401){
+                        //   return "Invalid credentials";
+                        // }
                         return null;
-                      }
-                      ),
+                      }),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.01,
                   ),
@@ -152,14 +151,12 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   MaterialButton(
                       onPressed: () {
-                        // login();
-                        // Navigator.pushNamed(context, HomeLayout.routeName);
-                        // String email = emailControl.text;
-                        // String password = passControl.text;
+                        loginValidation();
                         login(emailControl.text, passControl.text);
                       },
                       child: Buttons(
-                        title: 'Login', padd: 15,
+                        title: 'Login',
+                        padd: 15,
                       )),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.03,
@@ -189,9 +186,9 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-//   login() {
-//     if (formKey.currentState!.validate()) {
-//       Navigator.pushNamed(context, HomeLayout.routeName);
-//     }
-//   }
- }
+  loginValidation() {
+    if (formKey.currentState!.validate()) {
+      // Navigator.pushNamed(context, HomeLayout.routeName);
+    }
+  }
+}
