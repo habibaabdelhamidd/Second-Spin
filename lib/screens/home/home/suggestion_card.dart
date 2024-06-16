@@ -2,9 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation/models/home_model.dart';
 import 'package:graduation/screens/home/view_model/view_model.dart';
-class Suggestions_Card extends StatelessWidget{
+class Suggestions_Card extends StatefulWidget{
   Data product ;
-  Suggestions_Card(this.product);
+  HomeViewModel home_model ;
+  Suggestions_Card(this.product  , this.home_model);
+
+  @override
+  State<Suggestions_Card> createState() => _Suggestions_CardState();
+}
+
+class _Suggestions_CardState extends State<Suggestions_Card> {
   @override
   Widget build(BuildContext context) {
     final mediaquary = MediaQuery.of(context).size;
@@ -23,13 +30,26 @@ class Suggestions_Card extends StatelessWidget{
           Container(
               width: double.infinity,
               height: mediaquary.height*0.2,
-              child: Image.network(product.image!,fit: BoxFit.cover, )),
-          Text(product.title!,style: theme.textTheme.bodyMedium),
-          Text(product.price!, style: theme.textTheme.bodyLarge,),
-          Text(product.location!, style: theme.textTheme.bodyLarge,),
+              child: Image.network(widget.product.image!,fit: BoxFit.cover, )),
+          Text(widget.product.title!,style: theme.textTheme.bodyMedium),
+          Text(widget.product.price!, style: theme.textTheme.bodyLarge,),
+          Text(widget.product.location!, style: theme.textTheme.bodyLarge,),
           Row(children: [
             SizedBox(width: mediaquary.width/3.5,),
-            ImageIcon(AssetImage("assets/image/Icon fav.png" ,),color: theme.primaryColor,)
+            GestureDetector(
+              onTap: (){
+                if(widget.product.isfav==false){
+                  widget.home_model.addtofav(widget.product.id!);
+                  widget.product.isfav = !widget.product.isfav!;
+                }else{
+                  widget.home_model.removeFromFav(widget.product.id!);
+                  widget.product.isfav =!widget.product.isfav!;
+                }
+                setState((){});
+              },
+                child: Image.asset(widget.product.isfav==false ?
+                "assets/image/Icon fav.png" : "assets/image/fav_icon_solid.png")
+            )
           ],),
         ],
       ),

@@ -21,7 +21,8 @@ class Data {
   String? image;
   String? price;
   String? location;
-  Data({this.id, this.title, this.image, this.price, this.location});
+  bool ? isfav ;
+  Data({this.id, this.title, this.image, this.price, this.location , this.isfav = false});
   factory Data.fromjson(Map<String, dynamic> json) {
     return Data(
       id: json["id"],

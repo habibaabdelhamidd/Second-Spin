@@ -10,24 +10,27 @@ class Favourite_product_details extends StatefulWidget {
   @override
   State<Favourite_product_details> createState() => _Favourite_product_detailsState();
 }
-
 class _Favourite_product_detailsState extends State<Favourite_product_details> {
-  late RecycleProductDetailsVm recylePVM ;
+  late FavProductDetailsVm favPVM ;
   @override
   void initState() {
     super.initState();
-    recylePVM = RecycleProductDetailsVm();
+    favPVM = FavProductDetailsVm();
+    int ? id ;
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      id = ModalRoute.of(context)!.settings.arguments as int;
+      futureProductData(id!);
+    });
   }
-  @override
   Future<void> futureProductData(int id )async{
-    await recylePVM.getProductData(id);
+    await favPVM.getProductData(id);
+    favPVM.prodcuctData!.isfav = true;
+    print(favPVM.prodcuctData?.isfav);
     setState(() {});
   }
   Widget build(BuildContext context) {
     final mediaquary = MediaQuery.of(context).size;
     var theme = Theme.of(context);
-    int id = ModalRoute.of(context)!.settings.arguments as int;
-    futureProductData(id);
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
@@ -37,7 +40,8 @@ class _Favourite_product_detailsState extends State<Favourite_product_details> {
           style: theme.appBarTheme.titleTextStyle,
         ),
       ),
-      body: Container(
+      body:favPVM.prodcuctData == null ? Center(child: CircularProgressIndicator(),):
+      Container(
         padding: EdgeInsets.all(mediaquary.width * 0.02),
         child: SingleChildScrollView(
           child: Column(
@@ -47,7 +51,7 @@ class _Favourite_product_detailsState extends State<Favourite_product_details> {
                 alignment: AlignmentDirectional.bottomEnd,
                 children: [
                   Image.network(
-                    recylePVM.prodcuctData?.image?? "",
+                    favPVM.prodcuctData?.image?? "",
                     width: mediaquary.width,
                     fit: BoxFit.fill,
                   ),
@@ -59,9 +63,22 @@ class _Favourite_product_detailsState extends State<Favourite_product_details> {
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20)),
-                      child: Image.asset(
-                        "assets/image/fav_icon_solid.png",
-                      )),
+                      child:GestureDetector(
+                          onTap: ()async{
+                            print(favPVM .prodcuctData!.isfav);
+                            if(favPVM.prodcuctData?.isfav==false){
+                              await favPVM.addtofav();
+                              favPVM.prodcuctData?.isfav=true;
+                            }else{
+                              favPVM.removeFromFav();
+                              favPVM.prodcuctData?.isfav =false;
+                            }
+                            setState((){});
+                          },
+                          child: Image.asset(favPVM.prodcuctData?.isfav==false ?
+                          "assets/image/Icon fav.png" : "assets/image/fav_icon_solid.png")
+                      )
+                  ),
                 ],
               ),
               Padding(
@@ -69,15 +86,15 @@ class _Favourite_product_detailsState extends State<Favourite_product_details> {
                     top: mediaquary.width * 0.02,
                     bottom: mediaquary.width * 0.01),
                 child: Text(
-                  recylePVM.prodcuctData?.title??"",
+                  favPVM.prodcuctData?.title??"",
                   style: theme.textTheme.bodyLarge,
                 ),
               ),
               Text(
-                  recylePVM.prodcuctData?.description??"",
+                  favPVM.prodcuctData?.description??"",
                   style: theme.textTheme.bodyMedium!
                       .copyWith(color: Color(0xffA7A7A7))),
-              Text(recylePVM.prodcuctData?.location??"", style: theme.textTheme.bodyMedium),
+              Text(favPVM.prodcuctData?.location??"", style: theme.textTheme.bodyMedium),
               Container(
                 padding: EdgeInsets.all(mediaquary.width * 0.05),
                 margin: EdgeInsets.symmetric(
@@ -97,7 +114,7 @@ class _Favourite_product_detailsState extends State<Favourite_product_details> {
                       width: mediaquary.width / 3.5,
                     ),
                     Text(
-                      recylePVM.prodcuctData?.price??"",
+                      favPVM.prodcuctData?.price??"",
                       style: theme.textTheme.bodyLarge,
                     ),
                   ],

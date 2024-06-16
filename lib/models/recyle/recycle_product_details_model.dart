@@ -34,7 +34,7 @@ class ProdcuctData {
   String? locationDetails;
   String? category;
   String? user;
-  bool? isFav  ;
+  bool? isfav =false ;
 
   ProdcuctData(
       {this.id,
@@ -48,7 +48,6 @@ class ProdcuctData {
         this.category,
         this.description,
         this.user,
-        this.isFav = false ,
       });
 
   ProdcuctData.fromJson(Map<String, dynamic> json) {

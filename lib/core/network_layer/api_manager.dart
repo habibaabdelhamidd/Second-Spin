@@ -168,4 +168,39 @@ class Api_Manager {
       throw Exception('Failed to load products');
     }
   }
+  Future<bool>addToFav ( int id ) async{
+    String? token = await Preference.getToken();
+    print("befor token add $id");
+    final response = await http.post(
+      Uri.http(
+        Constants.api_base_URL ,
+          "/api/favorites/store/$id"
+      ),
+        headers:{
+          "Authorization":"Bearer $token"
+        }
+    );
+    final decodedResponse = jsonDecode(response.body);
+    if(response.statusCode == 201 && decodedResponse['status']==true) {
+      return true ;
+    } else return false ;
+  }
+  Future<bool>removeFromFav ( int id ) async{
+    String? token = await Preference.getToken();
+    print("befor token remove $id");
+    final response = await http.post(
+        Uri.http(
+            Constants.api_base_URL ,
+            "/api/favorites/delete/$id"
+        ),
+        headers:{
+          "Authorization":"Bearer $token"
+        }
+    );
+    final decodedResponse = jsonDecode(response.body);
+    if(response.statusCode == 200 && decodedResponse['status']==true) {
+      return true ;
+    } else return false ;
+  }
+
 }
