@@ -20,6 +20,7 @@ import 'package:graduation/screens/home/search/search_details.dart';
 import 'package:graduation/screens/login/login_page.dart';
 import 'package:graduation/screens/register/register_page.dart';
 import 'package:graduation/screens/sell/form/camera.dart';
+import 'package:graduation/screens/sell/form/charity_camera.dart';
 import 'package:graduation/screens/sell/form/charity_form.dart';
 import 'package:graduation/screens/sell/form/sell_form.dart';
 import 'package:graduation/screens/sell/sell_view.dart';
@@ -49,24 +50,25 @@ class MyApp extends StatelessWidget {
         HomeLayout.routeName : (context)=> HomeLayout(),
         HomeScreen.routeName: (context)=>  HomeScreen(),
         RecycleViewProducts.routeName : (context)=> RecycleViewProducts(),
-        LoginPage.routeName : (context)=> LoginPage(),
-        RegisterPage.routeName  : (context)=> RegisterPage(),
+        LoginPage.routeName : (context)=> const LoginPage(),
+        RegisterPage.routeName  : (context)=> const RegisterPage(),
         All_Favourit_Product.routeName: (context)=> All_Favourit_Product(),
         Favourite_product_details.routeName: (context)=> Favourite_product_details(),
         Recycle_Product_Details.routeName : (context)=> Recycle_Product_Details(),
         // SearchView.routeName : (context)=> const SearchView(),
         Cart_Chackout.routeName : (context)=> Cart_Chackout(),
         // SearchItem.routeName : (context)=> const SearchItem(),
-        SearchDetails.routeName : (context)=> SearchDetails(),
+        SearchDetails.routeName : (context)=> const SearchDetails(),
         UsedView.routeName : (context)=> const UsedView(),
         UsedCategory.routeName : (context)=> const UsedCategory(),
         UsedDetails.routeName : (context)=> const UsedDetails(),
         SellView.routeName : (context)=> const SellView(),
-        SellForm.routeName : (context)=> SellForm(),
+        SellForm.routeName : (context)=> const SellForm(),
         CharityForm.routeName : (context)=> const CharityForm(),
-        EditAccount.routeName : (context)=> const EditAccount(),
+        EditAccount.routeName : (context)=> EditAccount(),
         Settings_Account.routeName: (context)=> Settings_Account(),
         FormCamera.routeName : (context)=> const FormCamera(),
+        CharityCamera.routeName : (context)=> const CharityCamera(),
       },
       home: Splashscreen(),
     );

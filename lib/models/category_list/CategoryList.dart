@@ -1,14 +1,14 @@
 import 'Data.dart';
 
-/// message : "Charities retrieved Successfully"
-/// data : [{"id":1,"name":"Resalla"},{"id":2,"name":"Sonaa El Hayah"},{"id":3,"name":"Merssal"},{"id":4,"name":"Al Takwa"},{"id":5,"name":"Masr El Kheir"},{"id":6,"name":"EL Orman"},{"id":7,"name":"Ekram"}]
+/// message : "  Category retrieved successfully"
+/// data : [{"id":1,"name":"Recycle"},{"id":2,"name":"Clothes"},{"id":3,"name":"Shoes&Bags"},{"id":4,"name":"Perfumes"},{"id":5,"name":"Kitchen Utensils"},{"id":6,"name":"Electronics"},{"id":7,"name":"Sports"},{"id":8,"name":"Accessories"},{"id":9,"name":"Books"},{"id":10,"name":"Decorations"}]
 /// status : true
 /// code : 200
 
-class CharitiesResponse {
-  CharitiesResponse({
+class CategoryList {
+  CategoryList({
       String? message, 
-      List<CharityData>? data,
+      List<ListData>? data,
       bool? status, 
       num? code,}){
     _message = message;
@@ -17,32 +17,32 @@ class CharitiesResponse {
     _code = code;
 }
 
-  CharitiesResponse.fromJson(dynamic json) {
+  CategoryList.fromJson(dynamic json) {
     _message = json['message'];
     if (json['data'] != null) {
       _data = [];
       json['data'].forEach((v) {
-        _data?.add(CharityData.fromJson(v));
+        _data?.add(ListData.fromJson(v));
       });
     }
     _status = json['status'];
     _code = json['code'];
   }
   String? _message;
-  List<CharityData>? _data;
+  List<ListData>? _data;
   bool? _status;
   num? _code;
-CharitiesResponse copyWith({  String? message,
-  List<CharityData>? data,
+CategoryList copyWith({  String? message,
+  List<ListData>? data,
   bool? status,
   num? code,
-}) => CharitiesResponse(  message: message ?? _message,
+}) => CategoryList(  message: message ?? _message,
   data: data ?? _data,
   status: status ?? _status,
   code: code ?? _code,
 );
   String? get message => _message;
-  List<CharityData>? get data => _data;
+  List<ListData>? get data => _data;
   bool? get status => _status;
   num? get code => _code;
 

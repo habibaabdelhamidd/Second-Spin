@@ -2,9 +2,22 @@ import 'package:flutter/material.dart';
 import '../../login/buttons.dart';
 import '../../login/text_ff.dart';
 
-class EditAccount extends StatelessWidget {
+class EditAccount extends StatefulWidget {
   static const String routeName = "EditAccount";
   const EditAccount({super.key});
+
+  @override
+  State<EditAccount> createState() => _EditAccountState();
+}
+
+class _EditAccountState extends State<EditAccount> {
+  TextEditingController nameControl = TextEditingController();
+
+  TextEditingController emailControl = TextEditingController();
+
+  TextEditingController numberControl = TextEditingController();
+
+  TextEditingController passControl = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -46,33 +59,53 @@ class EditAccount extends StatelessWidget {
               children: [
                 Text(
                   "User Name",
-                  style: theme.textTheme.labelLarge?.copyWith(color: Color(0xf72B3139)),
+                  style: theme.textTheme.labelLarge
+                      ?.copyWith(color: const Color(0xf72B3139)),
                 ),
-                TextF(hint: "Cody Fisher", astrik: false),
+                TextF(
+                  hint: "Cody Fisher",
+                  astrik: false,
+                  textEditingController: nameControl,
+                ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.03,
                 ),
                 Text(
                   "Email",
-                  style: theme.textTheme.labelLarge?.copyWith(color: Color(0xf72B3139)),
+                  style: theme.textTheme.labelLarge
+                      ?.copyWith(color: const Color(0xf72B3139)),
                 ),
-                TextF(hint: "alma.lawson@example.com", astrik: false),
+                TextF(
+                  hint: "alma.lawson@example.com",
+                  astrik: false,
+                  textEditingController: emailControl,
+                ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.03,
                 ),
                 Text(
                   "Phone Number",
-                  style: theme.textTheme.labelLarge?.copyWith(color: Color(0xf72B3139)),
+                  style: theme.textTheme.labelLarge
+                      ?.copyWith(color: const Color(0xf72B3139)),
                 ),
-                TextF(hint: "(209) 555-0104", astrik: false),
+                TextF(
+                  hint: "(209) 555-0104",
+                  astrik: false,
+                  textEditingController: numberControl,
+                ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.03,
                 ),
                 Text(
                   "Password",
-                  style: theme.textTheme.labelLarge?.copyWith(color: Color(0xf72B3139)),
+                  style: theme.textTheme.labelLarge
+                      ?.copyWith(color: const Color(0xf72B3139)),
                 ),
-                TextF(hint: "*******", astrik: false),
+                TextF(
+                  hint: "*******",
+                  astrik: false,
+                  textEditingController: passControl,
+                ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.04,
                 ),
@@ -81,7 +114,9 @@ class EditAccount extends StatelessWidget {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.08,
             ),
-            Buttons(title: "Save changes", padd: 18)
+            MaterialButton(
+                onPressed: () {},
+                child: Buttons(title: "Save changes", padd: 18))
           ],
         ),
       ),
