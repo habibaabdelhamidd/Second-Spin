@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:graduation/models/categories_response/category_data.dart';
 import 'package:graduation/models/details_response/Data.dart';
 import 'package:graduation/screens/login/buttons.dart';
 
@@ -14,36 +13,31 @@ class UsedDetails extends StatefulWidget {
 }
 
 class _UsedDetailsState extends State<UsedDetails> {
-  final DetailsData details = DetailsData();
+  late ProductDetails details;
+  @override
+  void initState() {
+    super.initState();
+    details = ProductDetails();
+  }
+  Future<void> futureProductDetails(num? id )async{
+    await details.getProductDetails(id);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    var args = ModalRoute.of(context)?.settings.arguments as CategoryData;
+    num? id = ModalRoute.of(context)!.settings.arguments as num?;
+    futureProductDetails(id);
     return Scaffold(
         backgroundColor: theme.scaffoldBackgroundColor,
         appBar: AppBar(
           title: Text(
-            args.title ?? "",
+            "Product Details",
             style: theme.appBarTheme.titleTextStyle,
           ),
         ),
-        body: FutureBuilder(
-            future: Api_Manager.getDetails(details.id),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                    child: CircularProgressIndicator(
-                  color: Colors.black,
-                ));
-              }
-              if (snapshot.hasError || snapshot.data == null) {
-                return Center(
-                    child: Text(
-                  snapshot.data?.message ?? snapshot.error.toString(),
-                  style: const TextStyle(color: Colors.black),
-                ));
-              } return Expanded(
+        body: Expanded(
                   child: Padding(
                 padding:
                     EdgeInsets.all(MediaQuery.of(context).size.width * 0.04),
@@ -53,20 +47,20 @@ class _UsedDetailsState extends State<UsedDetails> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Stack(
+                        Stack(
                             alignment: Alignment.bottomRight,
                             children: [
-                              // Container(
-                              //   decoration: BoxDecoration(
-                              //       borderRadius: BorderRadius.circular(50)),
-                              //   child: Image.network(
-                              //     details.image??"",
-                              //     width: double.infinity,
-                              //     height: 300,
-                              //     fit: BoxFit.cover,
-                              //   ),
-                              // ),
-                              CircleAvatar(
+                              Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(50)),
+                                child: Image.network(
+                                  details.detailsData?.image??"",
+                                  width: double.infinity,
+                                  height: 300,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              const CircleAvatar(
                                   radius: 22,
                                   backgroundColor: Colors.white,
                                   child: Image(
@@ -76,17 +70,17 @@ class _UsedDetailsState extends State<UsedDetails> {
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.02,
                         ),
-                        Text(details.title ?? "",
+                        Text(details.detailsData?.title ?? "",
                             style: theme.textTheme.bodyLarge),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.02,
                         ),
-                        Text(details.description ?? "",
+                        Text(details.detailsData?.description ?? "",
                             style: theme.textTheme.bodySmall),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.02,
                         ),
-                        Text(details.location ?? "",
+                        Text(details.detailsData?.location ?? "",
                             style: theme.textTheme.bodyMedium
                                 ?.copyWith(fontWeight: FontWeight.normal)),
                         SizedBox(
@@ -100,10 +94,11 @@ class _UsedDetailsState extends State<UsedDetails> {
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           width: double.infinity,
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text('Price:', style: theme.textTheme.bodyLarge),
-                              Text(details.price ?? "",
+                              Text('Price:', style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w500)),
+                              SizedBox(width: MediaQuery.of(context).size.width*0.07,),
+                              Text("EGP ${details.detailsData?.price ?? ""}",
                                   style: theme.textTheme.bodyLarge),
                             ],
                           ),
@@ -118,7 +113,14 @@ class _UsedDetailsState extends State<UsedDetails> {
                     )
                   ],
                 ),
-              ));
-            }));
+              ))
+            );
+  } }
+  class ProductDetails{
+  DetailsData? detailsData;
+  Future <void> getProductDetails(num? id) async{
+    Api_Manager apiManager =  Api_Manager();
+    detailsData = (await apiManager.getDetails(id));
   }
 }
+

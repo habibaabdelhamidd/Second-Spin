@@ -5,8 +5,8 @@
 /// location : "cairo"
 /// location_details : "helwan sdfafafeefe"
 
-class Data {
-  Data({
+class DonationData {
+  DonationData({
       num? id, 
       String? description, 
       String? title, 
@@ -21,7 +21,7 @@ class Data {
     _locationDetails = locationDetails;
 }
 
-  Data.fromJson(dynamic json) {
+  DonationData.fromJson(dynamic json) {
     _id = json['id'];
     _description = json['description'];
     _title = json['title'];
@@ -35,13 +35,13 @@ class Data {
   String? _image;
   String? _location;
   String? _locationDetails;
-Data copyWith({  num? id,
+DonationData copyWith({  num? id,
   String? description,
   String? title,
   String? image,
   String? location,
   String? locationDetails,
-}) => Data(  id: id ?? _id,
+}) => DonationData(  id: id ?? _id,
   description: description ?? _description,
   title: title ?? _title,
   image: image ?? _image,
