@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation/models/recyle/recycle_product_details_model.dart';
 import 'package:graduation/screens/category/recycle/view_model/recycle_product_details_vm.dart';
 class Recycle_Product_Details extends StatefulWidget {
   @override
@@ -9,11 +10,16 @@ class Recycle_Product_Details extends StatefulWidget {
   State<Recycle_Product_Details> createState() => _Recycle_Product_DetailsState();
 }
 class _Recycle_Product_DetailsState extends State<Recycle_Product_Details> {
-  late RecycleProductDetailsVm recylePVM ;
+  late FavProductDetailsVm recylePVM ;
   @override
   void initState() {
     super.initState();
-    recylePVM = RecycleProductDetailsVm();
+    recylePVM = FavProductDetailsVm();
+    int ? id ;
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      id = ModalRoute.of(context)!.settings.arguments as int;
+      futureProductData(id!);
+       });
   }
   Future<void> futureProductData(int id )async{
     await recylePVM.getProductData(id);
@@ -23,8 +29,6 @@ class _Recycle_Product_DetailsState extends State<Recycle_Product_Details> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     final mediaquery = MediaQuery.of(context).size;
-    int id = ModalRoute.of(context)!.settings.arguments as int;
-    futureProductData(id);
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
@@ -34,7 +38,8 @@ class _Recycle_Product_DetailsState extends State<Recycle_Product_Details> {
           style: theme.appBarTheme.titleTextStyle,
         ),
       ),
-      body: Container(
+      body: recylePVM.prodcuctData == null ? Center(child: CircularProgressIndicator(),):
+      Container(
         padding: EdgeInsets.all(mediaquery.width * 0.02),
         child: SingleChildScrollView(
           child: Column(
@@ -61,9 +66,24 @@ class _Recycle_Product_DetailsState extends State<Recycle_Product_Details> {
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20)),
-                      child: Image.asset(
-                        "assets/image/Icon fav.png",
-                      )),
+                      child:
+                      GestureDetector(
+                          onTap: ()async{
+                            print("click");
+                            print(recylePVM .prodcuctData!.isfav);
+                            if(recylePVM.prodcuctData?.isfav==false){
+                               await recylePVM.addtofav();
+                              recylePVM.prodcuctData?.isfav=true;
+                            }else{
+                              recylePVM.removeFromFav();
+                              recylePVM.prodcuctData?.isfav =false;
+                            }
+                            setState((){});
+                          },
+                          child: Image.asset(recylePVM.prodcuctData?.isfav==false ?
+                          "assets/image/Icon fav.png" : "assets/image/fav_icon_solid.png")
+                      )
+                  ),
                 ],
               ),
               Padding(

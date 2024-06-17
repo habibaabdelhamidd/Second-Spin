@@ -52,6 +52,7 @@ class _RecycleViewProductsState extends State<RecycleViewProducts> {
                 },
                 child: Recycl_Product_card(
                     recyclVm.allRecyclProductsView[index],
+                  recyclVm,
                 ),
             ),
                 itemCount: recyclVm.allRecyclProductsView.length,

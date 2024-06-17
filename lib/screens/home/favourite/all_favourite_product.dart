@@ -51,7 +51,8 @@ class _All_Favourit_ProductState extends State<All_Favourit_Product> {
                         );
                       },
                       child: Favourite_card(
-                          favVM.allFavProducts[index]
+                          favVM.allFavProducts[index],
+                        favVM,
                       ),
                   ),
                 itemCount: favVM.allFavProducts.length,
