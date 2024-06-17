@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation/screens/home/search/search_details.dart';
 import 'package:graduation/screens/home/search/search_items.dart';
 
 import '../../../core/network_layer/api_manager.dart';
@@ -45,14 +46,18 @@ class ItemSearch extends SearchDelegate<String> {
         }
         var searchList = snapshot.data?.data;
         return GridView.builder(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(15),
             itemCount: searchList?.length,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 15,
                 mainAxisSpacing: 15,
                 childAspectRatio: 0.7),
-            itemBuilder: (context, index) => SearchItem(searchList![index]));
+            itemBuilder: (context, index) => InkWell(
+                onTap: (){
+                  Navigator.pushNamed(context, SearchDetails.routeName, arguments: searchList[index].id as num);
+                },
+                child: SearchItem(searchList![index])));
       });
 
   @override

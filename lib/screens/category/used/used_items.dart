@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:graduation/models/categories_response/category_data.dart';
-import 'package:graduation/screens/category/used/used_details.dart';
 
 class UsedItem extends StatelessWidget {
   static const String routeName = "UsedItem";
@@ -11,9 +10,9 @@ final CategoryData catData;
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     return InkWell(
-        onTap: () {
-          Navigator.pushNamed(context, UsedDetails.routeName, arguments: catData);
-        },
+        // onTap: () {
+        //   Navigator.pushNamed(context, UsedDetails.routeName, arguments: catData.id);
+        // },
         child: Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
@@ -25,11 +24,11 @@ final CategoryData catData;
                 Image.network(catData.image!,width: double.infinity ,height: 135,fit: BoxFit.cover, ),
                 Text(
                     catData.title ?? "",
-                    style: theme.textTheme.bodyMedium
+                    style: theme.textTheme.labelMedium
                 ),
                 Text(
-                    catData.price ?? "",
-                    style: theme.textTheme.bodyMedium
+                    "EGP ${catData.price ?? ""}",
+                    style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold)
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

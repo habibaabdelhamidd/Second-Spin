@@ -1,34 +1,35 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation/models/home_model.dart';
-import 'package:graduation/screens/home/view_model/view_model.dart';
-class Suggestions_Card extends StatelessWidget{
+class SuggestionsCard extends StatelessWidget{
   Data product ;
-  Suggestions_Card(this.product);
+  SuggestionsCard(this.product, {super.key});
   @override
   Widget build(BuildContext context) {
-    final mediaquary = MediaQuery.of(context).size;
+    final mediaQuery = MediaQuery.of(context).size;
     var theme = Theme.of(context);
     return Container(
-      padding: EdgeInsets.all(mediaquary.width*0.015),
-      margin: EdgeInsets.all(mediaquary.width * 0.01),
-      width:mediaquary.width/2.6,
+      padding: EdgeInsets.all(mediaQuery.width*0.015),
+      margin: EdgeInsets.all(mediaQuery.width * 0.01),
+      width:mediaQuery.width/2.4,
       decoration: BoxDecoration(
         color:Colors.white,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
-        crossAxisAlignment:CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
               width: double.infinity,
-              height: mediaquary.height*0.2,
-              child: Image.network(product.image!,fit: BoxFit.cover, )),
-          Text(product.title!,style: theme.textTheme.bodyMedium),
-          Text(product.price!, style: theme.textTheme.bodyLarge,),
-          Text(product.location!, style: theme.textTheme.bodyLarge,),
-          Row(children: [
-            SizedBox(width: mediaquary.width/3.5,),
+              height: mediaQuery.height*0.2,
+              child: Image.network(product.image!,fit: BoxFit.cover,width: double.infinity ,height: 135, )),
+          Text(product.title!,style: theme.textTheme.bodyLarge,maxLines: 2,),
+          Text("EGP ${product.price!}", style: theme.textTheme.labelMedium,),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+            Text(product.location!, style: theme.textTheme.bodyMedium),
             ImageIcon(AssetImage("assets/image/Icon fav.png" ,),color: theme.primaryColor,)
           ],),
         ],

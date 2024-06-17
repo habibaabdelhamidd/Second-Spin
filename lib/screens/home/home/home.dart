@@ -119,13 +119,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             decoration: BoxDecoration(
                                 image: DecorationImage(
                                     image: AssetImage(i), fit: BoxFit.cover),
-                                borderRadius: BorderRadius.circular(25)),
+                                borderRadius: BorderRadius.circular(20)),
                            );
                       },
                     );
                   }).toList(),
                   options: CarouselOptions(
-                    height: 150,
+                    height: 170,
                     aspectRatio: 16 / 9,
                     viewportFraction: 1,
                     autoPlay: true,
@@ -153,11 +153,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               Container(
-                height: mediaquary.height / 2.6,
+                height: mediaquary.height*0.35,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) =>
-                      Suggestions_Card(homeVm.suggestionsProducts[index]),
+                      SuggestionsCard(homeVm.suggestionsProducts[index]),
                   itemCount: homeVm.suggestionsProducts.length,
                 ),
               ),

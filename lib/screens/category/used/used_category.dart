@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graduation/models/response/Data.dart';
+import 'package:graduation/screens/category/used/used_details.dart';
 import 'package:graduation/screens/category/used/used_items.dart';
 import '../../../core/network_layer/api_manager.dart';
 
@@ -15,7 +16,7 @@ class UsedCategory extends StatelessWidget {
         backgroundColor: theme.scaffoldBackgroundColor,
         appBar: AppBar(
           title: Text(
-            args.name??"",
+            args.name ?? "",
             style: theme.appBarTheme.titleTextStyle,
           ),
         ),
@@ -46,7 +47,12 @@ class UsedCategory extends StatelessWidget {
                               crossAxisSpacing: 15,
                               mainAxisSpacing: 15,
                               childAspectRatio: 0.7),
-                      itemBuilder: (context, index) => UsedItem(productsList![index])));
+                      itemBuilder: (context, index) => InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(context, UsedDetails.routeName,
+                                arguments: productsList[index].id as num);
+                          },
+                          child: UsedItem(productsList![index]))));
             }));
   }
 }
