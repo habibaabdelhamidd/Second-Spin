@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation/models/fav/addtofav/add_to_fav.dart';
-
 import 'add_to_fav_view_model.dart';
-
 class Favourite_card extends StatefulWidget {
   FavProductList favProducts;
   AddToFavViewModel favVM;
