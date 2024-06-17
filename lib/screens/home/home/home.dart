@@ -6,23 +6,26 @@ import '../favourite/all_favourite_product.dart';
 import '../view_model/view_model.dart';
 
 class HomeScreen extends StatefulWidget {
-   HomeScreen({super.key});
+  HomeScreen({super.key});
   static const String routeName = "home";
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
+
 class _HomeScreenState extends State<HomeScreen> {
- late HomeViewModel homeVm ;
+  late HomeViewModel homeVm;
   @override
   void initState() {
     super.initState();
     homeVm = HomeViewModel();
     futureSuggest();
   }
-  Future<void> futureSuggest ()async{
-   await homeVm.getSuggtionsModel();
-   setState(() {});
+
+  Future<void> futureSuggest() async {
+    await homeVm.getSuggtionsModel();
+    setState(() {});
   }
+
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -102,7 +105,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: MediaQuery.of(context).size.height * 0.02,
               ),
               CarouselSlider(
-                  items: [1, 2, 3].map((i) {
+                  items: [
+                    "assets/image/Untitled Project (4).jpg",
+                    "assets/image/Untitled Project (5).jpg",
+                    "assets/image/Untitled Project (10).jpg"
+                  ].map((i) {
                     return Builder(
                       builder: (BuildContext context) {
                         return Container(
@@ -110,15 +117,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             width: MediaQuery.of(context).size.width,
                             margin: const EdgeInsets.symmetric(horizontal: 5.0),
                             decoration: BoxDecoration(
-                                image: const DecorationImage(
-                                    image: AssetImage(
-                                        "assets/image/slideshow1.jpg"),
-                                    fit: BoxFit.fill),
+                                image: DecorationImage(
+                                    image: AssetImage(i), fit: BoxFit.cover),
                                 borderRadius: BorderRadius.circular(25)),
-                            child: Text(
-                              'Donate now',
-                              style: theme.textTheme.titleLarge,
-                            ));
+                           );
                       },
                     );
                   }).toList(),
@@ -126,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 150,
                     aspectRatio: 16 / 9,
                     viewportFraction: 1,
-                    // autoPlay: true,
+                    autoPlay: true,
                     // autoPlayInterval: const Duration(seconds: 3),
                   )),
               Padding(
@@ -139,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       "suggestions",
                       style: theme.textTheme.bodyLarge,
                     ),
-                    Spacer(),
+                    const Spacer(),
                     InkWell(
                       // onTap: ,
                       child: Text(
@@ -151,13 +153,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               Container(
-                height: mediaquary.height/2.6,
-                child:ListView.builder(
+                height: mediaquary.height / 2.6,
+                child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemBuilder:
-                (context , index)=> Suggestions_Card(
-                  homeVm.suggestionsProducts[index]
-                ),
+                  itemBuilder: (context, index) =>
+                      Suggestions_Card(homeVm.suggestionsProducts[index]),
                   itemCount: homeVm.suggestionsProducts.length,
                 ),
               ),

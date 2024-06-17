@@ -1,23 +1,23 @@
 /// id : 1
-/// name : "Resalla"
+/// name : "Recycle"
 
-class CharityData {
-  CharityData({
+class ListData {
+  ListData({
       num? id, 
       String? name,}){
     _id = id;
     _name = name;
 }
 
-  CharityData.fromJson(dynamic json) {
+  ListData.fromJson(dynamic json) {
     _id = json['id'];
     _name = json['name'];
   }
   num? _id;
   String? _name;
-CharityData copyWith({  num? id,
+ListData copyWith({  num? id,
   String? name,
-}) => CharityData(  id: id ?? _id,
+}) => ListData(  id: id ?? _id,
   name: name ?? _name,
 );
   num? get id => _id;

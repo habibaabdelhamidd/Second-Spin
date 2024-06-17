@@ -20,6 +20,7 @@ import 'package:graduation/screens/home/search/search_details.dart';
 import 'package:graduation/screens/login/login_page.dart';
 import 'package:graduation/screens/register/register_page.dart';
 import 'package:graduation/screens/sell/form/camera.dart';
+import 'package:graduation/screens/sell/form/charity_camera.dart';
 import 'package:graduation/screens/sell/form/charity_form.dart';
 import 'package:graduation/screens/sell/form/sell_form.dart';
 import 'package:graduation/screens/sell/sell_view.dart';
@@ -62,11 +63,12 @@ class MyApp extends StatelessWidget {
         UsedCategory.routeName : (context)=> const UsedCategory(),
         UsedDetails.routeName : (context)=> const UsedDetails(),
         SellView.routeName : (context)=> const SellView(),
-        SellForm.routeName : (context)=> SellForm(),
+        SellForm.routeName : (context)=> const SellForm(),
         CharityForm.routeName : (context)=> const CharityForm(),
         EditAccount.routeName : (context)=> const EditAccount(),
         Settings_Account.routeName: (context)=> Settings_Account(),
         FormCamera.routeName : (context)=> const FormCamera(),
+        CharityCamera.routeName : (context)=> const CharityCamera(),
       },
       home: Splashscreen(),
     );
