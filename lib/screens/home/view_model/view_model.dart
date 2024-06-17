@@ -4,8 +4,14 @@ import '../../../models/home_model.dart';
 
 class HomeViewModel{
   List<Data>suggestionsProducts =[];
+  Api_Manager apiManager =  Api_Manager();
  Future <void> getSuggtionsModel() async{
-    Api_Manager apiManager =  Api_Manager();
    suggestionsProducts= (await apiManager.fetchHome())!;
+  }
+  Future<void> addtofav(int id ) async{
+   await apiManager.addToFav(id);
+  }
+  Future<void> removeFromFav (int id )async{
+   await apiManager.removeFromFav(id);
   }
 }

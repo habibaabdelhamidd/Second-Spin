@@ -20,7 +20,8 @@ class AllRecycle {
   String? image;
   String? price;
   String? location;
-  AllRecycle({this.id, this.title, this.image, this.price, this.location});
+  bool? isfav ;
+  AllRecycle({this.id, this.title, this.image, this.price, this.location , this.isfav=false});
   factory AllRecycle.fromjson(Map<String, dynamic> json) {
     return AllRecycle(
       id: json["id"],

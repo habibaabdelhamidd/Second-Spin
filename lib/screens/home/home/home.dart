@@ -158,6 +158,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) =>
                       SuggestionsCard(homeVm.suggestionsProducts[index]),
+                  itemBuilder:
+                (context , index)=> Suggestions_Card(
+                  homeVm.suggestionsProducts[index] ,
+                  homeVm,
+                ),
+
                   itemCount: homeVm.suggestionsProducts.length,
                 ),
               ),

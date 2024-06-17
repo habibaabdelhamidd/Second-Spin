@@ -27,7 +27,6 @@ class AddToFavModel {
     return data;
   }
 }
-
 class FavProductList {
   String? title;
   String? price;
@@ -35,8 +34,9 @@ class FavProductList {
   String? image;
   int?  id ;
   int? product_id;
+  bool ? isfav ;
 
-  FavProductList({this.title, this.price,this.location, this.image , this.id , this.product_id});
+  FavProductList({this.title, this.price,this.location, this.image , this.id , this.product_id , this.isfav=true});
 
   FavProductList.fromJson(Map<String, dynamic> json) {
     title = json['title'];

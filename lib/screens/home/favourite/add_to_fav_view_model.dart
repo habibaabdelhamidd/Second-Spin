@@ -3,8 +3,14 @@ import '../../../core/network_layer/api_manager.dart';
 
 class AddToFavViewModel{
   List<FavProductList> allFavProducts =[];
+  Api_Manager apiManager =  Api_Manager();
   Future <void> getAllFavProducts() async{
-    Api_Manager apiManager =  Api_Manager();
     allFavProducts= (await apiManager.fetchAllFavList())!;
+  }
+  Future<void> addtofav(int id ) async{
+    await apiManager.addToFav(id);
+  }
+  Future<void> removeFromFav (int id )async{
+    await apiManager.removeFromFav(id);
   }
 }
