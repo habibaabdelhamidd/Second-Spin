@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graduation/models/search_response/Data.dart';
 
-import 'search_details.dart';
-
 class SearchItem extends StatelessWidget {
   static const String routeName = "SearchItem";
   final SearchData args;
@@ -12,11 +10,10 @@ class SearchItem extends StatelessWidget {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     return InkWell(
-      onTap: (){
-        Navigator.pushNamed(context, SearchDetails.routeName, arguments: args);
-
-      }
-        ,
+      // onTap: (){
+      //   Navigator.pushNamed(context, SearchDetails.routeName, arguments: args);
+      //
+      // }
         child: Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
@@ -36,8 +33,8 @@ class SearchItem extends StatelessWidget {
                   style: theme.textTheme.labelMedium
                   ),
                 Text(
-                  args.price??"",
-                  style: theme.textTheme.bodyMedium
+                    "EGP ${args.price ?? ""}",
+                  style: theme.textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold)
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

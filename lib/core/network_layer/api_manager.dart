@@ -3,10 +3,10 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:graduation/core/constants.dart';
 import 'package:graduation/core/shared_preference.dart';
-import 'package:graduation/models/Donation/DonationFormRes.dart';
 import 'package:graduation/models/categories_response/CategoryResponse.dart';
 import 'package:graduation/models/category_list/CategoryList.dart';
 import 'package:graduation/models/charities_response/CharitiesResponse.dart';
+import 'package:graduation/models/details_response/Data.dart';
 import 'package:graduation/models/fav/addtofav/add_to_fav.dart';
 import 'package:graduation/models/home_model.dart';
 import 'package:graduation/models/recyle/recycle_product_details_model.dart';
@@ -79,16 +79,17 @@ class Api_Manager {
     }
   }
 
-  static Future<DetailsResponse> getDetails(num? detailsId) async {
+   Future<DetailsData?> getDetails(num? detailsId) async {
     String? token = await Preference.getToken();
     var response = await http.get(
         Uri.parse("http://secondspin.xyz/api/products/showDetails/$detailsId"),
         headers: {HttpHeaders.authorizationHeader: "Bearer $token"});
-
+    final decodedResponse = jsonDecode(response.body);
+    if (response.statusCode == 200 && decodedResponse["status"] == true) {
     final result = jsonDecode(response.body);
     debugPrint(response.body);
     var detailsResponse = DetailsResponse.fromJson(result);
-    return detailsResponse;
+    return detailsResponse.data;}
   }
 
   static Future<SearchResponse> getSearch(String query) async {
