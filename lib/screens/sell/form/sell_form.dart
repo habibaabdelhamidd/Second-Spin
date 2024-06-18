@@ -1,17 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:graduation/core/network_layer/api_manager.dart';
 import 'package:graduation/models/sell_res/SellResponse.dart';
 import 'package:graduation/screens/login/buttons.dart';
 import 'package:graduation/screens/login/text_ff.dart';
 import '../../../core/shared_preference.dart';
 import 'package:http/http.dart' as http;
+import '../../../models/category_list/CategoryList.dart';
 import 'camera.dart';
-
-List<String> items = <String>[
-  'Used item',
-  'Recycle Item',
-];
 
 class SellForm extends StatefulWidget {
   static const String routeName = "SellForm";
@@ -27,7 +24,6 @@ class SellForm extends StatefulWidget {
 }
 
 class _SellFormState extends State<SellForm> {
-  String dropDownValue = items.first;
   TextEditingController titleControl = TextEditingController();
   TextEditingController descriptionControl = TextEditingController();
   TextEditingController locationControl = TextEditingController();
@@ -83,6 +79,7 @@ class _SellFormState extends State<SellForm> {
     }
   }
 
+  var dropDownValue;
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -164,26 +161,39 @@ class _SellFormState extends State<SellForm> {
                       "Choose item category *",
                       style: theme.textTheme.labelMedium,
                     ),
-                    DropdownButton<String>(
-                      style: theme.textTheme.labelSmall,
-                      padding: EdgeInsets.all(
-                          MediaQuery.of(context).size.width * 0.02),
-                      isExpanded: true,
-                      value: dropDownValue,
-                      icon: const Icon(Icons.keyboard_arrow_down),
-                      items:
-                          items.map<DropdownMenuItem<String>>((String items) {
-                        return DropdownMenuItem<String>(
-                          value: items,
-                          child: Text(items),
-                        );
-                      }).toList(),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          dropDownValue = newValue!;
-                        });
-                      },
-                    ),
+                    FutureBuilder(
+                        future: Api_Manager.getAllCategory(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                                child: CircularProgressIndicator(
+                              color: Colors.grey,
+                            ));
+                          }
+                          if (snapshot.hasError) {
+                            return Text(snapshot.error.toString());
+                          }
+                          return DropdownButton(
+                            style: theme.textTheme.labelSmall,
+                            padding: EdgeInsets.all(
+                                MediaQuery.of(context).size.width * 0.02),
+                            isExpanded: true,
+                            value: dropDownValue,
+                            icon: const Icon(Icons.keyboard_arrow_down),
+                            items: snapshot.data?.map((e) {
+                              return DropdownMenuItem(
+                                value: e.toString(),
+                                child: Text(e.toString()),
+                              );
+                            }).toList(),
+                            onChanged: (newValue) {
+                              setState(() {
+                                dropDownValue = newValue!;
+                              });
+                            },
+                          );
+                        }),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.01,
                     ),
