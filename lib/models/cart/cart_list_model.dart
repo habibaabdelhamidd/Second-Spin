@@ -1,21 +1,22 @@
-class AddToFavModel {
+class CartListModel {
   String? message;
-  List<FavProductList>? data;
+  List<CartList>? data;
   bool? status;
   int? code;
-  AddToFavModel({this.message, this.data, this.status, this.code});
-  AddToFavModel.fromJson(Map<String, dynamic> json) {
+
+  CartListModel({this.message, this.data, this.status, this.code});
+
+  CartListModel.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     if (json['data'] != null) {
-      data = <FavProductList>[];
+      data = <CartList>[];
       json['data'].forEach((v) {
-        data!.add(new FavProductList.fromJson(v));
+        data!.add(new CartList.fromJson(v));
       });
     }
     status = json['status'];
     code = json['code'];
   }
-
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['message'] = this.message;
@@ -27,38 +28,44 @@ class AddToFavModel {
     return data;
   }
 }
-class FavProductList {
+
+class CartList{
+  int? id;
   String? title;
   String? price;
   String? location;
   String? image;
-  int?  id ;
-  int? product_id;
-  bool ? isfav ;
-  bool? incart ;
+  int? productId;
+  bool ? inCart;
 
-  FavProductList({this.title, this.price,this.location, this.image , this.id , this.product_id , this.isfav=true ,
-  this.incart=false
-  });
+  CartList(
+      {this.id,
+        this.title,
+        this.price,
+        this.location,
+        this.image,
+        this.productId
+      , this.inCart=false
+      }
+      );
 
-  FavProductList.fromJson(Map<String, dynamic> json) {
+  CartList.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     title = json['title'];
     price = json['price'];
     location = json['location'];
     image = json['image'];
-    id = json['id'];
-    product_id = json['product_id'];
+    productId = json['product_id'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
     data['title'] = this.title;
     data['price'] = this.price;
     data['location'] = this.location;
     data['image'] = this.image;
-    data['id']=this.id;
-    data['product_id']=this.product_id;
+    data['product_id'] = this.productId;
     return data;
   }
 }
-

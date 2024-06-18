@@ -35,6 +35,7 @@ class ProdcuctData {
   String? category;
   String? user;
   bool? isfav =false ;
+  bool ? incart =false ;
 
   ProdcuctData(
       {this.id,

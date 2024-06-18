@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation/models/fav/addtofav/add_to_fav.dart';
-
 import 'add_to_fav_view_model.dart';
-
 class Favourite_card extends StatefulWidget {
   FavProductList favProducts;
   AddToFavViewModel favVM;
@@ -40,13 +38,13 @@ class _Favourite_cardState extends State<Favourite_card> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               GestureDetector(
-                onTap: () {
+                onTap: () async {
                   if (widget.favProducts.isfav == false) {
-                    widget.favVM.addtofav(widget.favProducts.id!);
-                    widget.favProducts.isfav = widget.favProducts.isfav!;
+                   await widget.favVM.addtofav(widget.favProducts.id!);
+                    widget.favProducts.isfav = true;
                   } else {
-                    widget.favVM.removeFromFav(widget.favProducts.id!);
-                    widget.favProducts.isfav = widget.favProducts.isfav!;
+                   await widget.favVM.removeFromFav(widget.favProducts.id!);
+                    widget.favProducts.isfav = false;
                   }
                   setState(() {});
                 },

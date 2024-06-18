@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:graduation/core/constants.dart';
 import 'package:graduation/core/shared_preference.dart';
+import 'package:graduation/models/cart/cart_list_model.dart';
 import 'package:graduation/models/categories_response/CategoryResponse.dart';
 import 'package:graduation/models/category_list/CategoryList.dart';
 import 'package:graduation/models/charities_response/CharitiesResponse.dart';
@@ -149,7 +150,6 @@ class Api_Manager {
     var charitiesResponse = CharitiesResponse.fromJson(result);
     return charitiesResponse;
   }
-
   // Future<DonationFormRes> donate(
   //   num? donationId,
   //   String? description,
@@ -181,7 +181,6 @@ class Api_Manager {
   //   var donationResponse = DonationFormRes.fromJson(result);
   //   return donationResponse;
   // }
-
   static Future<CategoryList> listCategories() async {
     String? token = await Preference.getToken();
     var response = await http.get(
@@ -193,15 +192,29 @@ class Api_Manager {
     var listResponse = CategoryList.fromJson(result);
     return listResponse;
   }
-
   Future<bool>addToFav ( int id ) async{
     String? token = await Preference.getToken();
-    print("befor token add $id");
     final response = await http.post(
       Uri.http(
         Constants.api_base_URL ,
           "/api/favorites/store/$id"
       ),
+        headers:{
+          "Authorization":"Bearer $token"
+        }
+    );
+    final decodedResponse = jsonDecode(response.body);
+    if(response.statusCode == 201 && decodedResponse['status']==true) {
+      return true ;
+    } else return false ;
+  }
+  Future<bool>addToCart ( int id ) async{
+    String? token = await Preference.getToken();
+    final response = await http.post(
+        Uri.http(
+            Constants.api_base_URL ,
+            "/api/carts/store/$id"
+        ),
         headers:{
           "Authorization":"Bearer $token"
         }
@@ -228,5 +241,20 @@ class Api_Manager {
       return true ;
     } else return false ;
   }
-
+  Future<List<CartList>?> fetchCartList() async {
+    String? token = await Preference.getToken();
+    final response = await http.get(
+        Uri.http(
+          Constants.api_base_URL,
+          "/api/carts/cartlist",
+        ),
+        headers: {"Authorization": "Bearer $token"});
+    final decodedResponse = jsonDecode(response.body);
+    if (response.statusCode == 200 && decodedResponse["status"] == true) {
+      final cartList = CartListModel.fromJson(decodedResponse);
+      return cartList.data;
+    } else {
+      throw Exception('Failed to load products');
+    }
+  }
 }

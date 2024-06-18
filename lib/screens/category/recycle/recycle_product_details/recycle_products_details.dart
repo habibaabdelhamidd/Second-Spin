@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation/models/recyle/recycle_product_details_model.dart';
+import 'package:graduation/screens/cart/vms/cart_list_view_model.dart';
 import 'package:graduation/screens/category/recycle/view_model/recycle_product_details_vm.dart';
 class Recycle_Product_Details extends StatefulWidget {
   @override
@@ -139,25 +140,38 @@ class _Recycle_Product_DetailsState extends State<Recycle_Product_Details> {
                     ),
                   ],
                 ),
-                child: Container(
-                  padding: EdgeInsets.all(mediaquery.width * 0.03),
-                  margin: EdgeInsets.all(mediaquery.width * 0.02),
-                  decoration: BoxDecoration(
-                      color: theme.primaryColor,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ImageIcon(
-                        AssetImage("assets/image/homecart.png"),
-                        color: Colors.white,
-                        size: 30,
-                      ),
-                      Text("Add to cart",
-                          style: theme.textTheme.bodyLarge!.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w900)),
-                    ],
+                child: GestureDetector(
+                  onTap: ()async{
+                    if(recylePVM.prodcuctData?.incart==false){
+                      await recylePVM.addtoCart();
+                      recylePVM.prodcuctData?.incart=true;
+                    }
+                    // else{
+                    //   recylePVM.removeFromFav();
+                    //   recylePVM.prodcuctData?.incart =false;
+                    // }
+                    setState((){});
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(mediaquery.width * 0.03),
+                    margin: EdgeInsets.all(mediaquery.width * 0.02),
+                    decoration: BoxDecoration(
+                        color: theme.primaryColor,
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ImageIcon(
+                          AssetImage("assets/image/homecart.png"),
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                        Text("Add to cart",
+                            style: theme.textTheme.bodyLarge!.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w900)),
+                      ],
+                    ),
                   ),
                 ),
               ),
