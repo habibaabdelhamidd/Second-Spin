@@ -10,7 +10,8 @@ class CategoryData {
       String? title, 
       String? image, 
       String? price, 
-      String? location,}){
+      String? location,
+  }){
     _id = id;
     _title = title;
     _image = image;

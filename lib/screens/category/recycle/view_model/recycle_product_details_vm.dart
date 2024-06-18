@@ -9,6 +9,9 @@ class FavProductDetailsVm{
   Future<void> addtofav() async{
     await apiManager.addToFav(prodcuctData!.id!);
   }
+  Future<void> addtoCart() async{
+    await apiManager.addToCart(prodcuctData!.id!);
+  }
   Future<void> removeFromFav ( )async{
     await apiManager.removeFromFav(prodcuctData!.id!);
   }
