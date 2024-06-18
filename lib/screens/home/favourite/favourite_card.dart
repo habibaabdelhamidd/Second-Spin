@@ -38,13 +38,13 @@ class _Favourite_cardState extends State<Favourite_card> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               GestureDetector(
-                onTap: () {
+                onTap: () async {
                   if (widget.favProducts.isfav == false) {
-                    widget.favVM.addtofav(widget.favProducts.id!);
-                    widget.favProducts.isfav = widget.favProducts.isfav!;
+                   await widget.favVM.addtofav(widget.favProducts.id!);
+                    widget.favProducts.isfav = true;
                   } else {
-                    widget.favVM.removeFromFav(widget.favProducts.id!);
-                    widget.favProducts.isfav = widget.favProducts.isfav!;
+                   await widget.favVM.removeFromFav(widget.favProducts.id!);
+                    widget.favProducts.isfav = false;
                   }
                   setState(() {});
                 },

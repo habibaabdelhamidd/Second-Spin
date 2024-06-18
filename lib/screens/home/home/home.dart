@@ -160,7 +160,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   homeVm.suggestionsProducts[index] ,
                   homeVm,
                 ),
-
                   itemCount: homeVm.suggestionsProducts.length,
                 ),
               ),

@@ -1,6 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:graduation/screens/sell/form/charity_form.dart';
+import 'package:graduation/models/cart/cart_list_model.dart';
+import 'package:graduation/screens/cart/cart_view/cart_card.dart';
+import 'package:graduation/screens/cart/vms/cart_list_view_model.dart';
+import '../../login/text_ff.dart';
 import '../cart_checkout/cart_checkout.dart';
 List<String> items = <String>[
   'Cairo ','Giza', 'Demietta', "Gharbia" ,"Beni suef" , "Asute" , "Beheria" ,
@@ -15,8 +20,25 @@ List<String> options = [
   "cash",
 ];
 class _Cart_view_ScreenState extends State<Cart_view_Screen> {
-
+  late CartListViewModel cartM;
+  late CartList cartlist ;
+  @override
+  void initState() {
+    super.initState();
+    cartM = CartListViewModel();
+    futureCartList();
+  }
+  Future<void> futureCartList() async {
+    await cartM.getAllCartProducts();
+    setState(() {});
+  }
   String dropDownValue = items.first;
+  TextEditingController creditNum = TextEditingController();
+  TextEditingController cvv  = TextEditingController();
+  TextEditingController expire  = TextEditingController();
+  TextEditingController locationDetails  = TextEditingController();
+  var formKey = GlobalKey<FormState>();
+  DateTime _selectedDate = DateTime.now();
   @override
   String currentOption = options[0];
   Widget build(BuildContext context) {
@@ -48,47 +70,15 @@ class _Cart_view_ScreenState extends State<Cart_view_Screen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              padding: EdgeInsets.all(mediaquary.width * 0.006),
-              margin: EdgeInsets.all(mediaquary.width * 0.02),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  border: Border.all(
-                    color: Color(0xffCCCCCC),
-                  )),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Image.asset("assets/image/snkeers.png"),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: mediaquary.width * 0.02,
-                        left: mediaquary.width * 0.03,
-                        bottom: mediaquary.width * 0.01),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "sneakers Air Jordon",
-                          style: theme.textTheme.bodyLarge,
-                        ),
-                        Text(
-                          "EGP 3,500",
-                          style: theme.textTheme.bodyLarge,
-                        ),
-                        Text(
-                          "Giza, Egypt",
-                          style: theme.textTheme.bodyMedium,
-                        ),
-                        Icon(
-                          Icons.delete_outline,
-                          color: Colors.grey.shade500,
-                          size: 30,
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
+                height: mediaquary.height*0.20,
+                child:
+            ListView.builder(
+              itemBuilder: (context , index)=>CartCard(
+              cartM.allCartList[index],
+              cartM,
+            ),
+              itemCount: cartM.allCartList.length,
+            )
             ),
             Padding(
               padding:  EdgeInsets.only(left: mediaquary.width*0.02  ,
@@ -128,17 +118,16 @@ class _Cart_view_ScreenState extends State<Cart_view_Screen> {
             Container(
               margin: EdgeInsets.only(left: mediaquary.width*0.02 , right:mediaquary.width*0.02 ),
               child: TextFormField(
+                  controller: locationDetails,
                 decoration: InputDecoration(
                     hintText: "Enter Your Location Details",
                     hintStyle: theme.textTheme.bodySmall,
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide:
-                        BorderSide(color: Colors.grey.shade500))),
+                        BorderSide(color: Colors.grey.shade500)
+                    )),
               ),
-            ),
-            SizedBox(
-              height: mediaquary.height * 0.03,
             ),
             Padding(
               padding: EdgeInsets.only(
@@ -171,6 +160,111 @@ class _Cart_view_ScreenState extends State<Cart_view_Screen> {
                 });
               },
             ),
+            Container(
+              margin: EdgeInsets.only(left: mediaquary.width*0.03,
+                  right: mediaquary.width*0.03),
+              child: TextFormField(
+                obscureText: false,
+                decoration: InputDecoration(
+                  labelText: 'Credit Card Number',
+                  labelStyle: theme.textTheme.bodySmall,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                      borderSide:BorderSide(color: Colors.grey.shade500)
+                  ),
+                ),
+                controller:creditNum,
+                validator: (String? value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return "Please enter your Credit Card Number";
+                  }
+                  var regex = RegExp(r'^[0-9]{16}$');
+                  if (!regex.hasMatch(value)) {
+                    return "Invalid Credit Card Number";
+                  }
+                  return null;
+                },
+              ),
+            ),
+            Row(
+              children: [
+                Container(
+                  width: mediaquary.width/1.8,
+                  margin: EdgeInsets.only(left: mediaquary.width*0.03,
+                      right: mediaquary.width*0.03,
+                    top: mediaquary.width * 0.03
+                  ),
+                  child: TextFormField(
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      labelText: 'MM/YY',
+                      labelStyle: theme.textTheme.bodySmall,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide:BorderSide(color: Colors.grey.shade500)
+                      ),
+                    ),
+                    controller:expire ,
+                    keyboardType: TextInputType.datetime,
+                    // onTap: () async {
+                    //   final DateTime? pickedDate = await showDatePicker(
+                    //     context: context,
+                    //     initialDate: DateTime.now(),
+                    //     firstDate: DateTime(2024),
+                    //     lastDate: DateTime.now().add(Duration(days: 2190)),
+                    //   );
+                    //   if (pickedDate != null) {
+                    //     setState(() {
+                    //       _selectedDate = pickedDate!;
+                    //      _selectedDate != expire ;
+                    //     });
+                    //   }
+                    // },
+                    // validator: (value) {
+                    //   if (_selectedDate == null) {
+                    //     return 'Please select a date';
+                    //   }
+                    //   else if (_selectedDate.isBefore(DateTime.now())) {
+                    //     return 'Date cannot be in the past';
+                    //   }
+                    //   else if (_selectedDate.isAfter(DateTime.now().subtract(Duration(days:2190)))) {
+                    //     return "";
+                    //   }
+                    //   return null;
+                    // },
+                  ),
+                ),
+                Container(
+                  width: mediaquary.width/3.2,
+                  margin: EdgeInsets.only(left: mediaquary.width*0.03,
+                      right: mediaquary.width*0.03,
+                      top: mediaquary.width * 0.03
+                  ),
+                  child: TextFormField(
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      labelText: 'CVV',
+                      labelStyle: theme.textTheme.bodySmall,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide:BorderSide(color: Colors.grey.shade500)
+                      ),
+                    ),
+                    controller:cvv,
+                    validator: (String? value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return "Please enter your Secure Code";
+                      }
+                      var regex = RegExp(r'^[0-9]{3}$');
+                      if (!regex.hasMatch(value)) {
+                        return "Invalid Secure Code";
+                      }
+                      return null;
+                    },
+                  ),
+                ),
+              ],
+            ),
             RadioListTile(
               title: Row(
                 children: [
@@ -193,9 +287,6 @@ class _Cart_view_ScreenState extends State<Cart_view_Screen> {
                   currentOption = value.toString();
                 });
               },
-            ),
-            SizedBox(
-              height: mediaquary.height*0.09,
             ),
             Container(
                 width: double.infinity,
