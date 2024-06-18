@@ -28,7 +28,6 @@ class CartListModel {
     return data;
   }
 }
-
 class CartList{
   int? id;
   String? title;
@@ -36,7 +35,7 @@ class CartList{
   String? location;
   String? image;
   int? productId;
-  bool ? inCart;
+  bool ? incart;
 
   CartList(
       {this.id,
@@ -44,8 +43,8 @@ class CartList{
         this.price,
         this.location,
         this.image,
-        this.productId
-      , this.inCart=false
+        this.productId,
+        this.incart=true,
       }
       );
 
