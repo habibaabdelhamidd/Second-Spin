@@ -22,7 +22,11 @@ class DetailsData {
       String? location, 
       String? locationDetails, 
       String? category, 
-      String? user,}){
+      String? user,
+    bool? isfav = false,
+    bool? incart = false,
+
+  }){
     _id = id;
     _title = title;
     _description = description;
@@ -60,6 +64,8 @@ class DetailsData {
   String? _locationDetails;
   String? _category;
   String? _user;
+  bool? isfav = false;
+  bool? incart = false;
 DetailsData copyWith({  num? id,
   String? title,
   String? description,
