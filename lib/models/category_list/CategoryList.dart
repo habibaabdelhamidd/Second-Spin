@@ -1,5 +1,3 @@
-import 'Data.dart';
-
 /// message : "  Category retrieved successfully"
 /// data : [{"id":1,"name":"Recycle"},{"id":2,"name":"Clothes"},{"id":3,"name":"Shoes&Bags"},{"id":4,"name":"Perfumes"},{"id":5,"name":"Kitchen Utensils"},{"id":6,"name":"Electronics"},{"id":7,"name":"Sports"},{"id":8,"name":"Accessories"},{"id":9,"name":"Books"},{"id":10,"name":"Decorations"}]
 /// status : true
@@ -54,6 +52,40 @@ CategoryList copyWith({  String? message,
     }
     map['status'] = _status;
     map['code'] = _code;
+    return map;
+  }
+
+}
+
+/// id : 1
+/// name : "Recycle"
+
+class ListData {
+  ListData({
+      num? id, 
+      String? name,}){
+    _id = id;
+    _name = name;
+}
+
+  ListData.fromJson(dynamic json) {
+    _id = json['id'];
+    _name = json['name'];
+  }
+  num? _id;
+  String? _name;
+ListData copyWith({  num? id,
+  String? name,
+}) => ListData(  id: id ?? _id,
+  name: name ?? _name,
+);
+  num? get id => _id;
+  String? get name => _name;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = _id;
+    map['name'] = _name;
     return map;
   }
 
