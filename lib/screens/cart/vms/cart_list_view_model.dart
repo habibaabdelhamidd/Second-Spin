@@ -9,4 +9,7 @@ class CartListViewModel{
   Future<void> addtoCart(int id ) async{
     await apiManager.addToCart(id);
   }
+  Future<void>removeFromCart(int id) async{
+    await apiManager.removeFromCart(id);
+  }
 }

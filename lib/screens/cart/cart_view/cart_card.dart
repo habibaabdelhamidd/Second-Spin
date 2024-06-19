@@ -2,10 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation/screens/cart/vms/cart_list_view_model.dart';
 import '../../../models/cart/cart_list_model.dart';
-class CartCard extends StatelessWidget{
+class CartCard extends StatefulWidget{
   CartList cartProduct ;
   CartListViewModel cartM;
   CartCard(this.cartProduct , this.cartM);
+  @override
+  State<CartCard> createState() => _CartCardState();
+}
+class _CartCardState extends State<CartCard> {
   @override
   Widget build(BuildContext context) {
     final mediaquary =MediaQuery.of(context).size;
@@ -25,7 +29,7 @@ class CartCard extends StatelessWidget{
             children: [
               Container(
                   width: mediaquary.width*0.3,
-                  child: Image.network(cartProduct.image!)),
+                  child: Image.network(widget.cartProduct.image!)),
               Padding(
                 padding: EdgeInsets.only(
                     top: mediaquary.width * 0.02,
@@ -35,21 +39,33 @@ class CartCard extends StatelessWidget{
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                       cartProduct .title!,
+                       widget.cartProduct .title!,
                       style: theme.textTheme.bodyLarge,
                     ),
                     Text(
-                      "EGP ${cartProduct.price}",
+                      "EGP ${widget.cartProduct.price}",
                       style: theme.textTheme.bodyLarge,
                     ),
                     Text(
-                      "${cartProduct.location} Egypt",
+                      "${widget.cartProduct.location} Egypt",
                       style: theme.textTheme.bodyMedium,
                     ),
-                    Icon(
-                      Icons.delete_outline,
-                      color: Colors.grey.shade500,
-                      size: 30,
+                    GestureDetector(
+                      onTap: () async {
+                        if (widget.cartProduct.incart== false) {
+                          await widget.cartM.addtoCart(widget.cartProduct.id!);
+                          widget.cartProduct.incart = true;
+                        } else {
+                          await widget.cartM.removeFromCart(widget.cartProduct.id!);
+                          widget.cartProduct.incart = false;
+                        }
+                        setState(() {});
+                      },
+                      child: Icon(
+                        Icons.delete_outline,
+                        color: Colors.grey.shade500,
+                        size: 30,
+                      ),
                     )
                   ],
                 ),

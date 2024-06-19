@@ -161,39 +161,39 @@ class _SellFormState extends State<SellForm> {
                       "Choose item category *",
                       style: theme.textTheme.labelMedium,
                     ),
-                    FutureBuilder(
-                        future: Api_Manager.getAllCategory(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const Center(
-                                child: CircularProgressIndicator(
-                              color: Colors.grey,
-                            ));
-                          }
-                          if (snapshot.hasError) {
-                            return Text(snapshot.error.toString());
-                          }
-                          return DropdownButton(
-                            style: theme.textTheme.labelSmall,
-                            padding: EdgeInsets.all(
-                                MediaQuery.of(context).size.width * 0.02),
-                            isExpanded: true,
-                            value: dropDownValue,
-                            icon: const Icon(Icons.keyboard_arrow_down),
-                            items: snapshot.data?.map((e) {
-                              return DropdownMenuItem(
-                                value: e.toString(),
-                                child: Text(e.toString()),
-                              );
-                            }).toList(),
-                            onChanged: (newValue) {
-                              setState(() {
-                                dropDownValue = newValue!;
-                              });
-                            },
-                          );
-                        }),
+                    // FutureBuilder(
+                    //     future: Api_Manager.getAllCategory(),
+                    //     builder: (context, snapshot) {
+                    //       if (snapshot.connectionState ==
+                    //           ConnectionState.waiting) {
+                    //         return const Center(
+                    //             child: CircularProgressIndicator(
+                    //           color: Colors.grey,
+                    //         ));
+                    //       }
+                    //       if (snapshot.hasError) {
+                    //         return Text(snapshot.error.toString());
+                    //       }
+                    //       return DropdownButton(
+                    //         style: theme.textTheme.labelSmall,
+                    //         padding: EdgeInsets.all(
+                    //             MediaQuery.of(context).size.width * 0.02),
+                    //         isExpanded: true,
+                    //         value: dropDownValue,
+                    //         icon: const Icon(Icons.keyboard_arrow_down),
+                    //         items: snapshot.data?.map((e) {
+                    //           return DropdownMenuItem(
+                    //             value: e.toString(),
+                    //             child: Text(e.toString()),
+                    //           );
+                    //         }).toList(),
+                    //         onChanged: (newValue) {
+                    //           setState(() {
+                    //             dropDownValue = newValue!;
+                    //           });
+                    //         },
+                    //       );
+                    //     }),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.01,
                     ),
