@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation/core/network_layer/api_manager.dart';
 import 'package:graduation/screens/account/edit_account/edit_account.dart';
 import 'package:graduation/screens/account/settings_account/settings_account.dart';
+
+TextEditingController feedback = TextEditingController();
 class AccountScreen extends StatefulWidget {
   @override
   State<AccountScreen> createState() => _AccountScreenState();
@@ -197,6 +200,7 @@ void _showDialog(BuildContext context) {
           return AlertDialog(
             title: Text('User Feedback ',textAlign: TextAlign.center,),
             content:TextFormField(
+              controller: feedback,
               decoration: InputDecoration(
                 hintText: "Describe here",
                 border: OutlineInputBorder(
@@ -208,9 +212,15 @@ void _showDialog(BuildContext context) {
               ),
             ),
             actions: [
-              Padding(
-                padding: EdgeInsets.only(bottom: 8.0, right: 8.0),
-                child: Text("Done" , style: TextStyle(fontWeight: FontWeight.w600),),
+              GestureDetector(
+              onTap:(){
+                Api_Manager.userFeedback();
+                Navigator.pop(context);
+              },
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: 8.0, right: 8.0),
+                  child: Text("Done" , style: TextStyle(fontWeight: FontWeight.w600),),
+                ),
               )
             ],
           );
@@ -228,20 +238,26 @@ void showLogout(BuildContext context) {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Container(
-                  padding: EdgeInsets.all(8.0),
-                  margin: EdgeInsets.only(right: 5 , bottom: 10),
-                  decoration:BoxDecoration(
-                    border: Border.all(
-                      color: Color(0xff7AAB99),
-                    ),
-                    borderRadius: BorderRadius.circular(5)
+                GestureDetector(
+                  onTap: (){
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(8.0),
+                    margin: EdgeInsets.only(right: 5 , bottom: 10),
+                    child: Text("Cancel"),
                   ),
-                  child: Text("Cancel"),
                 ),
-                Container(
-                  margin: EdgeInsets.only(right: 5 , bottom: 10),
-                  child: Text("Logout"),
+                GestureDetector(
+                  onTap: (){
+                    Api_Manager.logOut();
+                    print("logged out");
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(right: 5 , bottom: 10),
+                    child: Text("Logout"),
+                  ),
                 ),
               ],
             ),
@@ -261,20 +277,26 @@ void showDelete(BuildContext context) {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Container(
-                  padding: EdgeInsets.all(8.0),
-                  margin: EdgeInsets.only(right: 5 , bottom: 10),
-                  decoration:BoxDecoration(
-                      border: Border.all(
-                        color: Color(0xff7AAB99),
-                      ),
-                      borderRadius: BorderRadius.circular(5)
+                GestureDetector(
+                  onTap: (){
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(8.0),
+                    margin: EdgeInsets.only(right: 5 , bottom: 10),
+                    child: Text("Cancel"),
                   ),
-                  child: Text("Cancel"),
                 ),
-                Container(
-                  margin: EdgeInsets.only(right: 5 , bottom: 10),
-                  child: Text("Delete"),
+                GestureDetector(
+                  onTap: (){
+                    Api_Manager.deleteAccount();
+                    print("click");
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(right: 5 , bottom: 10),
+                    child: Text("Delete"),
+                  ),
                 ),
               ],
             ),
