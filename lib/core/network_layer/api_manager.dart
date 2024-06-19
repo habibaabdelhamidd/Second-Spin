@@ -241,6 +241,22 @@ class Api_Manager {
       return true ;
     } else return false ;
   }
+  Future<bool>removeFromCart ( int id ) async{
+    String? token = await Preference.getToken();
+    final response = await http.post(
+        Uri.http(
+            Constants.api_base_URL ,
+            "/api/carts/delete/$id"
+        ),
+        headers:{
+          "Authorization":"Bearer $token"
+        }
+    );
+    final decodedResponse = jsonDecode(response.body);
+    if(response.statusCode == 200 && decodedResponse['status']==true) {
+      return true ;
+    } else return false ;
+  }
   Future<List<CartList>?> fetchCartList() async {
     String? token = await Preference.getToken();
     final response = await http.get(

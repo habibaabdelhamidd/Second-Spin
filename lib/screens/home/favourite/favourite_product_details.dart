@@ -68,7 +68,8 @@ class _Favourite_product_detailsState extends State<Favourite_product_details> {
                             if(favPVM.prodcuctData?.isfav==false){
                               await favPVM.addtofav();
                               favPVM.prodcuctData?.isfav=true;
-                            }else{
+                            }
+                            else{
                               favPVM.removeFromFav();
                               favPVM.prodcuctData?.isfav =false;
                             }
@@ -141,10 +142,6 @@ class _Favourite_product_detailsState extends State<Favourite_product_details> {
                       await favPVM.addtoCart();
                       favPVM.prodcuctData?.incart=true;
                     }
-                    // else{
-                    //   recylePVM.removeFromFav();
-                    //   recylePVM.prodcuctData?.incart =false;
-                    // }
                     setState((){});
                   },
                   child: Container(
