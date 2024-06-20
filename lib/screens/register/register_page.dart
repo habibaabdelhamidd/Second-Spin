@@ -44,10 +44,6 @@ class _RegisterPageState extends State<RegisterPage> {
       Preference.saveToken(registerResponse.data?.token);
       Navigator.pushNamed(context, HomeLayout.routeName);
     }
-    // else {
-    //   print("failed");
-    // }
-
     final result = jsonDecode(response.body);
     print(response.body);
     var registerResponse = RegisterResponse.fromJson(result);
@@ -125,6 +121,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       }
                       return null;
                     },
+                    onSaved: (mail) {
+                      mail = emailControl.text;
+                    },
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.02,
@@ -155,6 +154,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           return "Invalid Password";
                         }
                         return null;
+                      },
+                      onSaved: (String? pass) {
+                        pass = passControl.text;
                       }),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.02,

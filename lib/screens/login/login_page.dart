@@ -49,6 +49,7 @@ class _LoginPageState extends State<LoginPage> {
 
   var formKey = GlobalKey<FormState>();
   bool isVisible = false;
+  // Map <String,String> authdata= {"email":'',"password":''};
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +102,13 @@ class _LoginPageState extends State<LoginPage> {
                       if (!regex.hasMatch(value)) {
                         return "Invalid E-mail address";
                       }
+                      if(value != emailControl.toString()){
+                        return "User not found";
+                      }
                       return null;
+                    },
+                    onSaved:(String? mail){
+                      mail = emailControl.toString();
                     },
                   ),
                   SizedBox(
@@ -127,9 +134,9 @@ class _LoginPageState extends State<LoginPage> {
                         if (value == null || value.trim().isEmpty) {
                           return "Please enter password";
                         }
-                        // if(LoginResponse.fromJson(value) == 401){
-                        //   return "Invalid credentials";
-                        // }
+                        if(value != passControl.toString()){
+                          return "Wrong password";
+                        }
                         return null;
                       }),
                   SizedBox(
@@ -190,5 +197,6 @@ class _LoginPageState extends State<LoginPage> {
     if (formKey.currentState!.validate()) {
       // Navigator.pushNamed(context, HomeLayout.routeName);
     }
+    formKey.currentState?.save();
   }
 }
