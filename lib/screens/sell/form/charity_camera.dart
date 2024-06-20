@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation/screens/sell/form/charity_form.dart';
+
 class CharityCamera extends StatefulWidget {
   static const String routeName = "CharityCamera";
   const CharityCamera({super.key});
@@ -8,6 +9,7 @@ class CharityCamera extends StatefulWidget {
   @override
   State<CharityCamera> createState() => _CharityCameraState();
 }
+
 class _CharityCameraState extends State<CharityCamera> {
   late CameraController cameraController;
   late Future<void> initializeController;
@@ -28,6 +30,7 @@ class _CharityCameraState extends State<CharityCamera> {
     cameraController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -49,10 +52,21 @@ class _CharityCameraState extends State<CharityCamera> {
           onPressed: () async {
             try {
               final image = await cameraController.takePicture();
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => CharityForm(imagePath: image.path,
-                    )));
-            } catch (e){rethrow;}
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => CharityForm(imagePath: image.path,
+                  )));
+              // Navigator.popAndPushNamed(context, CharityForm.routeName,
+              //     arguments: image.path);
+              // Navigator.pushReplacement(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (BuildContext context) => CharityForm(
+              //               imagePath: image.path,
+              //             )));
+              // Navigator.pop(context, image.path);
+            } catch (e) {
+              rethrow;
+            }
           },
           backgroundColor: Colors.white,
           child: Icon(

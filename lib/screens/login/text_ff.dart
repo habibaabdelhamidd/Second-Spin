@@ -4,6 +4,7 @@ class TextF extends StatelessWidget {
   final String hint;
   final bool astrik;
   final FormFieldValidator<String>? validator;
+  final void Function(String?)? onSaved;
   Widget? icon;
   final Color? fieldColor;
   final TextEditingController? textEditingController;
@@ -14,7 +15,8 @@ class TextF extends StatelessWidget {
       this.textEditingController,
       this.validator,
       this.icon,
-      this.fieldColor});
+      this.fieldColor,
+      this.onSaved});
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class TextF extends StatelessWidget {
             obscureText: astrik,
             controller: textEditingController,
             validator: validator,
+            onSaved: onSaved,
             decoration: InputDecoration(
               focusedBorder: OutlineInputBorder(
                 borderSide: const BorderSide(
