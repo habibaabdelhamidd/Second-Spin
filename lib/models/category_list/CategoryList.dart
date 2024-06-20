@@ -68,17 +68,20 @@ class ListData {
     _name = name;
   }
 
+
   ListData.fromJson(dynamic json) {
     _id = json['id'];
     _name = json['name'];
   }
   num? _id;
   String? _name;
+
   ListData copyWith({  num? id,
     String? name,
   }) => ListData(  id: id ?? _id,
     name: name ?? _name,
   );
+
   num? get id => _id;
   String? get name => _name;
 

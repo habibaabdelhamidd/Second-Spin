@@ -8,6 +8,7 @@ import 'package:graduation/screens/login/text_ff.dart';
 import '../../../core/shared_preference.dart';
 import 'package:http/http.dart' as http;
 import '../../../models/category_list/CategoryList.dart';
+
 import '../../category/used/used_view.dart';
 import 'camera.dart';
 
@@ -174,10 +175,12 @@ class _SellFormState extends State<SellForm> {
                                 child: CircularProgressIndicator(
                                   color: Colors.grey,
                                 ));
+
                           }
                           if (snapshot.hasError) {
                             return Text(snapshot.error.toString());
                           }
+
                           CategoryList? response = snapshot.data;
                           return DropdownButton(
                             style: theme.textTheme.labelSmall,
