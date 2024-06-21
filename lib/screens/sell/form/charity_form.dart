@@ -29,40 +29,45 @@ class _CharityFormState extends State<CharityForm> {
   String? imagePath;
 
   Future<DonationFormRes> donate(
-    String? description,
+      num? charityId,
+      String? description,
     String? title,
     String? location,
     String? locationDetails,
     String? imagePath,
-    num? charityId,
+
   ) async {
     String? token = await Preference.getToken();
+    final body = jsonEncode(<String, dynamic>{
+      "description": description,
+      "title": title,
+      "location": location,
+      "location_details": locationDetails,
+      "image": imagePath,
+    });
+    print('Request Body: $body');
     var response = await http.post(
         Uri.parse("http://www.secondspin.xyz/api/donations/store/$charityId"),
         headers: {
           HttpHeaders.authorizationHeader: "Bearer $token",
           HttpHeaders.contentTypeHeader: "application/json",
         },
-        body: jsonEncode(<String, dynamic>{
-          "description": description,
-          "title": title,
-          "location": location,
-          "location_details": locationDetails,
-          "image": imagePath,
-          "charity_id": charityId,
-        }));
+        );
+    print('Response Status: ${response.statusCode}');
+    print('Response Body: ${response.body}');
     if (response.statusCode == 201) {
       final result = jsonDecode(response.body);
       print(response.body);
       var donationResponse = DonationFormRes.fromJson(result);
       return donationResponse;
-    } else {
-      print(response.statusCode);
+    }  else {
+      final result = jsonDecode(response.body);
+      throw Exception('Failed to sell item: ${result['message']}');
     }
-    final result = jsonDecode(response.body);
-    print(response.body);
-    var donationResponse = DonationFormRes.fromJson(result);
-    return donationResponse;
+    // final result = jsonDecode(response.body);
+    // print(response.body);
+    // var donationResponse = DonationFormRes.fromJson(result);
+    // return donationResponse;
   }
   CharitySelected charity = CharitySelected();
   @override
@@ -226,12 +231,19 @@ class _CharityFormState extends State<CharityForm> {
                     num? id = dropDownValue;
                     if (id != null) {
                       donate(
-                        descriptionControl.text,
-                        titleControl.text,
-                        locationControl.text,
-                        selectedImage?.path.toString(),
-                        locationDetailsControl.text,
-                        id,
+                        // dropDownValue,
+                        // descriptionControl.text,
+                        // titleControl.text,
+                        // locationControl.text,
+                        // locationDetailsControl.text,
+                        // selectedImage?.path.toString()
+                        3,
+                        "dcjhgbgtyhmjkjb",
+                        "mcnnc",
+                        "giza",
+                        ",njbjhvhchc",
+                        "assets/image/unknown_user.png"
+
                       ).then((response) {
                         print('Item sold successfully: ${response.toString()}');
                       }).catchError((error) {

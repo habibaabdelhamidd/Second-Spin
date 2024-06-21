@@ -38,20 +38,19 @@ class _SellFormState extends State<SellForm> {
       String? title,
       String? location,
       String? imagePath,
-      dynamic story,
       num? price,
       String? locDetails,
+      String? category
       ) async {
     String? token = await Preference.getToken();
     final body = jsonEncode(<String, dynamic>{
-      "category" : catId,
       "description": description,
       "title": title,
       "location": location,
       "image": imagePath,
-      "story": story,
       "price": price,
       "location_details": locDetails,
+      "category" : category
     });
 
     print('Request Body: $body'); // Print request body for debugging
@@ -192,6 +191,7 @@ File? selectedImage;
                             onChanged: (newValue) {
                               setState(() {
                                 dropDownValue = newValue!;
+
                               });
                             },
                           ),
@@ -206,18 +206,6 @@ File? selectedImage;
                       hint: "Describe What Are You Selling?",
                       asterisk: false,
                       textEditingController: descriptionControl,
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.03,
-                    ),
-                    Text(
-                      "Tell Us Your Story",
-                      style: theme.textTheme.labelMedium,
-                    ),
-                    TextF(
-                      hint: "Tell Us Your Story?",
-                      asterisk: false,
-                      textEditingController: storyControl,
                     ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.03,
@@ -272,9 +260,9 @@ File? selectedImage;
                     titleControl.text.toString(),
                     locationControl.text.toString(),
                     selectedImage?.path.toString(),
-                    storyControl.text.toString(),
                     price,
                     locDetailsControl.text.toString(),
+                    dropDownValue.toString()
                   ).then((response) {
                     print('Item sold successfully: ${response.toString()}');
                   }).catchError((error) {
@@ -294,7 +282,7 @@ File? selectedImage;
   }
   Future pickImageFromCamera() async {
     final pic =
-    await ImagePicker().pickImage(source: ImageSource.camera);
+    await ImagePicker().pickImage(source: ImageSource.gallery);
     if(pic == null)return;
     setState(() {
       selectedImage = File(pic.path);
