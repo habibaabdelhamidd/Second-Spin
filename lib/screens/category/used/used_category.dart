@@ -50,7 +50,7 @@ class UsedCategory extends StatelessWidget {
                       itemBuilder: (context, index) => InkWell(
                           onTap: () {
                             Navigator.pushNamed(context, UsedDetails.routeName,
-                                arguments: productsList[index].id as num);
+                                arguments: productsList[index].id as int);
                           },
                           child: UsedItem(productsList![index]))));
             }));

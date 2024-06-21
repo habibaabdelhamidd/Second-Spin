@@ -5,7 +5,6 @@ import '../../../models/response/Data.dart';
 class ViewCategoryList extends StatelessWidget {
   final Category category;
   const ViewCategoryList(this.category,{super.key});
-
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);

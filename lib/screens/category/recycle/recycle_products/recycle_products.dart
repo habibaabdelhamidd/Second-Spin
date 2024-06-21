@@ -37,7 +37,8 @@ class _RecycleViewProductsState extends State<RecycleViewProducts> {
           style: theme.appBarTheme.titleTextStyle,
         ),
       ),
-      body: Column(
+      body: recyclVm.allRecyclProductsView == null ? Center(child: CircularProgressIndicator(),):
+      Column(
         children: [
           Expanded(
               child: GridView.builder(

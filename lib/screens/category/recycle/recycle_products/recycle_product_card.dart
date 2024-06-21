@@ -18,7 +18,9 @@ class _Recycl_Product_cardState extends State<Recycl_Product_card> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     final mediaquary = MediaQuery.of(context).size;
-    return Container(
+    return
+      widget.productRecycl == null ? Center(child: CircularProgressIndicator(),):
+      Container(
       padding: EdgeInsets.all(mediaquary.width * 0.015),
       margin: EdgeInsets.all(mediaquary.width * 0.01),
       decoration: BoxDecoration(
