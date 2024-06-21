@@ -15,7 +15,8 @@ class _SuggestionsCardState extends State<SuggestionsCard> {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size;
     var theme = Theme.of(context);
-    return Container(
+    return widget.product == null ? Center(child: CircularProgressIndicator(),):
+      Container(
       padding: EdgeInsets.all(mediaQuery.width * 0.015),
       margin: EdgeInsets.all(mediaQuery.width * 0.01),
       width: mediaQuery.width / 2.4,

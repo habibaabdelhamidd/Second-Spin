@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation/layouts/homelayout/homelayout.dart';
 import 'package:graduation/models/home_model.dart';
+import 'package:graduation/screens/cart/vms/payment_vm.dart';
 import 'package:graduation/screens/home/home/home.dart';
 
 class Cart_Chackout extends StatefulWidget {
@@ -12,8 +13,18 @@ class Cart_Chackout extends StatefulWidget {
   State<Cart_Chackout> createState() => _Cart_ChackoutState();
 }
 
-
 class _Cart_ChackoutState extends State<Cart_Chackout> {
+  late PaymentVm paymentVm ;
+  @override
+  void initState() {
+    super.initState();
+    paymentVm = PaymentVm();
+    futurePaymentData();
+  }
+  Future<void> futurePaymentData()async{
+    await paymentVm.getPaymentData();
+    setState(() {});
+  }
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     final mediaquary = MediaQuery.of(context).size;
@@ -23,7 +34,8 @@ class _Cart_ChackoutState extends State<Cart_Chackout> {
         iconTheme: theme.appBarTheme.iconTheme,
         title: Text("Checkout"),
       ),
-      body: SingleChildScrollView(
+      body: paymentVm.paymentData == null ? Center(child: CircularProgressIndicator(),):
+      SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -48,9 +60,9 @@ class _Cart_ChackoutState extends State<Cart_Chackout> {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Total", style: theme.textTheme.bodyLarge),
+                        Text("Product Price", style: theme.textTheme.bodyLarge),
                         Spacer(),
-                        Text("EGP 3.500", style: theme.textTheme.bodyLarge),
+                        Text("EGP ${paymentVm.paymentData?.total}", style: theme.textTheme.bodyLarge),
                       ],
                     ),
                   ),
@@ -61,7 +73,7 @@ class _Cart_ChackoutState extends State<Cart_Chackout> {
                       children: [
                         Text("Delivary fees", style: theme.textTheme.bodyLarge),
                         Spacer(),
-                        Text("EGP 100", style: theme.textTheme.bodyLarge),
+                        Text("EGP ${paymentVm.paymentData?.deliveryFees}", style: theme.textTheme.bodyLarge),
                       ],
                     ),
                   ),
@@ -72,7 +84,7 @@ class _Cart_ChackoutState extends State<Cart_Chackout> {
                       children: [
                         Text("Total Price", style: theme.textTheme.bodyLarge),
                         Spacer(),
-                        Text("EGP 3.600", style: theme.textTheme.bodyLarge),
+                        Text("EGP ${paymentVm.paymentData?.totalPrice}", style: theme.textTheme.bodyLarge),
                       ],
                     ),
                   ),
