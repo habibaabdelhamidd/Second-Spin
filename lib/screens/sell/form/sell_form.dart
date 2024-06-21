@@ -5,10 +5,11 @@ import 'package:graduation/core/network_layer/api_manager.dart';
 import 'package:graduation/models/sell_res/SellResponse.dart';
 import 'package:graduation/screens/login/buttons.dart';
 import 'package:graduation/screens/login/text_ff.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../../core/shared_preference.dart';
 import 'package:http/http.dart' as http;
 import '../../../models/category_list/CategoryList.dart';
-import 'camera.dart';
+import '../../category/used/used_view.dart';
 
 class SellForm extends StatefulWidget {
   static const String routeName = "SellForm";
@@ -31,31 +32,32 @@ class _SellFormState extends State<SellForm> {
   TextEditingController priceControl = TextEditingController();
   TextEditingController locDetailsControl = TextEditingController();
 
-  Future<SellResponse> sell(
-    String? description,
-    String? title,
-    String? location,
-    String? imagePath,
-    dynamic story,
-    num? price,
-    String? locDetails,
-  ) async {
+  Future sell(
+      num? catId,
+      String? description,
+      String? title,
+      String? location,
+      String? imagePath,
+      num? price,
+      String? locDetails,
+      String? category
+      ) async {
     String? token = await Preference.getToken();
     final body = jsonEncode(<String, dynamic>{
       "description": description,
       "title": title,
       "location": location,
       "image": imagePath,
-      "story": story,
       "price": price,
       "location_details": locDetails,
+      "category" : category
     });
 
     print('Request Body: $body'); // Print request body for debugging
 
     try {
       var response = await http.post(
-        Uri.parse("http://secondspin.xyz/api/products/store"),
+        Uri.parse("http://www.secondspin.xyz/api/products/store/$catId"),
         headers: {
           HttpHeaders.authorizationHeader: "Bearer $token",
           HttpHeaders.contentTypeHeader: "application/json",
@@ -69,7 +71,8 @@ class _SellFormState extends State<SellForm> {
       if (response.statusCode == 201) {
         final result = jsonDecode(response.body);
         return SellResponse.fromJson(result);
-      } else {
+      }
+      else {
         final result = jsonDecode(response.body);
         throw Exception('Failed to sell item: ${result['message']}');
       }
@@ -78,7 +81,19 @@ class _SellFormState extends State<SellForm> {
       rethrow;
     }
   }
+  CategorySelected cat = CategorySelected();
+  @override
+  void initState() {
+    super.initState();
+    cat = CategorySelected();
+    futureData();
+  }
 
+  Future<void> futureData() async {
+    await cat.getCat();
+    setState(() {});
+  }
+File? selectedImage;
   var dropDownValue;
   @override
   Widget build(BuildContext context) {
@@ -100,9 +115,9 @@ class _SellFormState extends State<SellForm> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    InkWell(
-                      onTap: () async {
-                        Navigator.pushNamed(context, FormCamera.routeName);
+                    MaterialButton(
+                      onPressed: () {
+                        pickImageFromCamera();
                       },
                       child: Container(
                         height: MediaQuery.of(context).size.height * 0.2,
@@ -111,35 +126,33 @@ class _SellFormState extends State<SellForm> {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        child: widget.imagePath == null ||
-                                widget.imagePath!.isEmpty
+                        child: selectedImage == null
                             ? Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.add_a_photo_outlined,
-                                    color: theme.primaryColor,
-                                  ),
-                                  SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.01,
-                                  ),
-                                  Text(
-                                    "Add images",
-                                    style: theme.textTheme.labelMedium
-                                        ?.copyWith(color: theme.primaryColor),
-                                  ),
-                                  Text(
-                                    "Take a photo of your item",
-                                    style: theme.textTheme.bodyMedium
-                                        ?.copyWith(color: theme.primaryColor),
-                                  )
-                                ],
-                              )
-                            : Image.file(
-                                File(widget.imagePath!),
-                                fit: BoxFit.cover,
-                              ),
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.add_a_photo_outlined,
+                              color: theme.primaryColor,
+                            ),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height *
+                                  0.01,
+                            ),
+                            Text(
+                              "Add images",
+                              style: theme.textTheme.labelMedium
+                                  ?.copyWith(color: theme.primaryColor),
+                            ),
+                            Text(
+                              "Take a photo of your item",
+                              style: theme.textTheme.bodyMedium
+                                  ?.copyWith(color: theme.primaryColor),
+                            )
+                          ],
+                        )
+                            : Image.file(selectedImage!,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -151,7 +164,7 @@ class _SellFormState extends State<SellForm> {
                     ),
                     TextF(
                       hint: "Enter item Name",
-                      astrik: false,
+                      asterisk: false,
                       textEditingController: titleControl,
                     ),
                     SizedBox(
@@ -161,39 +174,28 @@ class _SellFormState extends State<SellForm> {
                       "Choose item category *",
                       style: theme.textTheme.labelMedium,
                     ),
-                    // FutureBuilder(
-                    //     future: Api_Manager.getAllCategory(),
-                    //     builder: (context, snapshot) {
-                    //       if (snapshot.connectionState ==
-                    //           ConnectionState.waiting) {
-                    //         return const Center(
-                    //             child: CircularProgressIndicator(
-                    //           color: Colors.grey,
-                    //         ));
-                    //       }
-                    //       if (snapshot.hasError) {
-                    //         return Text(snapshot.error.toString());
-                    //       }
-                    //       return DropdownButton(
-                    //         style: theme.textTheme.labelSmall,
-                    //         padding: EdgeInsets.all(
-                    //             MediaQuery.of(context).size.width * 0.02),
-                    //         isExpanded: true,
-                    //         value: dropDownValue,
-                    //         icon: const Icon(Icons.keyboard_arrow_down),
-                    //         items: snapshot.data?.map((e) {
-                    //           return DropdownMenuItem(
-                    //             value: e.toString(),
-                    //             child: Text(e.toString()),
-                    //           );
-                    //         }).toList(),
-                    //         onChanged: (newValue) {
-                    //           setState(() {
-                    //             dropDownValue = newValue!;
-                    //           });
-                    //         },
-                    //       );
-                    //     }),
+
+                          DropdownButton(
+                            style: theme.textTheme.labelSmall,
+                            hint: const Text("Categories"),
+                            padding: EdgeInsets.all(
+                                MediaQuery.of(context).size.width * 0.02),
+                            isExpanded: true,
+                            value: dropDownValue,
+                            icon: const Icon(Icons.keyboard_arrow_down),
+                            items: cat.user?.data?.map((e) {
+                              return DropdownMenuItem(
+                                value: e.id,
+                                child: Text(e.name??""),
+                              );
+                            }).toList(),
+                            onChanged: (newValue) {
+                              setState(() {
+                                dropDownValue = newValue!;
+
+                              });
+                            },
+                          ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.01,
                     ),
@@ -203,31 +205,19 @@ class _SellFormState extends State<SellForm> {
                     ),
                     TextF(
                       hint: "Describe What Are You Selling?",
-                      astrik: false,
+                      asterisk: false,
                       textEditingController: descriptionControl,
                     ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.03,
                     ),
                     Text(
-                      "Tell Us Your Story",
-                      style: theme.textTheme.labelMedium,
-                    ),
-                    TextF(
-                      hint: "Tell Us Your Story?",
-                      astrik: false,
-                      textEditingController: storyControl,
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.03,
-                    ),
-                    Text(
-                      "Location details *",
+                      "Region *",
                       style: theme.textTheme.labelMedium,
                     ),
                     TextF(
                       hint: "Enter your location details",
-                      astrik: false,
+                      asterisk: false,
                       textEditingController: locationControl,
                     ),
                     SizedBox(
@@ -239,7 +229,7 @@ class _SellFormState extends State<SellForm> {
                     ),
                     TextF(
                       hint: "Enter your location details",
-                      astrik: false,
+                      asterisk: false,
                       textEditingController: locDetailsControl,
                     ),
                     SizedBox(
@@ -251,7 +241,7 @@ class _SellFormState extends State<SellForm> {
                     ),
                     TextF(
                       hint: "Enter item Price",
-                      astrik: false,
+                      asterisk: false,
                       textEditingController: priceControl,
                     ),
                   ],
@@ -266,24 +256,23 @@ class _SellFormState extends State<SellForm> {
                 final num? price = num.tryParse(priceControl.text);
                 if (price != null) {
                   sell(
+                    dropDownValue,
                     descriptionControl.text.toString(),
                     titleControl.text.toString(),
                     locationControl.text.toString(),
-                    widget.imagePath,
-                    storyControl.text.toString(),
+                    selectedImage?.path.toString(),
                     price,
                     locDetailsControl.text.toString(),
+                    dropDownValue.toString()
                   ).then((response) {
-                    // Handle the response
                     print('Item sold successfully: ${response.toString()}');
                   }).catchError((error) {
-                    // Handle the error
                     print('Failed to sell item: $error');
                   });
                 } else {
-                  // Handle invalid price input
                   print('Invalid price input');
                 }
+                _showDialog(context);
               },
               child: Buttons(title: "Submit", padd: 17),
             ),
@@ -291,5 +280,43 @@ class _SellFormState extends State<SellForm> {
         ),
       ),
     );
+  }
+  Future pickImageFromCamera() async {
+    final pic =
+    await ImagePicker().pickImage(source: ImageSource.gallery);
+    if(pic == null)return;
+    setState(() {
+      selectedImage = File(pic.path);
+    });
+  }
+}
+void _showDialog(BuildContext context) {
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            "Form submitted!",
+            style: TextStyle(fontWeight: FontWeight.w900),
+            textAlign: TextAlign.center,
+          ),
+          content: GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, UsedView.routeName);
+            },
+            child: const Text(
+              "See also",
+              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
+      });
+}
+class CategorySelected {
+  CategoryList? user;
+  Api_Manager apiManager = Api_Manager();
+  Future<void> getCat() async {
+    user = (await apiManager.listCategories());
   }
 }
