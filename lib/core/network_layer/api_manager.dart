@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:graduation/core/constants.dart';
 import 'package:graduation/core/shared_preference.dart';
 import 'package:graduation/models/cart/cart_list_model.dart';
+import 'package:graduation/models/cart/payment_model.dart';
 import 'package:graduation/models/categories_response/CategoryResponse.dart';
 import 'package:graduation/models/category_list/CategoryList.dart';
 import 'package:graduation/models/charities_response/CharitiesResponse.dart';
@@ -14,15 +15,18 @@ import 'package:graduation/models/home_model.dart';
 import 'package:graduation/models/recyle/recycle_product_details_model.dart';
 import 'package:graduation/models/response/AllCategoriesResponse.dart';
 import 'package:graduation/screens/account/account_viwe_screen/account.dart';
+import 'package:graduation/screens/cart/cart_view/cart_user_data.dart';
 import 'package:graduation/screens/home/view_model/view_model.dart';
 import 'package:http/http.dart' as http;
 import '../../models/details_response/DetailsResponse.dart';
 import 'package:graduation/models/search_response/SearchResponse.dart';
 import '../../models/recyle/all_recycle_model.dart';
+import 'package:dio/dio.dart';
 
 class Api_Manager {
   Future<List<Data>?> fetchHome() async {
     String? token = await Preference.getToken();
+    print("home $token");
     final response = await http.get(
         Uri.http(
           Constants.api_base_URL,
@@ -37,6 +41,7 @@ class Api_Manager {
       throw Exception('Failed to load products');
     }
   }
+
   static Future<AllCategoriesResponse> getAllCategories() async {
     String? token = await Preference.getToken();
     var response = await http.get(
@@ -48,6 +53,7 @@ class Api_Manager {
     var allCategoriesResponse = AllCategoriesResponse.fromJson(result);
     return allCategoriesResponse;
   }
+
   static Future<CategoryResponse> getCategory(num? categoryId) async {
     try {
       String? token = await Preference.getToken();
@@ -63,6 +69,7 @@ class Api_Manager {
       rethrow;
     }
   }
+
   Future<List<AllRecycle>?> fetchAllRecycl() async {
     String? token = await Preference.getToken();
     final response = await http.get(
@@ -79,18 +86,21 @@ class Api_Manager {
       throw Exception('Failed to load products');
     }
   }
-   Future<DetailsData?> getDetails(num? detailsId) async {
+
+  Future<DetailsData?> getDetails(num? detailsId) async {
     String? token = await Preference.getToken();
     var response = await http.get(
         Uri.parse("http://secondspin.xyz/api/products/showDetails/$detailsId"),
         headers: {HttpHeaders.authorizationHeader: "Bearer $token"});
     final decodedResponse = jsonDecode(response.body);
     if (response.statusCode == 200 && decodedResponse["status"] == true) {
-    final result = jsonDecode(response.body);
-    debugPrint(response.body);
-    var detailsResponse = DetailsResponse.fromJson(result);
-    return detailsResponse.data;}
+      final result = jsonDecode(response.body);
+      debugPrint(response.body);
+      var detailsResponse = DetailsResponse.fromJson(result);
+      return detailsResponse.data;
+    }
   }
+
   static Future<SearchResponse> getSearch(String query) async {
     String? token = await Preference.getToken();
     var response = await http.get(
@@ -113,12 +123,13 @@ class Api_Manager {
     final decodedResponse = jsonDecode(response.body);
     if (response.statusCode == 200 && decodedResponse["status"] == true) {
       final productDetails =
-          RecycleProductDetailsModel.fromJson(decodedResponse);
+      RecycleProductDetailsModel.fromJson(decodedResponse);
       return productDetails.data;
     } else {
       throw Exception('Failed to load products');
     }
   }
+
   Future<List<FavProductList>?> fetchAllFavList() async {
     String? token = await Preference.getToken();
     final response = await http.get(
@@ -135,6 +146,7 @@ class Api_Manager {
       throw Exception('Failed to load products');
     }
   }
+
   static Future<CharitiesResponse> getCharities() async {
     String? token = await Preference.getToken();
     var response = await http.get(
@@ -145,6 +157,7 @@ class Api_Manager {
     var charitiesResponse = CharitiesResponse.fromJson(result);
     return charitiesResponse;
   }
+
   // Future<DonationFormRes> donate(
   //   num? donationId,
   //   String? description,
@@ -182,75 +195,59 @@ class Api_Manager {
         Uri.parse("http://secondspin.xyz/api/categories/allcategories"),
         headers: {HttpHeaders.authorizationHeader: "Bearer $token"});
     debugPrint(response.body);
-
     final result = jsonDecode(response.body);
     var listResponse = CategoryList.fromJson(result);
     return listResponse;
   }
-  Future<bool>addToFav ( int id ) async{
+
+  Future<bool> addToFav(int id) async {
     String? token = await Preference.getToken();
     final response = await http.post(
-      Uri.http(
-        Constants.api_base_URL ,
-          "/api/favorites/store/$id"
-      ),
-        headers:{
-          "Authorization":"Bearer $token"
-        }
-    );
+        Uri.http(Constants.api_base_URL, "/api/favorites/store/$id"),
+        headers: {"Authorization": "Bearer $token"});
     final decodedResponse = jsonDecode(response.body);
-    if(response.statusCode == 201 && decodedResponse['status']==true) {
-      return true ;
-    } else return false ;
+    if (response.statusCode == 201 && decodedResponse['status'] == true) {
+      return true;
+    } else
+      return false;
   }
-  Future<bool>addToCart ( int id ) async{
+
+  Future<bool> addToCart(int id) async {
     String? token = await Preference.getToken();
     final response = await http.post(
-        Uri.http(
-            Constants.api_base_URL ,
-            "/api/carts/store/$id"
-        ),
-        headers:{
-          "Authorization":"Bearer $token"
-        }
-    );
+        Uri.http(Constants.api_base_URL, "/api/carts/store/$id"),
+        headers: {"Authorization": "Bearer $token"});
     final decodedResponse = jsonDecode(response.body);
-    if(response.statusCode == 201 && decodedResponse['status']==true) {
-      return true ;
-    } else return false ;
+    if (response.statusCode == 201 && decodedResponse['status'] == true) {
+      return true;
+    } else
+      return false;
   }
-  Future<bool>removeFromFav ( int id ) async{
+
+  Future<bool> removeFromFav(int id) async {
     String? token = await Preference.getToken();
     final response = await http.post(
-        Uri.http(
-            Constants.api_base_URL ,
-            "/api/favorites/delete/$id"
-        ),
-        headers:{
-          "Authorization":"Bearer $token"
-        }
-    );
+        Uri.http(Constants.api_base_URL, "/api/favorites/delete/$id"),
+        headers: {"Authorization": "Bearer $token"});
     final decodedResponse = jsonDecode(response.body);
-    if(response.statusCode == 200 && decodedResponse['status']==true) {
-      return true ;
-    } else return false ;
+    if (response.statusCode == 200 && decodedResponse['status'] == true) {
+      return true;
+    } else
+      return false;
   }
-  Future<bool>removeFromCart ( int id ) async{
+
+  Future<bool> removeFromCart(int id) async {
     String? token = await Preference.getToken();
     final response = await http.post(
-        Uri.http(
-            Constants.api_base_URL ,
-            "/api/carts/delete/$id"
-        ),
-        headers:{
-          "Authorization":"Bearer $token"
-        }
-    );
+        Uri.http(Constants.api_base_URL, "/api/carts/delete/$id"),
+        headers: {"Authorization": "Bearer $token"});
     final decodedResponse = jsonDecode(response.body);
-    if(response.statusCode == 200 && decodedResponse['status']==true) {
-      return true ;
-    } else return false ;
+    if (response.statusCode == 200 && decodedResponse['status'] == true) {
+      return true;
+    } else
+      return false;
   }
+
   Future<List<CartList>?> fetchCartList() async {
     String? token = await Preference.getToken();
     final response = await http.get(
@@ -263,65 +260,101 @@ class Api_Manager {
     if (response.statusCode == 200 && decodedResponse["status"] == true) {
       final cartList = CartListModel.fromJson(decodedResponse);
       return cartList.data;
-    } else
-    {
+    } else {
       throw Exception('Failed to load products');
     }
   }
- static void userFeedback() async{
-    String? token = await Preference.getToken();
-    final input = feedback.text;
-    final response = await http.post(
-        Uri.http(
-            Constants.api_base_URL ,
-            "/api/userprofile/feedback"
-        ),
-        body:{'comment': input},
-        headers:{
-          "Authorization":"Bearer $token"
-        }
-    );
-    final decodedResponse = jsonDecode(response.body);
-    if(response.statusCode == 201 && decodedResponse['status']==true) {
-     print("success");
-    }  else {
-      print("error");
+  static Future <void>sendApiRequest() async {
+    try {
+      String? token = await Preference.getToken();
+      final feedbackuser = feedback.text;
+      final dio = Dio();
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+      final body = {
+        'comment': feedbackuser,
+      };
+      final response = await dio.post(
+        'http://secondspin.xyz/api/userprofiles/feedback',
+        options: Options(headers: headers , followRedirects: true,),
+        data: body,
+      );
+      print('Status code: ${response.statusCode}');
+      print('Response data: ${response.data}');
+    } catch (e) {
+      print('Error: $e');
     }
   }
-  static void deleteAccount() async{
+  static void deleteAccount() async {
     String? token = await Preference.getToken();
     final response = await http.post(
-        Uri.http(
-            Constants.api_base_URL ,
-            "/api/userprofile/deleteprofile"
-        ),
-        headers:{
-          "Authorization":"Bearer $token"
-        }
-    );
+        Uri.http(Constants.api_base_URL, "/api/userprofile/deleteprofile"),
+        headers: {"Authorization": "Bearer $token"});
     final decodedResponse = jsonDecode(response.body);
-    if(response.statusCode == 200 && decodedResponse['status']==true) {
+    if (response.statusCode == 200 && decodedResponse['status'] == true) {
       print("success");
-    }  else {
+    } else {
       print("error");
     }
   }
-  static void logOut() async{
+  static void logOut() async {
     String? token = await Preference.getToken();
     final response = await http.post(
-        Uri.http(
-            Constants.api_base_URL ,
-            "/api/auth/logout/"
-        ),
-        headers:{
-          "Authorization":"Bearer $token"
-        }
-    );
+        Uri.http(Constants.api_base_URL, "/api/auth/logout/"),
+        headers: {"Authorization": "Bearer $token"});
     final decodedResponse = jsonDecode(response.body);
-    if(response.statusCode == 200 && decodedResponse['status']==true) {
+    if (response.statusCode == 200 && decodedResponse['status'] == true) {
       print("success");
-    }  else {
+    } else {
       print("error");
     }
   }
+  static void checkoutData() async {
+    String? token = await Preference.getToken();
+    final inputLocation = dropDownCurrentValue;
+    final locationDetails = userLocationDetails.text;
+    final paymentMethod = currentPaymentMethodOptions;
+    final cardNumber = creditNum.text;
+    final cvv = cvV.text;
+    final expirydate = expire.text;
+    final response = await http.post(
+      Uri.http(Constants.api_base_URL, "/api/orders/checkout"),
+      headers: {"Authorization": "Bearer $token"},
+      body: jsonEncode({
+        "location": inputLocation,
+        "location_details": locationDetails,
+        "payment_method": paymentMethod,
+        "card_number": cardNumber,
+        "cvv": cvv,
+        "expiry_date": expirydate,
+      }),
+    );
+    // final decodedResponse = jsonDecode(response.body);
+    // print(decodedResponse);
+    // return;
+    if (response.statusCode == 201 ) {
+      print("success");
+    } else {
+      print(response.statusCode);
+    }
+  }
+  // Future<PaymentData?> fetchPaymentSummary() async {
+  //   String? token = await Preference.getToken();
+  //   final response = await http.get(
+  //       Uri.http(
+  //         Constants.api_base_URL,
+  //         "/api/orders/paymentSummary",
+  //       ),
+  //       headers: {"Authorization": "Bearer $token"});
+  //   final decodedResponse = jsonDecode(response.body);
+  //   if (response.statusCode == 200 && decodedResponse["status"] == true) {
+  //     final paymentData =
+  //     PaymentModel.fromJson(decodedResponse);
+  //     return paymentData.data;
+  //   } else {
+  //     throw Exception('Failed to load products');
+  //   }
+  // }
 }
