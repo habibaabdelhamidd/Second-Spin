@@ -72,7 +72,9 @@ class MyApp extends StatelessWidget {
         CharityCamera.routeName : (context)=> const CharityCamera(),
         CartUserData.routeName: (context)=> CartUserData()
       },
-      home: Splashscreen(),
+      home: Splashscreen()
+
+      ,
     );
   }
 }
