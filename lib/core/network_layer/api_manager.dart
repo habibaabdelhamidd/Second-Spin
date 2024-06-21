@@ -211,7 +211,6 @@ class Api_Manager {
     } else
       return false;
   }
-
   Future<bool> addToCart(int id) async {
     String? token = await Preference.getToken();
     final response = await http.post(
@@ -223,7 +222,6 @@ class Api_Manager {
     } else
       return false;
   }
-
   Future<bool> removeFromFav(int id) async {
     String? token = await Preference.getToken();
     final response = await http.post(
@@ -235,7 +233,6 @@ class Api_Manager {
     } else
       return false;
   }
-
   Future<bool> removeFromCart(int id) async {
     String? token = await Preference.getToken();
     final response = await http.post(
@@ -247,7 +244,6 @@ class Api_Manager {
     } else
       return false;
   }
-
   Future<List<CartList>?> fetchCartList() async {
     String? token = await Preference.getToken();
     final response = await http.get(
@@ -353,21 +349,20 @@ class Api_Manager {
       print('Error: $e');
     }
   }
-  // Future<PaymentData?> fetchPaymentSummary() async {
-  //   String? token = await Preference.getToken();
-  //   final response = await http.get(
-  //       Uri.http(
-  //         Constants.api_base_URL,
-  //         "/api/orders/paymentSummary",
-  //       ),
-  //       headers: {"Authorization": "Bearer $token"});
-  //   final decodedResponse = jsonDecode(response.body);
-  //   if (response.statusCode == 200 && decodedResponse["status"] == true) {
-  //     final paymentData =
-  //     PaymentModel.fromJson(decodedResponse);
-  //     return paymentData.data;
-  //   } else {
-  //     throw Exception('Failed to load products');
-  //   }
-  // }
+  Future<PaymentData?> fetchPaymentSummary() async {
+    String? token = await Preference.getToken();
+    final response = await http.get(
+        Uri.http(
+          Constants.api_base_URL ,
+          "/api/orders/paymentSummary",
+        ),
+        headers: {"Authorization": "Bearer $token"});
+    final decodedResponse = jsonDecode(response.body);
+    if (response.statusCode == 200 && decodedResponse["status"] == true) {
+      final paymentData = PaymentModel.fromJson(decodedResponse);
+      return paymentData.data;
+    } else {
+      throw Exception('Failed to load products');
+    }
+  }
 }

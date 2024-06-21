@@ -36,7 +36,8 @@ class _All_Favourit_ProductState extends State<All_Favourit_Product> {
           style: theme.appBarTheme.titleTextStyle,
         ),
       ),
-      body: Column(
+      body:
+      Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
