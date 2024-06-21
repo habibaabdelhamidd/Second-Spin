@@ -5,12 +5,11 @@ import 'package:graduation/core/network_layer/api_manager.dart';
 import 'package:graduation/models/sell_res/SellResponse.dart';
 import 'package:graduation/screens/login/buttons.dart';
 import 'package:graduation/screens/login/text_ff.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../../core/shared_preference.dart';
 import 'package:http/http.dart' as http;
 import '../../../models/category_list/CategoryList.dart';
-
 import '../../category/used/used_view.dart';
-import 'camera.dart';
 
 class SellForm extends StatefulWidget {
   static const String routeName = "SellForm";
@@ -59,7 +58,7 @@ class _SellFormState extends State<SellForm> {
 
     try {
       var response = await http.post(
-        Uri.parse("http://secondspin.xyz/api/products/store/$catId"),
+        Uri.parse("http://www.secondspin.xyz/api/products/store/$catId"),
         headers: {
           HttpHeaders.authorizationHeader: "Bearer $token",
           HttpHeaders.contentTypeHeader: "application/json",
@@ -83,7 +82,19 @@ class _SellFormState extends State<SellForm> {
       rethrow;
     }
   }
+  CategorySelected cat = CategorySelected();
+  @override
+  void initState() {
+    super.initState();
+    cat = CategorySelected();
+    futureData();
+  }
 
+  Future<void> futureData() async {
+    await cat.getCat();
+    setState(() {});
+  }
+File? selectedImage;
   var dropDownValue;
   @override
   Widget build(BuildContext context) {
@@ -105,9 +116,9 @@ class _SellFormState extends State<SellForm> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    InkWell(
-                      onTap: () async {
-                        Navigator.pushNamed(context, FormCamera.routeName);
+                    MaterialButton(
+                      onPressed: () {
+                        pickImageFromCamera();
                       },
                       child: Container(
                         height: MediaQuery.of(context).size.height * 0.2,
@@ -116,8 +127,7 @@ class _SellFormState extends State<SellForm> {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        child: widget.imagePath == null ||
-                            widget.imagePath!.isEmpty
+                        child: selectedImage == null
                             ? Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -141,8 +151,7 @@ class _SellFormState extends State<SellForm> {
                             )
                           ],
                         )
-                            : Image.file(
-                          File(widget.imagePath!),
+                            : Image.file(selectedImage!,
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -156,7 +165,7 @@ class _SellFormState extends State<SellForm> {
                     ),
                     TextF(
                       hint: "Enter item Name",
-                      astrik: false,
+                      asterisk: false,
                       textEditingController: titleControl,
                     ),
                     SizedBox(
@@ -166,23 +175,7 @@ class _SellFormState extends State<SellForm> {
                       "Choose item category *",
                       style: theme.textTheme.labelMedium,
                     ),
-                    FutureBuilder(
-                        future: Api_Manager.listCategories(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const Center(
-                                child: CircularProgressIndicator(
-                                  color: Colors.grey,
-                                ));
-
-                          }
-                          if (snapshot.hasError) {
-                            return Text(snapshot.error.toString());
-                          }
-
-                          CategoryList? response = snapshot.data;
-                          return DropdownButton(
+                          DropdownButton(
                             style: theme.textTheme.labelSmall,
                             hint: const Text("Categories"),
                             padding: EdgeInsets.all(
@@ -190,7 +183,7 @@ class _SellFormState extends State<SellForm> {
                             isExpanded: true,
                             value: dropDownValue,
                             icon: const Icon(Icons.keyboard_arrow_down),
-                            items: response?.data?.map((e) {
+                            items: cat.user?.data?.map((e) {
                               return DropdownMenuItem(
                                 value: e.id,
                                 child: Text(e.name??""),
@@ -201,8 +194,7 @@ class _SellFormState extends State<SellForm> {
                                 dropDownValue = newValue!;
                               });
                             },
-                          );
-                        }),
+                          ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.01,
                     ),
@@ -212,7 +204,7 @@ class _SellFormState extends State<SellForm> {
                     ),
                     TextF(
                       hint: "Describe What Are You Selling?",
-                      astrik: false,
+                      asterisk: false,
                       textEditingController: descriptionControl,
                     ),
                     SizedBox(
@@ -224,19 +216,19 @@ class _SellFormState extends State<SellForm> {
                     ),
                     TextF(
                       hint: "Tell Us Your Story?",
-                      astrik: false,
+                      asterisk: false,
                       textEditingController: storyControl,
                     ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.03,
                     ),
                     Text(
-                      "Location details *",
+                      "Region *",
                       style: theme.textTheme.labelMedium,
                     ),
                     TextF(
                       hint: "Enter your location details",
-                      astrik: false,
+                      asterisk: false,
                       textEditingController: locationControl,
                     ),
                     SizedBox(
@@ -248,7 +240,7 @@ class _SellFormState extends State<SellForm> {
                     ),
                     TextF(
                       hint: "Enter your location details",
-                      astrik: false,
+                      asterisk: false,
                       textEditingController: locDetailsControl,
                     ),
                     SizedBox(
@@ -260,7 +252,7 @@ class _SellFormState extends State<SellForm> {
                     ),
                     TextF(
                       hint: "Enter item Price",
-                      astrik: false,
+                      asterisk: false,
                       textEditingController: priceControl,
                     ),
                   ],
@@ -279,7 +271,7 @@ class _SellFormState extends State<SellForm> {
                     descriptionControl.text.toString(),
                     titleControl.text.toString(),
                     locationControl.text.toString(),
-                    widget.imagePath,
+                    selectedImage?.path.toString(),
                     storyControl.text.toString(),
                     price,
                     locDetailsControl.text.toString(),
@@ -299,6 +291,14 @@ class _SellFormState extends State<SellForm> {
         ),
       ),
     );
+  }
+  Future pickImageFromCamera() async {
+    final pic =
+    await ImagePicker().pickImage(source: ImageSource.camera);
+    if(pic == null)return;
+    setState(() {
+      selectedImage = File(pic.path);
+    });
   }
 }
 void _showDialog(BuildContext context) {
@@ -323,4 +323,11 @@ void _showDialog(BuildContext context) {
           ),
         );
       });
+}
+class CategorySelected {
+  CategoryList? user;
+  Api_Manager apiManager = Api_Manager();
+  Future<void> getCat() async {
+    user = (await apiManager.listCategories());
+  }
 }

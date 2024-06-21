@@ -91,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   TextF(
                     hint: "alma.lawson@example.com",
-                    astrik: false,
+                    asterisk: false,
                     textEditingController: emailControl,
                     validator: (String? value) {
                       if (value == null || value.trim().isEmpty) {
@@ -102,14 +102,14 @@ class _LoginPageState extends State<LoginPage> {
                       if (!regex.hasMatch(value)) {
                         return "Invalid E-mail address";
                       }
-                      if(value != emailControl.toString()){
-                        return "User not found";
-                      }
+                      // if(value != emailControl.toString()){
+                      //   return "User not found";
+                      // }
                       return null;
                     },
-                    onSaved:(String? mail){
-                      mail = emailControl.toString();
-                    },
+                    // onSaved:(String? mail){
+                    //   emailControl.text = mail!;
+                    // },
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.02,
@@ -120,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   TextF(
                       hint: "*************",
-                      astrik: !isVisible,
+                      asterisk: !isVisible,
                       icon: IconButton(
                           onPressed: () {
                             isVisible = !isVisible;
@@ -134,9 +134,9 @@ class _LoginPageState extends State<LoginPage> {
                         if (value == null || value.trim().isEmpty) {
                           return "Please enter password";
                         }
-                        if(value != passControl.toString()){
-                          return "Wrong password";
-                        }
+                        // if(value != passControl.toString()){
+                        //   return "Wrong password";
+                        // }
                         return null;
                       }),
                   SizedBox(
@@ -197,6 +197,6 @@ class _LoginPageState extends State<LoginPage> {
     if (formKey.currentState!.validate()) {
       // Navigator.pushNamed(context, HomeLayout.routeName);
     }
-    formKey.currentState?.save();
+    // formKey.currentState?.save();
   }
 }
