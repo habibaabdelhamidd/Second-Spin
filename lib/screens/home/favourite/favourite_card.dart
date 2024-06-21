@@ -14,7 +14,8 @@ class _Favourite_cardState extends State<Favourite_card> {
   Widget build(BuildContext context) {
     final mediaquary = MediaQuery.of(context).size;
     var theme = Theme.of(context);
-    return Container(
+    return widget.favProducts== null ? Center(child: CircularProgressIndicator(),):
+      Container(
       padding: EdgeInsets.all(mediaquary.width * 0.015),
       margin: EdgeInsets.all(mediaquary.width * 0.01),
       decoration: BoxDecoration(
