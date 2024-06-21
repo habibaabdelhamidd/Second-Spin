@@ -174,6 +174,7 @@ File? selectedImage;
                       "Choose item category *",
                       style: theme.textTheme.labelMedium,
                     ),
+
                           DropdownButton(
                             style: theme.textTheme.labelSmall,
                             hint: const Text("Categories"),
