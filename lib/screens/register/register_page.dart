@@ -44,10 +44,6 @@ class _RegisterPageState extends State<RegisterPage> {
       Preference.saveToken(registerResponse.data?.token);
       Navigator.pushNamed(context, HomeLayout.routeName);
     }
-    // else {
-    //   print("failed");
-    // }
-
     final result = jsonDecode(response.body);
     print(response.body);
     var registerResponse = RegisterResponse.fromJson(result);
@@ -94,7 +90,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   TextF(
                     hint: "Cody Fisher",
-                    astrik: false,
+                    asterisk: false,
                     textEditingController: nameControl,
                     validator: (String? value) {
                       if (value == null || value.trim().isEmpty) {
@@ -112,7 +108,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   TextF(
                     hint: "alma.lawson@example.com",
-                    astrik: false,
+                    asterisk: false,
                     textEditingController: emailControl,
                     validator: (String? value) {
                       if (value == null || value.trim().isEmpty) {
@@ -125,6 +121,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       }
                       return null;
                     },
+                    // onSaved: (mail) {
+                    //   mail = emailControl.text;
+                    // },
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.02,
@@ -135,7 +134,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   TextF(
                       hint: "*************",
-                      astrik: !isVisible,
+                      asterisk: !isVisible,
                       icon: IconButton(
                           onPressed: () {
                             isVisible = !isVisible;
@@ -155,7 +154,11 @@ class _RegisterPageState extends State<RegisterPage> {
                           return "Invalid Password";
                         }
                         return null;
-                      }),
+                      },
+                      // onSaved: (String? pass) {
+                      //   pass = passControl.text;
+                      // }
+                      ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.02,
                   ),
@@ -165,7 +168,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   TextF(
                       hint: "*************",
-                      astrik: !isSeen,
+                      asterisk: !isSeen,
                       icon: IconButton(
                           onPressed: () {
                             isSeen = !isSeen;

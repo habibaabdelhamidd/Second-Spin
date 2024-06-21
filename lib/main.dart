@@ -20,8 +20,6 @@ import 'package:graduation/screens/home/home/home.dart';
 import 'package:graduation/screens/home/search/search_details.dart';
 import 'package:graduation/screens/login/login_page.dart';
 import 'package:graduation/screens/register/register_page.dart';
-import 'package:graduation/screens/sell/form/camera.dart';
-import 'package:graduation/screens/sell/form/charity_camera.dart';
 import 'package:graduation/screens/sell/form/charity_form.dart';
 import 'package:graduation/screens/sell/form/sell_form.dart';
 import 'package:graduation/screens/sell/sell_view.dart';
@@ -68,9 +66,10 @@ class MyApp extends StatelessWidget {
         CharityForm.routeName : (context)=> const CharityForm(),
         EditAccount.routeName : (context)=> EditAccount(),
         Settings_Account.routeName: (context)=> Settings_Account(),
-        FormCamera.routeName : (context)=> const FormCamera(),
-        CharityCamera.routeName : (context)=> const CharityCamera(),
+        // FormCamera.routeName : (context)=> const FormCamera(),
+        // CharityCamera.routeName : (context)=> const CharityCamera(),
         CartUserData.routeName: (context)=> CartUserData()
+
       },
       home: Splashscreen()
 
