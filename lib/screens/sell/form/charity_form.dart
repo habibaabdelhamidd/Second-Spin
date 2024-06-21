@@ -1,15 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:graduation/models/charities_response/CharitiesResponse.dart';
 import 'package:graduation/screens/login/buttons.dart';
 import 'package:graduation/screens/login/text_ff.dart';
-import 'package:graduation/screens/sell/form/charity_camera.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../../core/network_layer/api_manager.dart';
 import '../../../core/shared_preference.dart';
 import '../../../models/Donation/DonationFormRes.dart';
 import 'package:http/http.dart' as http;
-
+import '../../../models/charities_response/CharityData.dart';
 import '../../category/used/used_view.dart';
 
 class CharityForm extends StatefulWidget {
@@ -39,7 +38,7 @@ class _CharityFormState extends State<CharityForm> {
   ) async {
     String? token = await Preference.getToken();
     var response = await http.post(
-        Uri.parse("http://secondspin.xyz/api/donations/store/$charityId"),
+        Uri.parse("http://www.secondspin.xyz/api/donations/store/$charityId"),
         headers: {
           HttpHeaders.authorizationHeader: "Bearer $token",
           HttpHeaders.contentTypeHeader: "application/json",
@@ -65,8 +64,20 @@ class _CharityFormState extends State<CharityForm> {
     var donationResponse = DonationFormRes.fromJson(result);
     return donationResponse;
   }
+  CharitySelected charity = CharitySelected();
+  @override
+  void initState() {
+    super.initState();
+    charity = CharitySelected();
+    futureData();
+  }
 
+  Future<void> futureData() async {
+    await charity.getCat();
+    setState(() {});
+  }
   var dropDownValue;
+  File? selectedImage;
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -89,8 +100,7 @@ class _CharityFormState extends State<CharityForm> {
                     children: [
                       InkWell(
                           onTap: () {
-                            Navigator.pushNamed(
-                                context, CharityCamera.routeName);
+                            pickImageFromCamera();
                           },
                           child: Container(
                             height: MediaQuery.of(context).size.height * 0.2,
@@ -98,8 +108,7 @@ class _CharityFormState extends State<CharityForm> {
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(20)),
-                            child: widget.imagePath == null ||
-                                    widget.imagePath!.isEmpty
+                            child: selectedImage == null
                                 ? Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -126,8 +135,7 @@ class _CharityFormState extends State<CharityForm> {
                                       )
                                     ],
                                   )
-                                : Image.file(
-                                    File(widget.imagePath!),
+                                : Image.file(selectedImage!,
                                     fit: BoxFit.cover,
                                   ),
                           )),
@@ -140,7 +148,7 @@ class _CharityFormState extends State<CharityForm> {
                       ),
                       TextF(
                         hint: "Enter item Name",
-                        astrik: false,
+                        asterisk: false,
                         textEditingController: titleControl,
                       ),
                       SizedBox(
@@ -152,19 +160,19 @@ class _CharityFormState extends State<CharityForm> {
                       ),
                       TextF(
                         hint: "Describe What Are You Selling?",
-                        astrik: false,
+                        asterisk: false,
                         textEditingController: descriptionControl,
                       ),
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.03,
                       ),
                       Text(
-                        "City*",
+                        "Region*",
                         style: theme.textTheme.labelMedium,
                       ),
                       TextF(
                         hint: "Enter your city",
-                        astrik: false,
+                        asterisk: false,
                         textEditingController: locationControl,
                       ),
                       SizedBox(
@@ -176,7 +184,7 @@ class _CharityFormState extends State<CharityForm> {
                       ),
                       TextF(
                         hint: "Enter your location details",
-                        astrik: false,
+                        asterisk: false,
                         textEditingController: locationDetailsControl,
                       ),
                       SizedBox(
@@ -186,21 +194,7 @@ class _CharityFormState extends State<CharityForm> {
                         "Choose charity *",
                         style: theme.textTheme.labelMedium,
                       ),
-                      FutureBuilder(
-                          future: Api_Manager.getCharities(),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return const Center(
-                                  child: CircularProgressIndicator(
-                                color: Colors.grey,
-                              ));
-                            }
-                            if (snapshot.hasError) {
-                              return Text(snapshot.error.toString());
-                            }
-                            CharitiesResponse? response = snapshot.data;
-                            return DropdownButton(
+                      DropdownButton(
                               style: theme.textTheme.labelSmall,
                               hint: const Text("Charities"),
                               padding: EdgeInsets.all(
@@ -208,7 +202,7 @@ class _CharityFormState extends State<CharityForm> {
                               isExpanded: true,
                               value: dropDownValue,
                               icon: const Icon(Icons.keyboard_arrow_down),
-                              items: response?.data?.map((e) {
+                              items: charity.user?.data?.map((e) {
                                 return DropdownMenuItem(
                                   value: e.id,
                                   child: Text(e.name ?? ""),
@@ -219,8 +213,7 @@ class _CharityFormState extends State<CharityForm> {
                                   dropDownValue = newValue!;
                                 });
                               },
-                            );
-                          }),
+                            ),
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.08,
                       ),
@@ -236,7 +229,7 @@ class _CharityFormState extends State<CharityForm> {
                         descriptionControl.text,
                         titleControl.text,
                         locationControl.text,
-                        imagePath,
+                        selectedImage?.path.toString(),
                         locationDetailsControl.text,
                         id,
                       ).then((response) {
@@ -253,6 +246,14 @@ class _CharityFormState extends State<CharityForm> {
             ],
           ),
         ));
+  }
+  Future pickImageFromCamera() async {
+    final pic =
+    await ImagePicker().pickImage(source: ImageSource.camera);
+    if(pic == null)return;
+    setState(() {
+      selectedImage = File(pic.path);
+    });
   }
 }
 
@@ -278,4 +279,11 @@ void _showDialog(BuildContext context) {
           ),
         );
       });
+}
+class CharitySelected {
+  CharityData? user;
+  Api_Manager apiManager = Api_Manager();
+  Future<void> getCat() async {
+    user = (await apiManager.getCharities());
+  }
 }

@@ -5,19 +5,21 @@ import 'package:graduation/core/constants.dart';
 import 'package:graduation/core/shared_preference.dart';
 import 'package:graduation/models/cart/cart_list_model.dart';
 import 'package:graduation/models/categories_response/CategoryResponse.dart';
-import 'package:graduation/models/charities_response/CharitiesResponse.dart';
 import 'package:graduation/models/details_response/Data.dart';
 import 'package:graduation/models/fav/addtofav/add_to_fav.dart';
+import 'package:graduation/models/get_user/Data.dart';
 import 'package:graduation/models/home_model.dart';
 import 'package:graduation/models/recyle/recycle_product_details_model.dart';
 import 'package:graduation/models/response/AllCategoriesResponse.dart';
 import 'package:http/http.dart' as http;
 import '../../models/category_list/CategoryList.dart';
+import '../../models/charities_response/CharityData.dart';
 import '../../models/details_response/DetailsResponse.dart';
 import 'package:graduation/models/search_response/SearchResponse.dart';
 import '../../models/edit_profile/EditProfile.dart';
+import '../../models/get_user/GetUser.dart';
+import '../../models/profile_pic/AddPic.dart';
 import '../../models/recyle/all_recycle_model.dart';
-import '../../models/register_response/RegisterResponse.dart';
 
 class Api_Manager {
   Future<List<Data>?> fetchHome() async {
@@ -143,18 +145,18 @@ class Api_Manager {
     }
   }
 
-  static Future<CharitiesResponse> getCharities() async {
+   Future<CharityData?> getCharities() async {
     String? token = await Preference.getToken();
     var response = await http.get(
         Uri.parse("http://secondspin.xyz/api/donations/charities"),
         headers: {HttpHeaders.authorizationHeader: "Bearer $token"});
     // debugPrint(response.body);
     final result = jsonDecode(response.body);
-    var charitiesResponse = CharitiesResponse.fromJson(result);
+    var charitiesResponse = CharityData.fromJson(result);
     return charitiesResponse;
   }
 
-  static Future<CategoryList> listCategories() async {
+   Future<CategoryList> listCategories() async {
     String? token = await Preference.getToken();
     var response = await http.get(
         Uri.parse("http://secondspin.xyz/api/categories/allcategories"),
@@ -220,30 +222,60 @@ class Api_Manager {
     }
   }
 
-  static Future<EditProfile> editProfile(String email, String password, String name) async {
+   static Future<EditProfile> editProfile(String email, String password, String name,String image) async {
     String? token = await Preference.getToken();
-        final body = jsonEncode(<String, dynamic>{
-          "name": name,
-          "email": email,
-          "password": password,});
-    print('Request Body: $body');
     var response = await http.post(
-        Uri.parse("http://secondspin.xyz/api/userprofile/editprofile"),
+        Uri.parse("http://www.secondspin.xyz/api/userprofiles/editprofile"),
         headers: {
           HttpHeaders.authorizationHeader: "Bearer $token",
           HttpHeaders.contentTypeHeader: "application/json",
         });
-
+        final body = jsonEncode(<String, dynamic>{
+          "name": name,
+          "email": email,
+          "password": password,
+        "image" : image});
+    print('Request Body: $body');
+    final result = jsonDecode(response.body);
+    var editResponse = EditProfile.fromJson(result);
     print('Response Status: ${response.statusCode}');
-    print('Response Body: ${response.body}');
+
     if (response.statusCode == 200) {
-      print(response.body);
+      print('Response Body: ${response.body}');
+      return editResponse;
     }  else {
       final result = jsonDecode(response.body);
       throw Exception('Failed to sell item: ${result['message']}');
     }
-    final result = jsonDecode(response.body);
-    var editResponse = EditProfile.fromJson(result);
-    return editResponse;
+
+
   }
+
+   Future<GetUserData?> userData() async {
+    String? token = await Preference.getToken();
+    var response = await http.get(
+        Uri.parse("http://secondspin.xyz/api/userprofiles/getuser"),
+        headers: {HttpHeaders.authorizationHeader: "Bearer $token",
+      HttpHeaders.contentTypeHeader: "application/json",});
+    debugPrint(response.body);
+    if (response.statusCode == 200) {
+      print('Response Body: ${response.body}');
+    }
+    final result = jsonDecode(response.body);
+    var userResponse = GetUser.fromJson(result);
+    return userResponse.data;
+  }
+
+  static Future<AddPic> getPic() async {
+    String? token = await Preference.getToken();
+    var response = await http.get(
+        Uri.parse("http://secondspin.xyz/api/userprofiles/uploadimage"),
+        headers: {HttpHeaders.authorizationHeader: "Bearer $token"});
+
+    final result = jsonDecode(response.body);
+    debugPrint(response.body);
+    var picResponse = AddPic.fromJson(result);
+    return picResponse;
+  }
+
 }
