@@ -311,33 +311,46 @@ class Api_Manager {
       print("error");
     }
   }
-  static void checkoutData() async {
-    String? token = await Preference.getToken();
-    final inputLocation = dropDownCurrentValue;
-    final locationDetails = userLocationDetails.text;
-    final paymentMethod = currentPaymentMethodOptions;
-    final cardNumber = creditNum.text;
-    final cvv = cvV.text;
-    final expirydate = expire.text;
-    final response = await http.post(
-      Uri.http(Constants.api_base_URL, "/api/orders/checkout"),
-      headers: {"Authorization": "Bearer $token"},
-      body: jsonEncode({
-        "location": inputLocation,
-        "location_details": locationDetails,
-        "payment_method": paymentMethod,
-        "card_number": cardNumber,
-        "cvv": cvv,
-        "expiry_date": expirydate,
-      }),
-    );
-    // final decodedResponse = jsonDecode(response.body);
-    // print(decodedResponse);
-    // return;
-    if (response.statusCode == 201 ) {
-      print("success");
-    } else {
-      print(response.statusCode);
+  static Future <void>sendCheckoutRequest() async {
+    try {
+      String? token = await Preference.getToken();
+      final locataionCity = dropDownCurrentValue;
+      final locationDetails = userLocationDetails.text;
+      final creditCardN=creditNum.text;
+      final expiryDate = expire.text;
+      final cardCvv = cvV.text;
+      final currentPayment = payment!;
+      print(locationDetails);
+      print(cardCvv);
+      print(expiryDate);
+      print(creditCardN);
+      print(locataionCity);
+      print(payment);
+      final dio = Dio();
+      final headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      };
+      final body ={
+        'location': locataionCity,
+        'payment_method' : currentPayment,
+        'location_details': locationDetails,
+        'card_number' : creditCardN,
+        'cvv' : cardCvv ,
+        'expiry_date' : expiryDate ,
+      };
+      final response = await dio.post(
+        'http://secondspin.xyz/api/orders/checkout',
+        options:Options(
+        headers: headers,
+        followRedirects: true,
+      ),
+        data: body,
+      );
+      print('Status code: ${response.statusCode}');
+      print('Response data: ${response.data}');
+    } catch (e) {
+      print('Error: $e');
     }
   }
   // Future<PaymentData?> fetchPaymentSummary() async {
