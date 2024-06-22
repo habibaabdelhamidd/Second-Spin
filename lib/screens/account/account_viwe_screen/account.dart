@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:graduation/core/network_layer/api_manager.dart';
 import 'package:graduation/screens/account/edit_account/edit_account.dart';
 import 'package:graduation/screens/account/settings_account/settings_account.dart';
+
+import '../../../models/get_user/Data.dart';
 final _formKey = GlobalKey<FormState>();
 TextEditingController feedback = TextEditingController();
 class AccountScreen extends StatefulWidget {
@@ -10,8 +12,21 @@ class AccountScreen extends StatefulWidget {
   State<AccountScreen> createState() => _AccountScreenState();
 }
 class _AccountScreenState extends State<AccountScreen> {
+  UserData user = UserData();
+  @override
+  void initState() {
+    super.initState();
+    user = UserData();
+    futureData();
+  }
+
+  Future<void> futureData() async {
+    await user.getUser();
+    setState(() {});
+  }
   @override
   Widget build(BuildContext context) {
+    // var args = ModalRoute.of(context)?.settings.arguments as GetUserData;
     var theme = Theme.of(context);
     final mediaquery = MediaQuery.of(context).size;
     return Form(
@@ -37,9 +52,15 @@ class _AccountScreenState extends State<AccountScreen> {
               Center(
                 child: Column(
                   children: [
-                    Image.asset("assets/image/profile.png"),
+                    CircleAvatar(
+                      radius: 45,
+                      backgroundImage: user.user?.image != null
+                          ? NetworkImage(user.user!.image)
+                          : AssetImage('assets/image/default_profile.png') as ImageProvider,
+                    ),
+                    SizedBox(height: mediaquery.height*0.015,),
                     Text(
-                      "Cody Fisher",
+                      user.user?.name ?? "",
                       style: theme.textTheme.bodyLarge!.copyWith(fontSize: 16),
                     ),
                   ],
@@ -307,4 +328,11 @@ void showDelete(BuildContext context) {
         );
       }
   );
+}
+class UserData {
+  GetUserData? user;
+  Api_Manager apiManager = Api_Manager();
+  Future<void> getUser() async {
+    user = (await apiManager.userData());
+  }
 }

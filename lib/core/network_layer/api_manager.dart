@@ -21,7 +21,6 @@ import '../../models/category_list/CategoryList.dart';
 import '../../models/charities_response/CharityData.dart';
 import '../../models/details_response/DetailsResponse.dart';
 import 'package:graduation/models/search_response/SearchResponse.dart';
-import '../../models/edit_profile/EditProfile.dart';
 import '../../models/get_user/GetUser.dart';
 import '../../models/profile_pic/AddPic.dart';
 import '../../models/recyle/all_recycle_model.dart';
@@ -241,34 +240,34 @@ class Api_Manager {
   }
 
 
-   static Future<EditProfile> editProfile(String email, String password, String name,String image) async {
-    String? token = await Preference.getToken();
-    var response = await http.post(
-        Uri.parse("http://www.secondspin.xyz/api/userprofiles/editprofile"),
-        headers: {
-          HttpHeaders.authorizationHeader: "Bearer $token",
-          HttpHeaders.contentTypeHeader: "application/json",
-        });
-        final body = jsonEncode(<String, dynamic>{
-          "name": name,
-          "email": email,
-          "password": password,
-        "image" : image});
-    print('Request Body: $body');
-    final result = jsonDecode(response.body);
-    var editResponse = EditProfile.fromJson(result);
-    print('Response Status: ${response.statusCode}');
-
-    if (response.statusCode == 200) {
-      print('Response Body: ${response.body}');
-      return editResponse;
-    }  else {
-      final result = jsonDecode(response.body);
-      throw Exception('Failed to sell item: ${result['message']}');
-    }
-
-
-  }
+  //  static Future<EditProfile> editProfile(String email, String password, String name,String image) async {
+  //   String? token = await Preference.getToken();
+  //   var response = await http.post(
+  //       Uri.parse("http://www.secondspin.xyz/api/userprofiles/editprofile"),
+  //       headers: {
+  //         HttpHeaders.authorizationHeader: "Bearer $token",
+  //         HttpHeaders.contentTypeHeader: "application/json",
+  //       });
+  //       final body = jsonEncode(<String, dynamic>{
+  //         "name": name,
+  //         "email": email,
+  //         "password": password,
+  //       "image" : image});
+  //   print('Request Body: $body');
+  //   final result = jsonDecode(response.body);
+  //   var editResponse = EditProfile.fromJson(result);
+  //   print('Response Status: ${response.statusCode}');
+  //
+  //   if (response.statusCode == 200) {
+  //     print('Response Body: ${response.body}');
+  //     return editResponse;
+  //   }  else {
+  //     final result = jsonDecode(response.body);
+  //     throw Exception('Failed to sell item: ${result['message']}');
+  //   }
+  //
+  //
+  // }
 
    Future<GetUserData?> userData() async {
     String? token = await Preference.getToken();

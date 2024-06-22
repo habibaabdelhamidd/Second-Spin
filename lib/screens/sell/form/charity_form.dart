@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:graduation/screens/login/buttons.dart';
@@ -6,10 +5,9 @@ import 'package:graduation/screens/login/text_ff.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../core/network_layer/api_manager.dart';
 import '../../../core/shared_preference.dart';
-import '../../../models/Donation/DonationFormRes.dart';
-import 'package:http/http.dart' as http;
 import '../../../models/charities_response/CharityData.dart';
 import '../../category/used/used_view.dart';
+import 'package:http/http.dart' as http;
 
 class CharityForm extends StatefulWidget {
   static const String routeName = "CharityForm";
@@ -28,46 +26,42 @@ class _CharityFormState extends State<CharityForm> {
   TextEditingController locationControl = TextEditingController();
   String? imagePath;
 
-  Future<DonationFormRes> donate(
-      num? charityId,
-      String? description,
-    String? title,
-    String? location,
-    String? locationDetails,
-    String? imagePath,
-
-  ) async {
+  Future donate(int? charityId) async {
     String? token = await Preference.getToken();
-    final body = jsonEncode(<String, dynamic>{
-      "description": description,
-      "title": title,
-      "location": location,
-      "location_details": locationDetails,
-      "image": imagePath,
-    });
-    print('Request Body: $body');
-    var response = await http.post(
-        Uri.parse("http://www.secondspin.xyz/api/donations/store/$charityId"),
-        headers: {
-          HttpHeaders.authorizationHeader: "Bearer $token",
-          HttpHeaders.contentTypeHeader: "application/json",
-        },
-        );
-    print('Response Status: ${response.statusCode}');
-    print('Response Body: ${response.body}');
-    if (response.statusCode == 201) {
-      final result = jsonDecode(response.body);
-      print(response.body);
-      var donationResponse = DonationFormRes.fromJson(result);
-      return donationResponse;
-    }  else {
-      final result = jsonDecode(response.body);
-      throw Exception('Failed to sell item: ${result['message']}');
+    final description = descriptionControl.text;
+        final  title = titleControl.text;
+        final location = locationControl.text;
+        final locationDetails = locationDetailsControl.text;
+
+
+    var uri = Uri.parse("http://www.secondspin.xyz/api/donations/store/$charityId");
+
+    var request = http.MultipartRequest('POST', uri)
+      ..headers[HttpHeaders.authorizationHeader] = "Bearer $token"
+      ..fields['description'] = description
+      ..fields['title'] = title
+      ..fields['location'] = location
+      ..fields['location_details'] = locationDetails;
+
+    if (selectedImage != null) {
+      request.files.add(await http.MultipartFile.fromPath('image', selectedImage!.path));
     }
-    // final result = jsonDecode(response.body);
-    // print(response.body);
-    // var donationResponse = DonationFormRes.fromJson(result);
-    // return donationResponse;
+
+    try {
+      var response = await request.send();
+
+      if (response.statusCode == 201) {
+        print("Success");
+        // Optionally, you can parse and return the response body here
+      } else {
+        print('Failed to sell item: ${response.statusCode}');
+        var responseData = await response.stream.bytesToString();
+        print('Error response: $responseData');
+      }
+    } catch (e) {
+      print('Error: $e'); // Print any error that occurs
+      rethrow;
+    }
   }
   CharitySelected charity = CharitySelected();
   @override
@@ -83,6 +77,7 @@ class _CharityFormState extends State<CharityForm> {
   }
   var dropDownValue;
   File? selectedImage;
+
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -228,29 +223,17 @@ class _CharityFormState extends State<CharityForm> {
               ),
               MaterialButton(
                   onPressed: () {
-                    num? id = dropDownValue;
+                    int? id = dropDownValue;
                     if (id != null) {
+                      print(id);
                       donate(
-                        // dropDownValue,
-                        // descriptionControl.text,
-                        // titleControl.text,
-                        // locationControl.text,
-                        // locationDetailsControl.text,
-                        // selectedImage?.path.toString()
-                        3,
-                        "dcjhgbgtyhmjkjb",
-                        "mcnnc",
-                        "giza",
-                        ",njbjhvhchc",
-                        "assets/image/unknown_user.png"
-
-                      ).then((response) {
-                        print('Item sold successfully: ${response.toString()}');
+                        id).then((response) {
+                        print('Item sold successfully: ');
                       }).catchError((error) {
                         print('Failed to sell item: $error');
                       });
                     } else {
-                      print('Invalid price input');
+                      print("invalid id");
                     }
                     _showDialog(context);
                   },

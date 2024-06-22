@@ -37,7 +37,7 @@ class _UsedDetailsState extends State<UsedDetails> {
             style: theme.appBarTheme.titleTextStyle,
           ),
         ),
-        body: Expanded(
+        body: details.detailsData == null ? Center(child: CircularProgressIndicator(),): Expanded(
                   child: Padding(
                 padding:
                     EdgeInsets.all(MediaQuery.of(context).size.width * 0.04),
