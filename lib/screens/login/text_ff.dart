@@ -2,19 +2,21 @@ import 'package:flutter/material.dart';
 
 class TextF extends StatelessWidget {
   final String hint;
-  final bool astrik;
+  final bool asterisk;
   final FormFieldValidator<String>? validator;
+  final void Function(String?)? onSaved;
   Widget? icon;
   final Color? fieldColor;
   final TextEditingController? textEditingController;
   TextF(
       {super.key,
       required this.hint,
-      required this.astrik,
+      required this.asterisk,
       this.textEditingController,
       this.validator,
       this.icon,
-      this.fieldColor});
+      this.fieldColor,
+      this.onSaved});
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +27,10 @@ class TextF extends StatelessWidget {
         alignment: Alignment.center,
         child: TextFormField(
             style: theme.textTheme.labelMedium,
-            obscureText: astrik,
+            obscureText: asterisk,
             controller: textEditingController,
             validator: validator,
+            onSaved: onSaved,
             decoration: InputDecoration(
               focusedBorder: OutlineInputBorder(
                 borderSide: const BorderSide(

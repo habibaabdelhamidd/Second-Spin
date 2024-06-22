@@ -49,6 +49,7 @@ class _LoginPageState extends State<LoginPage> {
 
   var formKey = GlobalKey<FormState>();
   bool isVisible = false;
+  // Map <String,String> authdata= {"email":'',"password":''};
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   TextF(
                     hint: "alma.lawson@example.com",
-                    astrik: false,
+                    asterisk: false,
                     textEditingController: emailControl,
                     validator: (String? value) {
                       if (value == null || value.trim().isEmpty) {
@@ -101,8 +102,14 @@ class _LoginPageState extends State<LoginPage> {
                       if (!regex.hasMatch(value)) {
                         return "Invalid E-mail address";
                       }
+                      if(value != emailControl.toString()){
+                        return "";
+                      }
                       return null;
                     },
+                    // onSaved:(String? mail){
+                    //   emailControl.text = mail!;
+                    // },
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.02,
@@ -113,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   TextF(
                       hint: "*************",
-                      astrik: !isVisible,
+                      asterisk: !isVisible,
                       icon: IconButton(
                           onPressed: () {
                             isVisible = !isVisible;
@@ -127,9 +134,9 @@ class _LoginPageState extends State<LoginPage> {
                         if (value == null || value.trim().isEmpty) {
                           return "Please enter password";
                         }
-                        // if(LoginResponse.fromJson(value) == 401){
-                        //   return "Invalid credentials";
-                        // }
+                        if(value != passControl.toString()){
+                          return "Wrong email or password!";
+                        }
                         return null;
                       }),
                   SizedBox(
@@ -190,5 +197,6 @@ class _LoginPageState extends State<LoginPage> {
     if (formKey.currentState!.validate()) {
       // Navigator.pushNamed(context, HomeLayout.routeName);
     }
+    // formKey.currentState?.save();
   }
 }

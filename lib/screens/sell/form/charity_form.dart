@@ -1,17 +1,13 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:graduation/screens/login/buttons.dart';
 import 'package:graduation/screens/login/text_ff.dart';
-import 'package:graduation/screens/sell/form/charity_camera.dart';
+import 'package:image_picker/image_picker.dart';
+import '../../../core/network_layer/api_manager.dart';
 import '../../../core/shared_preference.dart';
-import '../../../models/Donation/DonationFormRes.dart';
+import '../../../models/charities_response/CharityData.dart';
+import '../../category/used/used_view.dart';
 import 'package:http/http.dart' as http;
-
-List<String> items = <String>[
-  'Al-Orman',
-  'Resala',
-];
 
 class CharityForm extends StatefulWidget {
   static const String routeName = "CharityForm";
@@ -26,36 +22,61 @@ class CharityForm extends StatefulWidget {
 class _CharityFormState extends State<CharityForm> {
   TextEditingController titleControl = TextEditingController();
   TextEditingController descriptionControl = TextEditingController();
+  TextEditingController locationDetailsControl = TextEditingController();
   TextEditingController locationControl = TextEditingController();
   String? imagePath;
-  String dropDownValue = items.first;
-  Future<DonationFormRes> donate(
-    String? description,
-    String? title,
-    String? location,
-    String? imagePath,
-  ) async {
+
+  Future donate(int? charityId) async {
     String? token = await Preference.getToken();
-    var response =
-        await http.post(Uri.parse("http://secondspin.xyz/api/donations/store"),
-            headers: {
-              HttpHeaders.authorizationHeader: "Bearer $token",
-              HttpHeaders.contentTypeHeader: "application/json",
-            },
-            body: jsonEncode(<String, dynamic>{
-              "description": description,
-              "title": title,
-              "location": location,
-              "image": imagePath,
-            }));
-    if (response.statusCode == 201) {
-      print(response.body);
+    final description = descriptionControl.text;
+        final  title = titleControl.text;
+        final location = locationControl.text;
+        final locationDetails = locationDetailsControl.text;
+
+
+    var uri = Uri.parse("http://www.secondspin.xyz/api/donations/store/$charityId");
+
+    var request = http.MultipartRequest('POST', uri)
+      ..headers[HttpHeaders.authorizationHeader] = "Bearer $token"
+      ..fields['description'] = description
+      ..fields['title'] = title
+      ..fields['location'] = location
+      ..fields['location_details'] = locationDetails;
+
+    if (selectedImage != null) {
+      request.files.add(await http.MultipartFile.fromPath('image', selectedImage!.path));
     }
-    final result = jsonDecode(response.body);
-    print(response.body);
-    var donationResponse = DonationFormRes.fromJson(result);
-    return donationResponse;
+
+    try {
+      var response = await request.send();
+
+      if (response.statusCode == 201) {
+        print("Success");
+        // Optionally, you can parse and return the response body here
+      } else {
+        print('Failed to sell item: ${response.statusCode}');
+        var responseData = await response.stream.bytesToString();
+        print('Error response: $responseData');
+      }
+    } catch (e) {
+      print('Error: $e'); // Print any error that occurs
+      rethrow;
+    }
   }
+  CharitySelected charity = CharitySelected();
+  @override
+  void initState() {
+    super.initState();
+    charity = CharitySelected();
+    futureData();
+  }
+
+  Future<void> futureData() async {
+    await charity.getCat();
+    setState(() {});
+  }
+  var dropDownValue;
+  File? selectedImage;
 
   @override
   Widget build(BuildContext context) {
@@ -79,8 +100,7 @@ class _CharityFormState extends State<CharityForm> {
                     children: [
                       InkWell(
                           onTap: () {
-                            Navigator.pushNamed(
-                                context, CharityCamera.routeName);
+                            pickImageFromCamera();
                           },
                           child: Container(
                             height: MediaQuery.of(context).size.height * 0.2,
@@ -88,7 +108,7 @@ class _CharityFormState extends State<CharityForm> {
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(20)),
-                            child: widget.imagePath == null || widget.imagePath!.isEmpty
+                            child: selectedImage == null
                                 ? Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -115,8 +135,7 @@ class _CharityFormState extends State<CharityForm> {
                                       )
                                     ],
                                   )
-                                : Image.file(
-                                    File(widget.imagePath!),
+                                : Image.file(selectedImage!,
                                     fit: BoxFit.cover,
                                   ),
                           )),
@@ -129,7 +148,7 @@ class _CharityFormState extends State<CharityForm> {
                       ),
                       TextF(
                         hint: "Enter item Name",
-                        astrik: false,
+                        asterisk: false,
                         textEditingController: titleControl,
                       ),
                       SizedBox(
@@ -141,8 +160,20 @@ class _CharityFormState extends State<CharityForm> {
                       ),
                       TextF(
                         hint: "Describe What Are You Selling?",
-                        astrik: false,
+                        asterisk: false,
                         textEditingController: descriptionControl,
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.03,
+                      ),
+                      Text(
+                        "Region*",
+                        style: theme.textTheme.labelMedium,
+                      ),
+                      TextF(
+                        hint: "Enter your city",
+                        asterisk: false,
+                        textEditingController: locationControl,
                       ),
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.03,
@@ -153,8 +184,8 @@ class _CharityFormState extends State<CharityForm> {
                       ),
                       TextF(
                         hint: "Enter your location details",
-                        astrik: false,
-                        textEditingController: locationControl,
+                        asterisk: false,
+                        textEditingController: locationDetailsControl,
                       ),
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.03,
@@ -163,25 +194,26 @@ class _CharityFormState extends State<CharityForm> {
                         "Choose charity *",
                         style: theme.textTheme.labelMedium,
                       ),
-                      DropdownButton<String>(
-                          style: theme.textTheme.labelSmall,
-                          padding: EdgeInsets.all(
-                              MediaQuery.of(context).size.width * 0.02),
-                          isExpanded: true,
-                          value: dropDownValue,
-                          icon: const Icon(Icons.keyboard_arrow_down),
-                          items: items
-                              .map<DropdownMenuItem<String>>((String items) {
-                            return DropdownMenuItem<String>(
-                              value: items,
-                              child: Text(items),
-                            );
-                          }).toList(),
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              dropDownValue = newValue!;
-                            });
-                          }),
+                      DropdownButton(
+                              style: theme.textTheme.labelSmall,
+                              hint: const Text("Charities"),
+                              padding: EdgeInsets.all(
+                                  MediaQuery.of(context).size.width * 0.02),
+                              isExpanded: true,
+                              value: dropDownValue,
+                              icon: const Icon(Icons.keyboard_arrow_down),
+                              items: charity.user?.data?.map((e) {
+                                return DropdownMenuItem(
+                                  value: e.id,
+                                  child: Text(e.name ?? ""),
+                                );
+                              }).toList(),
+                              onChanged: (newValue) {
+                                setState(() {
+                                  dropDownValue = newValue!;
+                                });
+                              },
+                            ),
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.08,
                       ),
@@ -191,12 +223,62 @@ class _CharityFormState extends State<CharityForm> {
               ),
               MaterialButton(
                   onPressed: () {
-                    donate(descriptionControl.text, titleControl.text,
-                        locationControl.text, imagePath);
+                    int? id = dropDownValue;
+                    if (id != null) {
+                      print(id);
+                      donate(
+                        id).then((response) {
+                        print('Item sold successfully: ');
+                      }).catchError((error) {
+                        print('Failed to sell item: $error');
+                      });
+                    } else {
+                      print("invalid id");
+                    }
+                    _showDialog(context);
                   },
                   child: Buttons(title: "Submit", padd: 17))
             ],
           ),
         ));
+  }
+  Future pickImageFromCamera() async {
+    final pic =
+    await ImagePicker().pickImage(source: ImageSource.camera);
+    if(pic == null)return;
+    setState(() {
+      selectedImage = File(pic.path);
+    });
+  }
+}
+
+void _showDialog(BuildContext context) {
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            "Thank you for donating!",
+            style: TextStyle(fontWeight: FontWeight.w900),
+            textAlign: TextAlign.center,
+          ),
+          content: GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, UsedView.routeName);
+            },
+            child: const Text(
+              "See also",
+              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
+      });
+}
+class CharitySelected {
+  CharityData? user;
+  Api_Manager apiManager = Api_Manager();
+  Future<void> getCat() async {
+    user = (await apiManager.getCharities());
   }
 }

@@ -36,7 +36,7 @@ class _SearchDetailsState extends State<SearchDetails> {
         style: theme.appBarTheme.titleTextStyle,
     ),
     ),
-    body: Padding(
+    body:  details.detailsData == null ? Center(child: CircularProgressIndicator(),): Padding(
         padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.04),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

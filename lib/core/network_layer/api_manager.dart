@@ -7,10 +7,9 @@ import 'package:graduation/core/shared_preference.dart';
 import 'package:graduation/models/cart/cart_list_model.dart';
 import 'package:graduation/models/cart/payment_model.dart';
 import 'package:graduation/models/categories_response/CategoryResponse.dart';
-import 'package:graduation/models/category_list/CategoryList.dart';
-import 'package:graduation/models/charities_response/CharitiesResponse.dart';
 import 'package:graduation/models/details_response/Data.dart';
 import 'package:graduation/models/fav/addtofav/add_to_fav.dart';
+import 'package:graduation/models/get_user/Data.dart';
 import 'package:graduation/models/home_model.dart';
 import 'package:graduation/models/recyle/recycle_product_details_model.dart';
 import 'package:graduation/models/response/AllCategoriesResponse.dart';
@@ -18,8 +17,12 @@ import 'package:graduation/screens/account/account_viwe_screen/account.dart';
 import 'package:graduation/screens/cart/cart_view/cart_user_data.dart';
 import 'package:graduation/screens/home/view_model/view_model.dart';
 import 'package:http/http.dart' as http;
+import '../../models/category_list/CategoryList.dart';
+import '../../models/charities_response/CharityData.dart';
 import '../../models/details_response/DetailsResponse.dart';
 import 'package:graduation/models/search_response/SearchResponse.dart';
+import '../../models/get_user/GetUser.dart';
+import '../../models/profile_pic/AddPic.dart';
 import '../../models/recyle/all_recycle_model.dart';
 import 'package:dio/dio.dart';
 
@@ -147,49 +150,19 @@ class Api_Manager {
     }
   }
 
-  static Future<CharitiesResponse> getCharities() async {
+   Future<CharityData?> getCharities() async {
     String? token = await Preference.getToken();
     var response = await http.get(
         Uri.parse("http://secondspin.xyz/api/donations/charities"),
         headers: {HttpHeaders.authorizationHeader: "Bearer $token"});
-    debugPrint(response.body);
+    // debugPrint(response.body);
     final result = jsonDecode(response.body);
-    var charitiesResponse = CharitiesResponse.fromJson(result);
+    var charitiesResponse = CharityData.fromJson(result);
     return charitiesResponse;
   }
 
-  // Future<DonationFormRes> donate(
-  //   num? donationId,
-  //   String? description,
-  //   String? title,
-  //   String? location,
-  //   String? locationDetails,
-  //   String? imagePath,
-  // ) async {
-  //   String? token = await Preference.getToken();
-  //   var response = await http.post(
-  //       Uri.parse("http://secondspin.xyz/api/donations/store/$donationId"),
-  //       headers: {
-  //         HttpHeaders.authorizationHeader: "Bearer $token",
-  //         HttpHeaders.contentTypeHeader: "application/json",
-  //       },
-  //       body: jsonEncode(<String, dynamic>{
-  //         "description": description,
-  //         "title": title,
-  //         "location": location,
-  //         "location_details": locationDetails,
-  //         "image": imagePath,
-  //         'charity_id' : donationId
-  //       }));
-  //   if (response.statusCode == 201) {
-  //     print(response.body);
-  //   }
-  //   final result = jsonDecode(response.body);
-  //   print(response.body);
-  //   var donationResponse = DonationFormRes.fromJson(result);
-  //   return donationResponse;
-  // }
-  static Future<CategoryList> listCategories() async {
+
+   Future<CategoryList> listCategories() async {
     String? token = await Preference.getToken();
     var response = await http.get(
         Uri.parse("http://secondspin.xyz/api/categories/allcategories"),
@@ -260,6 +233,64 @@ class Api_Manager {
       throw Exception('Failed to load products');
     }
   }
+
+
+  //  static Future<EditProfile> editProfile(String email, String password, String name,String image) async {
+  //   String? token = await Preference.getToken();
+  //   var response = await http.post(
+  //       Uri.parse("http://www.secondspin.xyz/api/userprofiles/editprofile"),
+  //       headers: {
+  //         HttpHeaders.authorizationHeader: "Bearer $token",
+  //         HttpHeaders.contentTypeHeader: "application/json",
+  //       });
+  //       final body = jsonEncode(<String, dynamic>{
+  //         "name": name,
+  //         "email": email,
+  //         "password": password,
+  //       "image" : image});
+  //   print('Request Body: $body');
+  //   final result = jsonDecode(response.body);
+  //   var editResponse = EditProfile.fromJson(result);
+  //   print('Response Status: ${response.statusCode}');
+  //
+  //   if (response.statusCode == 200) {
+  //     print('Response Body: ${response.body}');
+  //     return editResponse;
+  //   }  else {
+  //     final result = jsonDecode(response.body);
+  //     throw Exception('Failed to sell item: ${result['message']}');
+  //   }
+  //
+  //
+  // }
+
+   Future<GetUserData?> userData() async {
+    String? token = await Preference.getToken();
+    var response = await http.get(
+        Uri.parse("http://secondspin.xyz/api/userprofiles/getuser"),
+        headers: {HttpHeaders.authorizationHeader: "Bearer $token",
+      HttpHeaders.contentTypeHeader: "application/json",});
+    debugPrint(response.body);
+    if (response.statusCode == 200) {
+      print('Response Body: ${response.body}');
+    }
+    final result = jsonDecode(response.body);
+    var userResponse = GetUser.fromJson(result);
+    return userResponse.data;
+  }
+
+  static Future<AddPic> getPic() async {
+    String? token = await Preference.getToken();
+    var response = await http.get(
+        Uri.parse("http://secondspin.xyz/api/userprofiles/uploadimage"),
+        headers: {HttpHeaders.authorizationHeader: "Bearer $token"});
+
+    final result = jsonDecode(response.body);
+    debugPrint(response.body);
+    var picResponse = AddPic.fromJson(result);
+    return picResponse;
+  }
+
   static Future <void>sendApiRequest() async {
     try {
       String? token = await Preference.getToken();
@@ -365,4 +396,23 @@ class Api_Manager {
       throw Exception('Failed to load products');
     }
   }
+
+  // Future<PaymentData?> fetchPaymentSummary() async {
+  //   String? token = await Preference.getToken();
+  //   final response = await http.get(
+  //       Uri.http(
+  //         Constants.api_base_URL,
+  //         "/api/orders/paymentSummary",
+  //       ),
+  //       headers: {"Authorization": "Bearer $token"});
+  //   final decodedResponse = jsonDecode(response.body);
+  //   if (response.statusCode == 200 && decodedResponse["status"] == true) {
+  //     final paymentData =
+  //     PaymentModel.fromJson(decodedResponse);
+  //     return paymentData.data;
+  //   } else {
+  //     throw Exception('Failed to load products');
+  //   }
+  // }
+
 }
