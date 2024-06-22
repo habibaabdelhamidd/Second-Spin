@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:graduation/core/network_layer/api_manager.dart';
 import 'package:graduation/models/get_user/Data.dart';
 import 'package:image_picker/image_picker.dart';
+import '../../../core/shared_preference.dart';
 import '../../login/buttons.dart';
 import '../../login/text_ff.dart';
+import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as path;
 
 class EditAccount extends StatefulWidget {
   static const String routeName = "EditAccount";
@@ -34,6 +38,40 @@ class _EditAccountState extends State<EditAccount> {
     setState(() {});
   }
 File? selectedImage;
+  Future editProfile() async {
+    String? token = await Preference.getToken();
+    final name = nameControl.text;
+    final  email = emailControl.text;
+    final password = passControl.text;
+
+    var uri = Uri.parse("http://www.secondspin.xyz/api/userprofiles/editprofile");
+
+    var request = http.MultipartRequest('POST', uri)
+      ..headers[HttpHeaders.authorizationHeader] = "Bearer $token"
+      ..fields['name'] = name
+      ..fields['email'] = email
+      ..fields['password'] = password;
+
+    if (selectedImage != null) {
+      request.files.add(await http.MultipartFile.fromPath('image', selectedImage!.path));
+    }
+
+    try {
+      var response = await request.send();
+
+      if (response.statusCode == 201) {
+        print("Success");
+        // Optionally, you can parse and return the response body here
+      } else {
+        print('Failed to sell item: ${response.statusCode}');
+        var responseData = await response.stream.bytesToString();
+        print('Error response: $responseData');
+      }
+    } catch (e) {
+      print('Error: $e'); // Print any error that occurs
+      rethrow;
+    }
+  }
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -61,12 +99,18 @@ File? selectedImage;
                         CircleAvatar(
                             radius: 45,
                             backgroundColor: Colors.white,
-                            child: selectedImage == null
-                                ? const Icon(
-                                    Icons.person_outline,
-                                    size: 60,
-                                  )
-                                : Image.file(selectedImage!)),
+                            backgroundImage: selectedImage != null
+                                ? FileImage(selectedImage!)
+                                : user.user?.image != null
+                                ? NetworkImage(user.user!.image!)
+                                : null,
+                          child: selectedImage == null && user.user?.image == null
+                              ? const Icon(
+                            Icons.person_outline,
+                            size: 60,
+                          )
+                              : null,
+                        ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.015,
                         ),
@@ -189,12 +233,8 @@ File? selectedImage;
                     MaterialButton(
                         onPressed: () {
                           validate();
-                          Api_Manager.editProfile(
-                              emailControl.text.toString(),
-                              passControl.text.toString(),
-                              nameControl.text.toString(), selectedImage!.path.toString());
+                          editProfile();
                           _showDialog(context);
-                          setState(() {});
                         },
                         child: Buttons(title: "Save changes", padd: 18))
                   ],
@@ -220,6 +260,22 @@ File? selectedImage;
     setState(() {
       selectedImage = File(pic.path);
     });
+  }
+  Future<void> saveImage (File image) async {
+    try {
+      final directory = await getApplicationDocumentsDirectory();
+      final String fileName = path.basename(image.path);
+      final String newPath = path.join(directory.path, fileName);
+      final savedImage = await image.copy(newPath);
+
+      setState(() {
+        selectedImage = savedImage;
+      });
+
+      print('Image saved to $newPath');
+    } catch (e) {
+      print('Error saving image: $e');
+    }
   }
 }
 void _showDialog(BuildContext context) {

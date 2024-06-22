@@ -1,8 +1,6 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:graduation/core/network_layer/api_manager.dart';
-import 'package:graduation/models/sell_res/SellResponse.dart';
 import 'package:graduation/screens/login/buttons.dart';
 import 'package:graduation/screens/login/text_ff.dart';
 import 'package:image_picker/image_picker.dart';
@@ -28,60 +26,13 @@ class _SellFormState extends State<SellForm> {
   TextEditingController titleControl = TextEditingController();
   TextEditingController descriptionControl = TextEditingController();
   TextEditingController locationControl = TextEditingController();
-  TextEditingController storyControl = TextEditingController();
-  TextEditingController priceControl = TextEditingController();
   TextEditingController locDetailsControl = TextEditingController();
+  TextEditingController priceControl = TextEditingController();
 
-  Future sell(
-      num? catId,
-      String? description,
-      String? title,
-      String? location,
-      String? imagePath,
-      num? price,
-      String? locDetails,
-      String? category
-      ) async {
-    String? token = await Preference.getToken();
-    final body = jsonEncode(<String, dynamic>{
-      "description": description,
-      "title": title,
-      "location": location,
-      "image": imagePath,
-      "price": price,
-      "location_details": locDetails,
-      "category" : category
-    });
-
-    print('Request Body: $body'); // Print request body for debugging
-
-    try {
-      var response = await http.post(
-        Uri.parse("http://www.secondspin.xyz/api/products/store/$catId"),
-        headers: {
-          HttpHeaders.authorizationHeader: "Bearer $token",
-          HttpHeaders.contentTypeHeader: "application/json",
-        },
-        body: body,
-      );
-
-      print('Response Status: ${response.statusCode}');
-      print('Response Body: ${response.body}');
-
-      if (response.statusCode == 201) {
-        final result = jsonDecode(response.body);
-        return SellResponse.fromJson(result);
-      }
-      else {
-        final result = jsonDecode(response.body);
-        throw Exception('Failed to sell item: ${result['message']}');
-      }
-    } catch (e) {
-      print('Error: $e'); // Print any error that occurs
-      rethrow;
-    }
-  }
   CategorySelected cat = CategorySelected();
+  File? selectedImage;
+  var dropDownValue;
+
   @override
   void initState() {
     super.initState();
@@ -93,8 +44,46 @@ class _SellFormState extends State<SellForm> {
     await cat.getCat();
     setState(() {});
   }
-File? selectedImage;
-  var dropDownValue;
+
+  Future sell(int? catId) async {
+    String? token = await Preference.getToken();
+    final description = descriptionControl.text;
+    final title = titleControl.text;
+    final location = locationControl.text;
+    final locationDetails = locDetailsControl.text;
+    final price = priceControl.text;
+
+    var uri = Uri.parse("http://www.secondspin.xyz/api/products/store/$catId");
+
+    var request = http.MultipartRequest('POST', uri)
+      ..headers[HttpHeaders.authorizationHeader] = "Bearer $token"
+      ..fields['description'] = description
+      ..fields['title'] = title
+      ..fields['location'] = location
+      ..fields['location_details'] = locationDetails
+      ..fields['price'] = price;
+
+    if (selectedImage != null) {
+      request.files.add(await http.MultipartFile.fromPath('image', selectedImage!.path));
+    }
+
+    try {
+      var response = await request.send();
+
+      if (response.statusCode == 201) {
+        print("Success");
+        // Optionally, you can parse and return the response body here
+      } else {
+        print('Failed to sell item: ${response.statusCode}');
+        var responseData = await response.stream.bytesToString();
+        print('Error response: $responseData');
+      }
+    } catch (e) {
+      print('Error: $e'); // Print any error that occurs
+      rethrow;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -116,9 +105,7 @@ File? selectedImage;
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     MaterialButton(
-                      onPressed: () {
-                        pickImageFromCamera();
-                      },
+                      onPressed: pickImageFromCamera,
                       child: Container(
                         height: MediaQuery.of(context).size.height * 0.2,
                         width: double.infinity,
@@ -135,22 +122,20 @@ File? selectedImage;
                               color: theme.primaryColor,
                             ),
                             SizedBox(
-                              height: MediaQuery.of(context).size.height *
-                                  0.01,
+                              height: MediaQuery.of(context).size.height * 0.01,
                             ),
                             Text(
                               "Add images",
-                              style: theme.textTheme.labelMedium
-                                  ?.copyWith(color: theme.primaryColor),
+                              style: theme.textTheme.labelMedium?.copyWith(color: theme.primaryColor),
                             ),
                             Text(
                               "Take a photo of your item",
-                              style: theme.textTheme.bodyMedium
-                                  ?.copyWith(color: theme.primaryColor),
+                              style: theme.textTheme.bodyMedium?.copyWith(color: theme.primaryColor),
                             )
                           ],
                         )
-                            : Image.file(selectedImage!,
+                            : Image.file(
+                          selectedImage!,
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -174,28 +159,25 @@ File? selectedImage;
                       "Choose item category *",
                       style: theme.textTheme.labelMedium,
                     ),
-
-                          DropdownButton(
-                            style: theme.textTheme.labelSmall,
-                            hint: const Text("Categories"),
-                            padding: EdgeInsets.all(
-                                MediaQuery.of(context).size.width * 0.02),
-                            isExpanded: true,
-                            value: dropDownValue,
-                            icon: const Icon(Icons.keyboard_arrow_down),
-                            items: cat.user?.data?.map((e) {
-                              return DropdownMenuItem(
-                                value: e.id,
-                                child: Text(e.name??""),
-                              );
-                            }).toList(),
-                            onChanged: (newValue) {
-                              setState(() {
-                                dropDownValue = newValue!;
-
-                              });
-                            },
-                          ),
+                    DropdownButton(
+                      style: theme.textTheme.labelSmall,
+                      hint: const Text("Categories"),
+                      padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.02),
+                      isExpanded: true,
+                      value: dropDownValue,
+                      icon: const Icon(Icons.keyboard_arrow_down),
+                      items: cat.user?.data?.map((e) {
+                        return DropdownMenuItem(
+                          value: e.id,
+                          child: Text(e.name ?? ""),
+                        );
+                      }).toList(),
+                      onChanged: (newValue) {
+                        setState(() {
+                          dropDownValue = newValue;
+                        });
+                      },
+                    ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.01,
                     ),
@@ -253,25 +235,11 @@ File? selectedImage;
             ),
             MaterialButton(
               onPressed: () {
-                final num? price = num.tryParse(priceControl.text);
-                if (price != null) {
-                  sell(
-                    dropDownValue,
-                    descriptionControl.text.toString(),
-                    titleControl.text.toString(),
-                    locationControl.text.toString(),
-                    selectedImage?.path.toString(),
-                    price,
-                    locDetailsControl.text.toString(),
-                    dropDownValue.toString()
-                  ).then((response) {
-                    print('Item sold successfully: ${response.toString()}');
-                  }).catchError((error) {
-                    print('Failed to sell item: $error');
-                  });
-                } else {
-                  print('Invalid price input');
-                }
+                sell(dropDownValue).then((response) {
+                  print('Item sold successfully: ${response.toString()}');
+                }).catchError((error) {
+                  print('Failed to sell item: $error');
+                });
                 _showDialog(context);
               },
               child: Buttons(title: "Submit", padd: 17),
@@ -281,15 +249,16 @@ File? selectedImage;
       ),
     );
   }
-  Future pickImageFromCamera() async {
-    final pic =
-    await ImagePicker().pickImage(source: ImageSource.gallery);
-    if(pic == null)return;
+
+  Future<void> pickImageFromCamera() async {
+    final pic = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pic == null) return;
     setState(() {
       selectedImage = File(pic.path);
     });
   }
 }
+
 void _showDialog(BuildContext context) {
   showDialog(
       context: context,
@@ -313,6 +282,7 @@ void _showDialog(BuildContext context) {
         );
       });
 }
+
 class CategorySelected {
   CategoryList? user;
   Api_Manager apiManager = Api_Manager();
