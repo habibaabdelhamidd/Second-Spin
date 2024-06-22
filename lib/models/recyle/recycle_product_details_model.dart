@@ -36,7 +36,6 @@ class ProdcuctData {
   String? user;
   bool? isfav =false ;
   bool ? incart =false ;
-
   ProdcuctData(
       {this.id,
         this.title,
@@ -49,8 +48,9 @@ class ProdcuctData {
         this.category,
         this.description,
         this.user,
+        this.isfav,
+        this.incart,
       });
-
   ProdcuctData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];

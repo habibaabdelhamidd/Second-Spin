@@ -23,8 +23,8 @@ class DetailsData {
       String? locationDetails, 
       String? category, 
       String? user,
-    bool? isfav = false,
-    bool? incart = false,
+    bool? isfav ,
+    bool? incart
 
   }){
     _id = id;
