@@ -5,8 +5,12 @@ import 'package:graduation/screens/home/search/search_items.dart';
 import '../../../core/network_layer/api_manager.dart';
 
 class ItemSearch extends SearchDelegate<String> {
-  // final items = ['shoes', 't-shirts', 'hats', 'jackets', 'Laptops'];
-  // final suggItems = ['hats', 'Laptops'];
+  final List<String> allItems = [
+    'Item 1',
+    'Item 2',
+    'Item 3',
+    'Item 4',
+  ];
 
   @override
   List<Widget>? buildActions(BuildContext context) => [
@@ -38,11 +42,13 @@ class ItemSearch extends SearchDelegate<String> {
           ));
         }
         if (snapshot.hasError || snapshot.data == null) {
-          return Center(
+          return const Center(
               child: Text(
-            snapshot.data?.message ?? snapshot.error.toString(),
-            style: const TextStyle(color: Colors.black),
-          ));
+              "No items available",
+              // Text(
+              //   snapshot.data?.message ?? snapshot.error.toString(),
+                style: TextStyle(color: Colors.black),
+              ));
         }
         var searchList = snapshot.data?.data;
         return GridView.builder(
@@ -62,40 +68,41 @@ class ItemSearch extends SearchDelegate<String> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
+
+    final suggestions = query.isEmpty
+        ? allItems
+        : allItems.where((item) {
+            final itemLower = item.toLowerCase();
+            final queryLower = query.toLowerCase();
+            return itemLower.startsWith(queryLower);
+          }).toList();
     return Container(
         alignment: Alignment.center,
         width: double.infinity,
         decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage("assets/image/auth_bg.png"),
-                fit: BoxFit.fitWidth)));
-    // final suggestions = query.isEmpty
-    //     ? suggItems
-    //     : items.where((item) {
-    //         final itemLower = item.toLowerCase();
-    //         final queryLower = query.toLowerCase();
-    //         return itemLower.startsWith(queryLower);
-    //       }).toList();
-    // return buildSuggestionSuccess(suggestions);
+                fit: BoxFit.fitWidth)),
+    child: buildSuggestionSuccess(suggestions),);
   }
 
-  // buildSuggestionSuccess(List<String> suggestions) => ListView.builder(
-  //     itemBuilder: (context, index) {
-  //       final suggestion = suggestions[index];
-  //       return ListTile(
-  //           onTap: () {
-  //             query = suggestion;
-  //             // close(context, suggestion);
-  //             // showResults(context);
-  //             Navigator.pushNamed(context, SearchView.routeName, arguments: suggestion);
-  //           },
-  //           title: Text(suggestion,
-  //               style: const TextStyle(
-  //                   fontFamily: "poppins",
-  //                   fontSize: 18,
-  //               color: Color(0xff2B3139))));
-  //     },
-  //     itemCount: suggestions.length);
+  buildSuggestionSuccess(List<String> suggestions) => ListView.builder(
+      itemBuilder: (context, index) {
+        final suggestion = suggestions[index];
+        return ListTile(
+            onTap: () {
+              query = suggestion;
+              // close(context, suggestion);
+              // showResults(context);
+              Navigator.pushNamed(context, SearchItem.routeName, arguments: suggestion);
+            },
+            title: Text(suggestion,
+                style: const TextStyle(
+                    fontFamily: "poppins",
+                    fontSize: 18,
+                color: Color(0xff2B3139))));
+      },
+      itemCount: suggestions.length);
   @override
   String get searchFieldLabel => 'What are you looking for?';
   @override

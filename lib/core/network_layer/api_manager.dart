@@ -22,7 +22,6 @@ import '../../models/charities_response/CharityData.dart';
 import '../../models/details_response/DetailsResponse.dart';
 import 'package:graduation/models/search_response/SearchResponse.dart';
 import '../../models/get_user/GetUser.dart';
-import '../../models/profile_pic/AddPic.dart';
 import '../../models/recyle/all_recycle_model.dart';
 import 'package:dio/dio.dart';
 

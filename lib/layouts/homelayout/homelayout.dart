@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation/screens/account/account_viwe_screen/account.dart';
 import 'package:graduation/screens/sell/sell_view.dart';

@@ -56,7 +56,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       radius: 45,
                       backgroundImage: user.user?.image != null
                           ? NetworkImage(user.user!.image)
-                          : AssetImage('assets/image/default_profile.png') as ImageProvider,
+                          : AssetImage('assets/image/splash.png') as ImageProvider,
                     ),
                     SizedBox(height: mediaquery.height*0.015,),
                     Text(

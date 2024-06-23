@@ -18,6 +18,8 @@ import 'package:graduation/screens/home/favourite/all_favourite_product.dart';
 import 'package:graduation/screens/home/favourite/favourite_product_details.dart';
 import 'package:graduation/screens/home/home/home.dart';
 import 'package:graduation/screens/home/search/search_details.dart';
+import 'package:graduation/screens/home/see_all/see_all.dart';
+import 'package:graduation/screens/home/see_all/see_details.dart';
 import 'package:graduation/screens/login/login_page.dart';
 import 'package:graduation/screens/register/register_page.dart';
 import 'package:graduation/screens/sell/form/charity_form.dart';
@@ -54,9 +56,7 @@ class MyApp extends StatelessWidget {
         All_Favourit_Product.routeName: (context)=> All_Favourit_Product(),
         Favourite_product_details.routeName: (context)=> Favourite_product_details(),
         Recycle_Product_Details.routeName : (context)=> Recycle_Product_Details(),
-        // SearchView.routeName : (context)=> const SearchView(),
         Cart_Chackout.routeName : (context)=> Cart_Chackout(),
-        // SearchItem.routeName : (context)=> const SearchItem(),
         SearchDetails.routeName : (context)=> const SearchDetails(),
         UsedView.routeName : (context)=> const UsedView(),
         UsedCategory.routeName : (context)=> const UsedCategory(),
@@ -64,11 +64,11 @@ class MyApp extends StatelessWidget {
         SellView.routeName : (context)=> const SellView(),
         SellForm.routeName : (context)=> const SellForm(),
         CharityForm.routeName : (context)=> const CharityForm(),
-        EditAccount.routeName : (context)=> EditAccount(),
+        EditAccount.routeName : (context)=> const EditAccount(),
         Settings_Account.routeName: (context)=> Settings_Account(),
-        // FormCamera.routeName : (context)=> const FormCamera(),
-        // CharityCamera.routeName : (context)=> const CharityCamera(),
-        CartUserData.routeName: (context)=> CartUserData()
+        CartUserData.routeName: (context)=> CartUserData(),
+        SeeAll.routeName:(context)=> const SeeAll(),
+        AllDetails.routeName :(context)=> const AllDetails(),
 
       },
       home: Splashscreen()
