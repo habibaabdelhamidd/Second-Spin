@@ -3,6 +3,8 @@ import 'package:flutter/widgets.dart';
 import 'package:graduation/layouts/homelayout/homelayout.dart';
 import 'package:graduation/screens/boarding/boarding2.dart';
 
+import '../login/login_page.dart';
+
 
 class Onboarding1 extends StatelessWidget {
   static const String routeName = "onboarding1";
@@ -27,7 +29,7 @@ class Onboarding1 extends StatelessWidget {
                     Container(
                       child: GestureDetector(
                         onTap: (){
-                          Navigator.pushNamed(context, HomeLayout.routeName);
+                          Navigator.pushNamed(context, LoginPage.routeName);
                         },
                         child: Text(
                           "Skip",

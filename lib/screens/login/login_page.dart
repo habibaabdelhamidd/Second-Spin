@@ -38,8 +38,7 @@ class _LoginPageState extends State<LoginPage> {
       var loginResponse = LoginResponse.fromJson(result);
       Preference.saveToken(loginResponse.data?.token);
       Navigator.pushNamed(context, HomeLayout.routeName);
-    }
-    else if (response.statusCode == 401) {
+    } else if (response.statusCode == 401) {
       setState(() {
         errorMessage = "Invalid credentials";
       });
@@ -135,13 +134,12 @@ class _LoginPageState extends State<LoginPage> {
                               : const Icon(Icons.visibility)),
                       textEditingController: passControl,
                       validator: (String? value) {
+                        if (errorMessage != null) {
+                          return errorMessage;
+                        }
                         if (value == null || value.trim().isEmpty) {
                           return "Please enter password";
                         }
-
-                        // if(value != passControl.toString()){
-                        //   return "Wrong email or password!";
-                        // }
                         return null;
                       }),
                   SizedBox(
@@ -163,12 +161,10 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   MaterialButton(
                       onPressed: () {
-    if (formKey.currentState!.validate()) {
-      setState(() {
-        errorMessage = null;
-      });
-      login(emailControl.text, passControl.text);
-    }},
+                        if (formKey.currentState!.validate()) {}
+                          login(emailControl.text, passControl.text);
+
+                      },
                       child: Buttons(
                         title: 'Login',
                         padd: 15,

@@ -25,6 +25,7 @@ class _CharityFormState extends State<CharityForm> {
   TextEditingController locationDetailsControl = TextEditingController();
   TextEditingController locationControl = TextEditingController();
   String? imagePath;
+  String? errorMessage;
 
   Future donate(int? charityId) async {
     String? token = await Preference.getToken();
@@ -53,8 +54,13 @@ class _CharityFormState extends State<CharityForm> {
       if (response.statusCode == 201) {
         print("Success");
         // Optionally, you can parse and return the response body here
+      }else if (response.statusCode == 302 || response.statusCode == 500) {
+        setState(() {
+          errorMessage = "Invalid credentials";
+        });
+        return Future.error("Invalid credentials");
       } else {
-        print('Failed to sell item: ${response.statusCode}');
+        print('Failed to upload item: ${response.statusCode}');
         var responseData = await response.stream.bytesToString();
         print('Error response: $responseData');
       }
@@ -77,174 +83,213 @@ class _CharityFormState extends State<CharityForm> {
   }
   var dropDownValue;
   File? selectedImage;
+  var formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    return Scaffold(
-        backgroundColor: theme.scaffoldBackgroundColor,
-        appBar: AppBar(
-          title: Text(
-            "Include details",
-            style: theme.appBarTheme.titleTextStyle,
+    return Form(
+      key: formKey,
+      child: Scaffold(
+          backgroundColor: theme.scaffoldBackgroundColor,
+          appBar: AppBar(
+            title: Text(
+              "Include details",
+              style: theme.appBarTheme.titleTextStyle,
+            ),
           ),
-        ),
-        body: Padding(
-          padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
-          child: Column(
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      InkWell(
-                          onTap: () {
-                            pickImageFromCamera();
+          body: Padding(
+            padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
+            child: Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        InkWell(
+                            onTap: () {
+                              pickImageFromCamera();
+                            },
+                            child: Container(
+                              height: MediaQuery.of(context).size.height * 0.2,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: selectedImage == null
+                                  ? Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.add_a_photo_outlined,
+                                          color: theme.primaryColor,
+                                        ),
+                                        SizedBox(
+                                          height:
+                                              MediaQuery.of(context).size.height *
+                                                  0.01,
+                                        ),
+                                        Text(
+                                          "Add images",
+                                          style: theme.textTheme.labelMedium
+                                              ?.copyWith(
+                                                  color: theme.primaryColor),
+                                        ),
+                                        Text(
+                                          "Take a photo of your item",
+                                          style: theme.textTheme.bodyMedium
+                                              ?.copyWith(
+                                                  color: theme.primaryColor),
+                                        )
+                                      ],
+                                    )
+                                  : Image.file(selectedImage!,
+                                      fit: BoxFit.cover,
+                                    ),
+                            )),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.03,
+                        ),
+                        Text(
+                          "Ad title *",
+                          style: theme.textTheme.labelMedium,
+                        ),
+                        TextF(
+                          hint: "Enter item Name",
+                          asterisk: false,
+                          textEditingController: titleControl,
+                          validator: (String? value) {
+                          if (value == null || value.trim().isEmpty) {
+                            return "Please enter a title to your product";
+                          }
+                          return null;
+                        },
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.03,
+                        ),
+                        Text(
+                          "Describe Your item *",
+                          style: theme.textTheme.labelMedium,
+                        ),
+                        TextF(
+                          hint: "Describe your product?",
+                          asterisk: false,
+                          textEditingController: descriptionControl,
+                          validator: (String? value) {
+                            if (value!.length < 10) {
+                              return "Please write full description";
+                            }
+                            if (value.trim().isEmpty) {
+                              return "Please enter description";
+                            }
+                            return null;
                           },
-                          child: Container(
-                            height: MediaQuery.of(context).size.height * 0.2,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(20)),
-                            child: selectedImage == null
-                                ? Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.add_a_photo_outlined,
-                                        color: theme.primaryColor,
-                                      ),
-                                      SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.01,
-                                      ),
-                                      Text(
-                                        "Add images",
-                                        style: theme.textTheme.labelMedium
-                                            ?.copyWith(
-                                                color: theme.primaryColor),
-                                      ),
-                                      Text(
-                                        "Take a photo of your item",
-                                        style: theme.textTheme.bodyMedium
-                                            ?.copyWith(
-                                                color: theme.primaryColor),
-                                      )
-                                    ],
-                                  )
-                                : Image.file(selectedImage!,
-                                    fit: BoxFit.cover,
-                                  ),
-                          )),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.03,
-                      ),
-                      Text(
-                        "Ad title *",
-                        style: theme.textTheme.labelMedium,
-                      ),
-                      TextF(
-                        hint: "Enter item Name",
-                        asterisk: false,
-                        textEditingController: titleControl,
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.03,
-                      ),
-                      Text(
-                        "Describe Your item *",
-                        style: theme.textTheme.labelMedium,
-                      ),
-                      TextF(
-                        hint: "Describe What Are You Selling?",
-                        asterisk: false,
-                        textEditingController: descriptionControl,
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.03,
-                      ),
-                      Text(
-                        "Region*",
-                        style: theme.textTheme.labelMedium,
-                      ),
-                      TextF(
-                        hint: "Enter your city",
-                        asterisk: false,
-                        textEditingController: locationControl,
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.03,
-                      ),
-                      Text(
-                        "Location details *",
-                        style: theme.textTheme.labelMedium,
-                      ),
-                      TextF(
-                        hint: "Enter your location details",
-                        asterisk: false,
-                        textEditingController: locationDetailsControl,
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.03,
-                      ),
-                      Text(
-                        "Choose charity *",
-                        style: theme.textTheme.labelMedium,
-                      ),
-                      DropdownButton(
-                              style: theme.textTheme.labelSmall,
-                              hint: const Text("Charities"),
-                              padding: EdgeInsets.all(
-                                  MediaQuery.of(context).size.width * 0.02),
-                              isExpanded: true,
-                              value: dropDownValue,
-                              icon: const Icon(Icons.keyboard_arrow_down),
-                              items: charity.user?.data?.map((e) {
-                                return DropdownMenuItem(
-                                  value: e.id,
-                                  child: Text(e.name ?? ""),
-                                );
-                              }).toList(),
-                              onChanged: (newValue) {
-                                setState(() {
-                                  dropDownValue = newValue!;
-                                });
-                              },
-                            ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.08,
-                      ),
-                    ],
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.03,
+                        ),
+                        Text(
+                          "Region*",
+                          style: theme.textTheme.labelMedium,
+                        ),
+                        TextF(
+                          hint: "cairo",
+                          asterisk: false,
+                          textEditingController: locationControl,
+                          validator: (String? value) {
+                            if (errorMessage != null ) {
+                              return "Please enter a city";
+                            }
+                            if (value == null || value.trim().isEmpty) {
+                              return "Please enter your city";
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.03,
+                        ),
+                        Text(
+                          "Location details *",
+                          style: theme.textTheme.labelMedium,
+                        ),
+                        TextF(
+                          hint: "Enter your location details",
+                          asterisk: false,
+                          textEditingController: locationDetailsControl,
+                          validator: (String? value) {
+                            if (value!.length < 10) {
+                              return "Please write full location details";
+                            }
+                            if (value.trim().isEmpty) {
+                              return "Please enter location details";
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.03,
+                        ),
+                        Text(
+                          "Choose charity *",
+                          style: theme.textTheme.labelMedium,
+                        ),
+                        DropdownButton(
+                                style: theme.textTheme.labelSmall,
+                                hint: const Text("Charities"),
+                                padding: EdgeInsets.all(
+                                    MediaQuery.of(context).size.width * 0.02),
+                                isExpanded: true,
+                                value: dropDownValue,
+                                icon: const Icon(Icons.keyboard_arrow_down),
+                                items: charity.user?.data?.map((e) {
+                                  return DropdownMenuItem(
+                                    value: e.id,
+                                    child: Text(e.name ?? ""),
+                                  );
+                                }).toList(),
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    dropDownValue = newValue!;
+                                  });
+                                },
+                              ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.08,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              MaterialButton(
-                  onPressed: () {
-                    int? id = dropDownValue;
-                    if (id != null) {
-                      print(id);
-                      donate(
-                        id).then((response) {
-                        print('Item sold successfully: ');
-                      }).catchError((error) {
-                        print('Failed to sell item: $error');
-                      });
-                    } else {
-                      print("invalid id");
-                    }
-                    _showDialog(context);
-                  },
-                  child: Buttons(title: "Submit", padd: 17))
-            ],
-          ),
-        ));
+                MaterialButton(
+                    onPressed: () {
+
+                      int? id = dropDownValue;
+                      if (id != null) {
+                        print(id);
+                        donate(
+                          id).then((response) {
+                          print('Item sold successfully: ');
+                        }).catchError((error) {
+                          print('Failed to sell item: $error');
+                        });
+                      } else {
+                        print("invalid id");
+                      }
+                      if (formKey.currentState!.validate()) {_showDialog(context);}
+
+                    },
+                    child: Buttons(title: "Submit", padd: 17))
+              ],
+            ),
+          )),
+    );
   }
   Future pickImageFromCamera() async {
     final pic =
-    await ImagePicker().pickImage(source: ImageSource.camera);
+    await ImagePicker().pickImage(source: ImageSource.gallery);
     if(pic == null)return;
     setState(() {
       selectedImage = File(pic.path);

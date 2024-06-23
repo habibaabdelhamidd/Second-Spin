@@ -68,7 +68,8 @@ class _EditAccountState extends State<EditAccount> {
     String? token = await Preference.getToken();
     final image = selectedImage?.path;
 
-    var uri = Uri.parse("http://www.secondspin.xyz/api/userprofiles/uploadimage");
+    var uri =
+        Uri.parse("http://www.secondspin.xyz/api/userprofiles/uploadimage");
 
     var request = http.MultipartRequest('POST', uri)
       ..headers[HttpHeaders.authorizationHeader] = "Bearer $token"
@@ -101,7 +102,8 @@ class _EditAccountState extends State<EditAccount> {
     final email = emailControl.text;
     final password = passControl.text;
 
-    var uri = Uri.parse("http://www.secondspin.xyz/api/userprofiles/editprofile");
+    var uri =
+        Uri.parse("http://www.secondspin.xyz/api/userprofiles/editprofile");
 
     var request = http.MultipartRequest('POST', uri)
       ..headers[HttpHeaders.authorizationHeader] = "Bearer $token"
@@ -119,7 +121,7 @@ class _EditAccountState extends State<EditAccount> {
           errorMessage = "Invalid credentials";
         });
         return Future.error("Invalid credentials");
-      }else {
+      } else {
         print('Failed to edit profile: ${response.statusCode}');
         var responseData = await response.stream.bytesToString();
         print('Error response: $responseData');
@@ -150,124 +152,124 @@ class _EditAccountState extends State<EditAccount> {
               Expanded(
                 child: SingleChildScrollView(
                     child: Column(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            CircleAvatar(
-                              radius: 45,
-                              backgroundColor: Colors.white,
-                              backgroundImage: selectedImage != null
-                                  ? FileImage(selectedImage!)
-                                  : user.user?.image != null
+                        CircleAvatar(
+                          radius: 45,
+                          backgroundColor: Colors.white,
+                          backgroundImage: selectedImage != null
+                              ? FileImage(selectedImage!)
+                              : user.user?.image != null
                                   ? NetworkImage(user.user!.image!)
                                   : null,
-                              child:
+                          child:
                               selectedImage == null && user.user?.image == null
                                   ? const Icon(
-                                Icons.person_outline,
-                                size: 60,
-                              )
+                                      Icons.person_outline,
+                                      size: 60,
+                                    )
                                   : null,
-                            ),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.015,
-                            ),
-                            MaterialButton(
-                              onPressed: () {
-                                pickImageFromGallery();
-                              },
-                              child: Text(
-                                "Change profile picture",
-                                style: theme.textTheme.bodyLarge!
-                                    .copyWith(fontSize: 16),
-                              ),
-                            ),
-                          ],
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.015,
+                        ),
+                        MaterialButton(
+                          onPressed: () {
+                            pickImageFromGallery();
+                          },
+                          child: Text(
+                            "Change profile picture",
+                            style: theme.textTheme.bodyLarge!
+                                .copyWith(fontSize: 16),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.04,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "User Name",
+                          style: theme.textTheme.labelLarge
+                              ?.copyWith(color: const Color(0xf72B3139)),
+                        ),
+                        TextF(
+                          hint: user.user?.name ?? "",
+                          asterisk: false,
+                          textEditingController: nameControl,
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.03,
+                        ),
+                        Text(
+                          "Email",
+                          style: theme.textTheme.labelLarge
+                              ?.copyWith(color: const Color(0xf72B3139)),
+                        ),
+                        TextF(
+                          hint: user.user?.email ?? "",
+                          asterisk: false,
+                          textEditingController: emailControl,
+                          validator: (String? value) {
+                            if (errorMessage != null) {
+                              return errorMessage;
+                            }
+                            if (value == null || value.trim().isEmpty) {
+                              return "Please enter your E-mail address";
+                            }
+                            var regex = RegExp(
+                                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+                            if (!regex.hasMatch(value)) {
+                              return "Invalid E-mail address";
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.03,
+                        ),
+                        Text(
+                          "Password",
+                          style: theme.textTheme.labelLarge
+                              ?.copyWith(color: const Color(0xf72B3139)),
+                        ),
+                        TextF(
+                          hint: "*******",
+                          asterisk: false,
+                          textEditingController: passControl,
+                          validator: (String? value) {
+                            if (value == null || value.trim().isEmpty) {
+                              return "Please enter password";
+                            }
+                            var regex = RegExp(
+                                r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
+                            if (!regex.hasMatch(value)) {
+                              return "Invalid Password";
+                            }
+                            return null;
+                          },
                         ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.04,
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "User Name",
-                              style: theme.textTheme.labelLarge
-                                  ?.copyWith(color: const Color(0xf72B3139)),
-                            ),
-                            TextF(
-                              hint: user.user?.name ?? "",
-                              asterisk: false,
-                              textEditingController: nameControl,
-                            ),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.03,
-                            ),
-                            Text(
-                              "Email",
-                              style: theme.textTheme.labelLarge
-                                  ?.copyWith(color: const Color(0xf72B3139)),
-                            ),
-                            TextF(
-                              hint: user.user?.email ?? "",
-                              asterisk: false,
-                              textEditingController: emailControl,
-                              validator: (String? value) {
-                                if (errorMessage != null) {
-                                  return errorMessage;
-                                }
-                                if (value == null || value.trim().isEmpty) {
-                                  return "Please enter your E-mail address";
-                                }
-                                var regex = RegExp(
-                                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-                                if (!regex.hasMatch(value)) {
-                                  return "Invalid E-mail address";
-                                }
-                                return null;
-                              },
-                            ),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.03,
-                            ),
-                            Text(
-                              "Password",
-                              style: theme.textTheme.labelLarge
-                                  ?.copyWith(color: const Color(0xf72B3139)),
-                            ),
-                            TextF(
-                              hint: "*******",
-                              asterisk: false,
-                              textEditingController: passControl,
-                              validator: (String? value) {
-                                if (value == null || value.trim().isEmpty) {
-                                  return "Please enter password";
-                                }
-                                var regex = RegExp(
-                                    r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
-                                if (!regex.hasMatch(value)) {
-                                  return "Invalid Password";
-                                }
-                                return null;
-                              },
-                            ),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.04,
-                            ),
-                          ],
-                        ),
                       ],
-                    )),
+                    ),
+                  ],
+                )),
               ),
               MaterialButton(
                   onPressed: () {
-    if (formKey.currentState!.validate()) {
-      setState(() {
-        errorMessage = null;
-      });
-      updateProfileAndPic();
-    }
+                    if (formKey.currentState!.validate()) {
+                      setState(() {
+                        errorMessage = null;
+                      });
+                      updateProfileAndPic();
+                    }
                   },
                   child: Buttons(title: "Save changes", padd: 18))
             ],
@@ -307,4 +309,3 @@ class UserData {
     user = (await apiManager.userData());
   }
 }
-

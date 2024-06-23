@@ -5,12 +5,6 @@ import 'package:graduation/screens/home/search/search_items.dart';
 import '../../../core/network_layer/api_manager.dart';
 
 class ItemSearch extends SearchDelegate<String> {
-  final List<String> allItems = [
-    'Item 1',
-    'Item 2',
-    'Item 3',
-    'Item 4',
-  ];
 
   @override
   List<Widget>? buildActions(BuildContext context) => [
@@ -41,9 +35,10 @@ class ItemSearch extends SearchDelegate<String> {
             color: Colors.black,
           ));
         }
-        if (snapshot.hasError || snapshot.data == null) {
+        if (snapshot.hasError || snapshot.data == null || snapshot.data?.message == "Not Matching ") {
           return const Center(
-              child: Text(
+              child:
+              Text(
               "No items available",
               // Text(
               //   snapshot.data?.message ?? snapshot.error.toString(),
@@ -69,13 +64,13 @@ class ItemSearch extends SearchDelegate<String> {
   @override
   Widget buildSuggestions(BuildContext context) {
 
-    final suggestions = query.isEmpty
-        ? allItems
-        : allItems.where((item) {
-            final itemLower = item.toLowerCase();
-            final queryLower = query.toLowerCase();
-            return itemLower.startsWith(queryLower);
-          }).toList();
+    // final suggestions = query.isEmpty
+    //     ? allItems
+    //     : allItems.where((item) {
+    //         final itemLower = item.toLowerCase();
+    //         final queryLower = query.toLowerCase();
+    //         return itemLower.startsWith(queryLower);
+    //       }).toList();
     return Container(
         alignment: Alignment.center,
         width: double.infinity,
@@ -83,26 +78,27 @@ class ItemSearch extends SearchDelegate<String> {
             image: DecorationImage(
                 image: AssetImage("assets/image/auth_bg.png"),
                 fit: BoxFit.fitWidth)),
-    child: buildSuggestionSuccess(suggestions),);
+    // child: buildSuggestionSuccess(suggestions),
+    );
   }
 
-  buildSuggestionSuccess(List<String> suggestions) => ListView.builder(
-      itemBuilder: (context, index) {
-        final suggestion = suggestions[index];
-        return ListTile(
-            onTap: () {
-              query = suggestion;
-              // close(context, suggestion);
-              // showResults(context);
-              Navigator.pushNamed(context, SearchItem.routeName, arguments: suggestion);
-            },
-            title: Text(suggestion,
-                style: const TextStyle(
-                    fontFamily: "poppins",
-                    fontSize: 18,
-                color: Color(0xff2B3139))));
-      },
-      itemCount: suggestions.length);
+  // buildSuggestionSuccess(List<String> suggestions) => ListView.builder(
+  //     itemBuilder: (context, index) {
+  //       final suggestion = suggestions[index];
+  //       return ListTile(
+  //           onTap: () {
+  //             query = suggestion;
+  //             // close(context, suggestion);
+  //             // showResults(context);
+  //             Navigator.pushNamed(context, SearchItem.routeName, arguments: suggestion);
+  //           },
+  //           title: Text(suggestion,
+  //               style: const TextStyle(
+  //                   fontFamily: "poppins",
+  //                   fontSize: 18,
+  //               color: Color(0xff2B3139))));
+  //     },
+  //     itemCount: suggestions.length);
   @override
   String get searchFieldLabel => 'What are you looking for?';
   @override
