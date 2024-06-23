@@ -2,7 +2,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation/screens/home/home/suggestion_card.dart';
 import 'package:graduation/screens/home/search/search.dart';
-import 'package:graduation/screens/home/see_all/see_all.dart';
 import '../favourite/all_favourite_product.dart';
 import '../view_model/view_model.dart';
 
@@ -141,16 +140,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     Text(
                       "suggestions",
                       style: theme.textTheme.bodyLarge,
-                    ),
-                    const Spacer(),
-                    InkWell(
-                      onTap: (){
-                        Navigator.pushNamed(context, SeeAll.routeName);
-                      },
-                      child: Text(
-                        "See All",
-                        style: theme.textTheme.bodySmall,
-                      ),
                     ),
                   ],
                 ),

@@ -18,8 +18,6 @@ import 'package:graduation/screens/home/favourite/all_favourite_product.dart';
 import 'package:graduation/screens/home/favourite/favourite_product_details.dart';
 import 'package:graduation/screens/home/home/home.dart';
 import 'package:graduation/screens/home/search/search_details.dart';
-import 'package:graduation/screens/home/see_all/see_all.dart';
-import 'package:graduation/screens/home/see_all/see_details.dart';
 import 'package:graduation/screens/login/login_page.dart';
 import 'package:graduation/screens/register/register_page.dart';
 import 'package:graduation/screens/sell/form/charity_form.dart';
@@ -67,8 +65,6 @@ class MyApp extends StatelessWidget {
         EditAccount.routeName : (context)=> const EditAccount(),
         Settings_Account.routeName: (context)=> Settings_Account(),
         CartUserData.routeName: (context)=> CartUserData(),
-        SeeAll.routeName:(context)=> const SeeAll(),
-        AllDetails.routeName :(context)=> const AllDetails(),
 
       },
       home: Splashscreen()
