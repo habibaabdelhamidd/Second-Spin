@@ -2,7 +2,6 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation/models/cart/cart_list_model.dart';
-import 'package:graduation/screens/cart/cart_view/cart_card.dart';
 import 'package:graduation/screens/cart/cart_view/cart_user_data.dart';
 import 'package:graduation/screens/cart/vms/cart_list_view_model.dart';
 import '../../login/text_ff.dart';
@@ -57,10 +56,63 @@ class _Cart_view_ScreenState extends State<Cart_view_Screen> {
               height: mediaquary.height/1.4,
                 child:
             ListView.builder(
-              itemBuilder: (context , index)=>CartCard(
-              cartM.allCartList[index],
-              cartM,
-            ),
+              itemBuilder: (context , index)=>  Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(mediaquary.width * 0.006),
+                    margin: EdgeInsets.all(mediaquary.width * 0.02),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(
+                          color: Color(0xffCCCCCC),
+                        )),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                            width: mediaquary.width*0.3,
+                            child: Image.network(cartM.allCartList[index].image!)),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: mediaquary.width * 0.02,
+                              left: mediaquary.width * 0.03,
+                              bottom: mediaquary.width * 0.01),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                cartM.allCartList[index].title!,
+                                style: theme.textTheme.bodyLarge,
+                              ),
+                              Text(
+                                "EGP ${cartM.allCartList[index].price}",
+                                style: theme.textTheme.bodyLarge,
+                              ),
+                              Text(
+                                "${cartM.allCartList[index].location} Egypt",
+                                style: theme.textTheme.bodyMedium,
+                              ),
+                              GestureDetector(
+                                onTap: () async {
+                                  await cartM.removeFromCart(cartM.allCartList[index].id!);
+                                  if(mounted){
+                                    setState(() {});
+                                  }
+                                },
+                                child: Icon(
+                                  Icons.delete_outline,
+                                  color: Colors.grey.shade500,
+                                  size: 30,
+                                ),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
               itemCount: cartM.allCartList.length,
             )
             ),

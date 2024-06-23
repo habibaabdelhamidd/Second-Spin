@@ -5,14 +5,15 @@ class SuggestionsCard extends StatefulWidget {
   Data product;
   HomeViewModel home_model;
   SuggestionsCard(this.product, this.home_model);
-
   @override
   State<SuggestionsCard> createState() => _SuggestionsCardState();
 }
-
 class _SuggestionsCardState extends State<SuggestionsCard> {
   @override
   Widget build(BuildContext context) {
+    print("=================================================");
+    print(widget.product.isfav);
+    print("=================================================");
     final mediaQuery = MediaQuery.of(context).size;
     var theme = Theme.of(context);
     return widget.product == null ? Center(child: CircularProgressIndicator(),):
@@ -58,6 +59,8 @@ class _SuggestionsCardState extends State<SuggestionsCard> {
                         widget.home_model.addtofav(widget.product.id!);
                         widget.product.isfav = !widget.product.isfav!;
                       } else {
+                        print("widgetproductisfav");
+                        print(widget.product.isfav);
                         widget.home_model.removeFromFav(widget.product.id!);
                         widget.product.isfav = !widget.product.isfav!;
                       }

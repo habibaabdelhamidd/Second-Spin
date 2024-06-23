@@ -64,7 +64,7 @@ class DetailsData {
   String? _locationDetails;
   String? _category;
   String? _user;
-  bool? isfav = false;
+  bool? isfav =false;
   bool? incart = false;
 DetailsData copyWith({  int? id,
   String? title,

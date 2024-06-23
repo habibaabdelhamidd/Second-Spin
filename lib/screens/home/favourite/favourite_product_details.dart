@@ -44,40 +44,44 @@ class _Favourite_product_detailsState extends State<Favourite_product_details> {
         padding: EdgeInsets.all(mediaquary.width * 0.02),
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Stack(
-                alignment: AlignmentDirectional.bottomEnd,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Image.network(
-                    favPVM.prodcuctData?.image?? "",
-                    width: mediaquary.width,
-                    fit: BoxFit.fill,
-                  ),
-                  Container(
-                      margin: EdgeInsets.only(
-                          right: mediaquary.width * 0.02,
-                          bottom: mediaquary.width * 0.02),
-                      padding: EdgeInsets.all(mediaquary.width * 0.02),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(20)),
-                      child:GestureDetector(
-                          onTap: ()async{
-                            print(favPVM .prodcuctData!.isfav);
-                            if(favPVM.prodcuctData?.isfav==false){
-                              await favPVM.addtofav();
-                              favPVM.prodcuctData?.isfav=true;
-                            }
-                            else{
-                              favPVM.removeFromFav();
-                              favPVM.prodcuctData?.isfav =false;
-                            }
-                            setState((){});
-                          },
-                          child: Image.asset(favPVM.prodcuctData?.isfav==false ?
-                          "assets/image/Icon fav.png" : "assets/image/fav_icon_solid.png")
-                      )
+                  Stack(
+                    alignment: AlignmentDirectional.bottomEnd,
+                    children: [
+                      Image.network(
+                        favPVM.prodcuctData?.image?? "",
+                        width: mediaquary.width,
+                        fit: BoxFit.fill,
+                      ),
+                      Container(
+                          margin: EdgeInsets.only(
+                              right: mediaquary.width * 0.02,
+                              bottom: mediaquary.width * 0.02),
+                          padding: EdgeInsets.all(mediaquary.width * 0.02),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20)),
+                          child:GestureDetector(
+                              onTap: ()async{
+                                print(favPVM .prodcuctData!.isfav);
+                                if(favPVM.prodcuctData?.isfav==false){
+                                  await favPVM.addtofav();
+                                  favPVM.prodcuctData?.isfav=true;
+                                }
+                                else{
+                                  favPVM.removeFromFav();
+                                  favPVM.prodcuctData?.isfav =false;
+                                }
+                                setState((){});
+                              },
+                              child: Image.asset(favPVM.prodcuctData?.isfav==false ?
+                              "assets/image/Icon fav.png" : "assets/image/fav_icon_solid.png")
+                          )
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -120,55 +124,56 @@ class _Favourite_product_detailsState extends State<Favourite_product_details> {
                   ],
                 ),
               ),
-              SizedBox(
-                height: mediaquary.height / 7,
-              ),
-              Container(
-                padding: EdgeInsets.all(mediaquary.width * 0.02),
-                decoration: BoxDecoration(
-                  color: Colors.white70,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.10),
-                      spreadRadius: 10,
-                      blurRadius: 10,
-                      offset: Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: GestureDetector(
-                  onTap: ()async{
-                    if(favPVM.prodcuctData?.incart==false){
-                      await favPVM.addtoCart();
-                      favPVM.prodcuctData?.incart=true;
-                    }
-                    setState((){});
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(mediaquary.width * 0.03),
-                    margin: EdgeInsets.all(mediaquary.width * 0.02),
+              SizedBox(height: mediaquary.height/3.5,),
+              Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(mediaquary.width * 0.02),
                     decoration: BoxDecoration(
-                        color: theme.primaryColor,
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ImageIcon(
-                          AssetImage("assets/image/homecart.png"),
-                          color: Colors.white,
-                          size: 30,
+                      color: Colors.white70,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.10),
+                          spreadRadius: 10,
+                          blurRadius: 10,
+                          offset: Offset(0, 2),
                         ),
-                        Text("Add to cart",
-                            style: theme.textTheme.bodyLarge!.copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w900)),
                       ],
                     ),
+                    child: GestureDetector(
+                      onTap: ()async{
+                        if(favPVM.prodcuctData?.incart==false){
+                          await favPVM.addtoCart();
+                          favPVM.prodcuctData?.incart=true;
+                        }
+                        setState((){});
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(mediaquary.width * 0.03),
+                        margin: EdgeInsets.all(mediaquary.width * 0.02),
+                        decoration: BoxDecoration(
+                            color: theme.primaryColor,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ImageIcon(
+                              AssetImage("assets/image/homecart.png"),
+                              color: Colors.white,
+                              size: 30,
+                            ),
+                            Text("Add to cart",
+                                style: theme.textTheme.bodyLarge!.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w900)),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+           ]  ),
         ),
       ),
     );

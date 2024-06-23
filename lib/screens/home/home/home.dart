@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation/screens/home/home/suggestion_card.dart';
@@ -20,12 +21,13 @@ class _HomeScreenState extends State<HomeScreen> {
     homeVm = HomeViewModel();
     futureSuggest();
   }
-
   Future<void> futureSuggest() async {
     await homeVm.getSuggtionsModel();
+    for (int i = 0; i <homeVm.suggestionsProducts.length; i++) {
+      log("${homeVm.suggestionsProducts [i].isfav}");
+    }
     setState(() {});
   }
-
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
@@ -145,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               Container(
-                height: mediaquary.height*0.35,
+                height: mediaquary.height*0.40,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context , index)=> SuggestionsCard(
