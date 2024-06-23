@@ -6,7 +6,7 @@
 
 class CategoryData {
   CategoryData({
-      num? id, 
+      int? id,
       String? title, 
       String? image, 
       String? price, 
@@ -27,13 +27,13 @@ class CategoryData {
     _price = json['price'];
     _location = json['location'];
   }
-  num? _id;
+  int? _id;
   String? _title;
   String? _image;
   String? _price;
   String? _location;
   bool? isfav;
-CategoryData copyWith({  num? id,
+CategoryData copyWith({  int? id,
   String? title,
   String? image,
   String? price,
@@ -44,7 +44,7 @@ CategoryData copyWith({  num? id,
   price: price ?? _price,
   location: location ?? _location,
 );
-  num? get id => _id;
+  int? get id => _id;
   String? get title => _title;
   String? get image => _image;
   String? get price => _price;

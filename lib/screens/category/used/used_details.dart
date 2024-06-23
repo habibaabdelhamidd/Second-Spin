@@ -22,14 +22,14 @@ class _UsedDetailsState extends State<UsedDetails> {
     details = ProductDetails();
     recylePVM = FavProductDetailsVm();
   }
-  Future<void> futureProductDetails(num? id  )async{
+  Future<void> futureProductDetails(int? id  )async{
     await details.getProductDetails(id);
     setState(() {});
   }
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    num? id = ModalRoute.of(context)!.settings.arguments as num?;
+    int? id = ModalRoute.of(context)!.settings.arguments as int?;
     futureProductDetails(id );
     return Scaffold(
         backgroundColor: theme.scaffoldBackgroundColor,
@@ -149,7 +149,7 @@ class _UsedDetailsState extends State<UsedDetails> {
     Api_Manager apiManager =  Api_Manager();
   DetailsData? detailsData;
   late FavProductDetailsVm recylePVM ;
-  Future <void> getProductDetails(num? id) async{
+  Future <void> getProductDetails(int? id) async{
     detailsData = (await apiManager.getDetails(id));
   }
   // Future<void> addtofav() async{

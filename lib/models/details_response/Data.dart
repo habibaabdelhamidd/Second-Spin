@@ -12,7 +12,7 @@
 
 class DetailsData {
   DetailsData({
-      num? id, 
+      int? id,
       String? title, 
       String? description, 
       String? image, 
@@ -53,7 +53,7 @@ class DetailsData {
     _category = json['category'];
     _user = json['user'];
   }
-  num? _id;
+  int? _id;
   String? _title;
   String? _description;
   String? _image;
@@ -66,7 +66,7 @@ class DetailsData {
   String? _user;
   bool? isfav = false;
   bool? incart = false;
-DetailsData copyWith({  num? id,
+DetailsData copyWith({  int? id,
   String? title,
   String? description,
   String? image,
@@ -89,7 +89,7 @@ DetailsData copyWith({  num? id,
   category: category ?? _category,
   user: user ?? _user,
 );
-  num? get id => _id;
+  int? get id => _id;
   String? get title => _title;
   String? get description => _description;
   String? get image => _image;

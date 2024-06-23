@@ -57,7 +57,7 @@ class Api_Manager {
     return allCategoriesResponse;
   }
 
-  static Future<CategoryResponse> getCategory(num? categoryId) async {
+  static Future<CategoryResponse> getCategory(int? categoryId) async {
     try {
       String? token = await Preference.getToken();
       var response = await http.get(
@@ -90,7 +90,7 @@ class Api_Manager {
     }
   }
 
-  Future<DetailsData?> getDetails(num? detailsId) async {
+  Future<DetailsData?> getDetails(int? detailsId) async {
     String? token = await Preference.getToken();
     var response = await http.get(
         Uri.parse("http://secondspin.xyz/api/products/showDetails/$detailsId"),
@@ -279,17 +279,17 @@ class Api_Manager {
     return userResponse.data;
   }
 
-  static Future<AddPic> getPic() async {
-    String? token = await Preference.getToken();
-    var response = await http.get(
-        Uri.parse("http://secondspin.xyz/api/userprofiles/uploadimage"),
-        headers: {HttpHeaders.authorizationHeader: "Bearer $token"});
-
-    final result = jsonDecode(response.body);
-    debugPrint(response.body);
-    var picResponse = AddPic.fromJson(result);
-    return picResponse;
-  }
+  // static Future<AddPic> getPic() async {
+  //   String? token = await Preference.getToken();
+  //   var response = await http.get(
+  //       Uri.parse("http://secondspin.xyz/api/userprofiles/uploadimage"),
+  //       headers: {HttpHeaders.authorizationHeader: "Bearer $token"});
+  //
+  //   final result = jsonDecode(response.body);
+  //   debugPrint(response.body);
+  //   var picResponse = AddPic.fromJson(result);
+  //   return picResponse;
+  // }
 
   static Future <void>sendApiRequest() async {
     try {
