@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation/core/favorites_manager.dart';
 import 'package:graduation/screens/account/account_viwe_screen/account.dart';
 import 'package:graduation/screens/sell/sell_view.dart';
 import '../../screens/cart/cart_view/cart_view.dart';
@@ -20,9 +21,11 @@ class _HomeLayoutState extends State<HomeLayout> {
     Cart_view_Screen(),
     AccountScreen()
   ];
-
   @override
   Widget build(BuildContext context) {
+     print("=============================================================");
+         print(FavoritesManager.getInstance().favs.length);
+             print("=============================================================");   
     var theme = Theme.of(context);
     return Scaffold(
       backgroundColor: Color(0xffF7F7F7),

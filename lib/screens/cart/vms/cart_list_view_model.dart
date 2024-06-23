@@ -8,8 +8,17 @@ class CartListViewModel{
   }
   Future<void> addtoCart(int id ) async{
     await apiManager.addToCart(id);
+    await getAllCartProducts();
   }
   Future<void>removeFromCart(int id) async{
     await apiManager.removeFromCart(id);
+    allCartList.removeAt(indexOfFavsProduct(id)!);
+  }
+  int? indexOfFavsProduct(int id) {
+    for (int i = 0; i < allCartList.length; i++) {
+      if (allCartList[i].id == id) {
+        return i;
+    }
+    }
   }
 }

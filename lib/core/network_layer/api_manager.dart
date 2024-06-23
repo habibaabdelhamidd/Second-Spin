@@ -132,7 +132,7 @@ class Api_Manager {
     }
   }
 
-  Future<List<FavProductList>?> fetchAllFavList() async {
+static  Future<List<FavProductList>?> fetchAllFavList() async {
     String? token = await Preference.getToken();
     final response = await http.get(
         Uri.http(
@@ -337,27 +337,31 @@ class Api_Manager {
       print("error");
     }
   }
-  static Future <void>sendCheckoutRequest() async {
+  static Future <void>sendCheckoutRequest({
+      required String locataionCity , required String locationDetails , required String
+    currentPayment , String ? creditCardN ,
+      String ?  expiryDate , String ? cardCvv }
+      ) async {
     try {
       String? token = await Preference.getToken();
-      final locataionCity = dropDownCurrentValue;
-      final locationDetails = userLocationDetails.text;
-      final creditCardN=creditNum.text;
-      final expiryDate = expire.text;
-      final cardCvv = cvV.text;
-      final currentPayment = payment!;
       print(locationDetails);
       print(cardCvv);
       print(expiryDate);
       print(creditCardN);
       print(locataionCity);
-      print(payment);
+      print(currentPayment);
       final dio = Dio();
       final headers = {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       };
-      final body ={
+      final body =
+      currentPayment == 'cash' ? {
+        'location': locataionCity,
+        'payment_method' : currentPayment,
+        'location_details': locationDetails,
+      }:
+      {
         'location': locataionCity,
         'payment_method' : currentPayment,
         'location_details': locationDetails,

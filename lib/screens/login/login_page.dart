@@ -109,6 +109,9 @@ class _LoginPageState extends State<LoginPage> {
                       if (!regex.hasMatch(value)) {
                         return "Invalid E-mail address";
                       }
+                      // if(value != emailControl.toString()){
+                      //   return "";
+                      // }
                       return null;
                     },
                   ),
@@ -135,6 +138,10 @@ class _LoginPageState extends State<LoginPage> {
                         if (value == null || value.trim().isEmpty) {
                           return "Please enter password";
                         }
+
+                        // if(value != passControl.toString()){
+                        //   return "Wrong email or password!";
+                        // }
                         return null;
                       }),
                   SizedBox(

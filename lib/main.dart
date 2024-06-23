@@ -41,7 +41,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ApplicationTheme.lightTheme,
-
       initialRoute: Splashscreen.routeName,
       routes: {
         Splashscreen.routeName :(context)=> Splashscreen(),
