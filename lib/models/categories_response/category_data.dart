@@ -11,7 +11,7 @@ class CategoryData {
       String? image, 
       String? price, 
       String? location,
-    bool? isfav= false,
+    bool? isfav,
   }){
     _id = id;
     _title = title;
@@ -32,7 +32,7 @@ class CategoryData {
   String? _image;
   String? _price;
   String? _location;
-  bool? isfav;
+  bool? isfav = false;
 CategoryData copyWith({  int? id,
   String? title,
   String? image,

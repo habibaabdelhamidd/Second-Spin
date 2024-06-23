@@ -5,7 +5,7 @@ class AddToFavViewModel{
   List<FavProductList> allFavProducts =[];
   Api_Manager apiManager =  Api_Manager();
   Future <void> getAllFavProducts() async{
-    allFavProducts= (await apiManager.fetchAllFavList())!;
+    allFavProducts= (await Api_Manager.fetchAllFavList())!;
   }
   Future<void> addtofav(int id ) async{
     await apiManager.addToFav(id);
